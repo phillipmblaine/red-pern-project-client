@@ -3,12 +3,12 @@ import './App.css';
 import Auth from './auth/Auth';
 // admin role access pages
 import AdminNavbar from './site/AdminNavbar'
-import AdminHome from './site/AdminHome';
+import { BrowserRouter as AdminRouter } from 'react-router-dom';
 // user role access pages
 import UserNavbar from './site/UserNavbar';
-import Header from './site/Header';
-import Home from './site/Home';
+import { BrowserRouter as UserRouter } from 'react-router-dom';
 import Footer from './site/Footer';
+import { Toolbar } from '@material-ui/core';
 
 type AppState = {
   sessionToken: string | undefined;
@@ -91,22 +91,25 @@ class App extends React.Component<AcceptedProps, AppState> {
           this.state.role === 'admin'
             ? (
               <div>
-                <AdminNavbar
-                  clearUserLogin={this.clearUserLogin}
-                />
-                <AdminHome />
+                <p>Login success. Admin access granted.</p>
+                <AdminRouter>
+                  <AdminNavbar
+                    sessionToken={this.state.sessionToken}
+                    clearUserLogin={this.clearUserLogin}
+                  />
+                </AdminRouter>
+                <Footer />
               </div>
             )
             : (
               <div>
-                <p>Login success.Access granted.</p >
-                <UserNavbar
-                  clearUserLogin={this.clearUserLogin}
-                // clearToken={this.clearToken}
-                // clearRole={this.clearRole}
-                />
-                <Header />
-                <Home />
+                <p>Login success. User access granted.</p >
+                <UserRouter>
+                  <UserNavbar
+                    sessionToken={this.state.sessionToken}
+                    clearUserLogin={this.clearUserLogin}
+                  />
+                </UserRouter>
                 <Footer />
               </div >
             )
@@ -125,6 +128,7 @@ class App extends React.Component<AcceptedProps, AppState> {
   render() {
     return (
       <div className='App'>
+        <Toolbar />
         {/* <button onClick={() => { this.setState({ sessionToken: 'abcde' }) }}>Set sessionToken to a value.</button>
         <button onClick={() => { this.setState({ sessionToken: undefined }) }}>Set sessionToken to undefined.</button> */}
         <h2>Hello from App.tsx</h2>

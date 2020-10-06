@@ -15,7 +15,7 @@ type AcceptedProps = {
 
 const ButtonStyles = withStyles({
     root: {
-        background: 'blue'
+        background: '#993355'
     }
 })(Button)
 
@@ -70,6 +70,7 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
                     type="text"
                     id="loginUsername"
                     name="loginUsername"
+                    placeholder='Username'
                     onChange={props.handleUsernameLoginInput}
                 /><br /><br />
 
@@ -78,6 +79,7 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
                     type="password"
                     id="loginPassword"
                     name="loginPassword"
+                    placeholder='Password'
                     onChange={props.handlePasswordLoginInput}
                 /><br /><br />
                 {/* <input

@@ -1,5 +1,7 @@
 import React from 'react';
 import './Register.css';
+import { withStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 
 type AcceptedProps = {
     firstName: string;
@@ -15,6 +17,12 @@ type AcceptedProps = {
     handlePasswordRegisterInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleRegisterSubmit: (e: React.FormEvent) => void;
 }
+
+const ButtonStyles = withStyles({
+    root: {
+        background: '#339977'
+    }
+})(Button)
 
 const Register: React.FunctionComponent<AcceptedProps> = (props) => {
     let passwordMessageStyling: HTMLElement | null = document.getElementById('passwordMessage')
@@ -94,6 +102,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     type='text'
                     id='firstName'
                     name='firstName'
+                    placeholder='First Name'
                     onChange={props.handleFirstNameRegisterInput}
                     required
                 /><br /><br />
@@ -103,6 +112,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     type='text'
                     id='lastName'
                     name='lastName'
+                    placeholder='Last Name'
                     onChange={props.handleLastNameRegisterInput}
                     required
                 /><br /><br />
@@ -112,6 +122,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     type='text'
                     id='registerUsername'
                     name='registerUsername'
+                    placeholder='Username'
                     onChange={props.handleUsernameRegisterInput}
                     required
                 /><br /><br />
@@ -121,6 +132,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     type='registerEmail'
                     id='registerEmail'
                     name='registerEmail'
+                    placeholder='email@email.com'
                     onChange={props.handleEmailRegisterInput}
                     pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
                     title='Please use a valid email address format: example@example.com'
@@ -134,7 +146,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     name='registerPassword'
                     pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
                     title='Password must contain: one number, one uppercase letter, one lowercase letter, at least 8 or more characters'
-                    placeholder='password'
+                    placeholder='Password'
                     onChange={props.handlePasswordRegisterInput}
                     onFocus={onFocusPasswordMessageStyling}
                     onBlur={onBlurPasswordMessageStyling}
@@ -151,7 +163,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
 
                 <br /><br />
 
-                <input type='submit' value='Submit' />
+                <ButtonStyles type='submit' value='Submit' variant='contained'>Submit</ButtonStyles>
             </form>
         </div>
     )

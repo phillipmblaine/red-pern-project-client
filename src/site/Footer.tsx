@@ -1,5 +1,5 @@
 import React from 'react';
-// import './Footer.css';
+import './Footer.css';
 
 type FooterState = {}
 type AcceptedProps = {}
