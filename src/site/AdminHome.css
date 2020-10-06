@@ -1,0 +1,18 @@
+.adminHomeMainDiv {
+    background: darkslategray;
+}
+
+.adminUsersTableDiv {
+    background: black;
+    color: wheat;
+}
+
+.adminDestinationsTableDiv {
+    background: darkcyan;
+    color: whitesmoke;
+}
+
+.adminTripsTableDiv {
+    background: darkkhaki;
+    color: #4759ff
+}

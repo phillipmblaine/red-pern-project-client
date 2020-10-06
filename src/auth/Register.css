@@ -1,0 +1,37 @@
+.registerMainDiv {
+  background: rgba(0, 90, 48, 0.596);
+}
+
+#passwordMessage {
+  display: none;
+  background: rgba(0, 37, 20, 0.562);;
+  color: rgb(255, 255, 255);
+  position: relative;
+  padding: 0.5rem;
+  /* margin-top: 10px; */
+}
+
+#passwordMessage p {
+  /* padding: 10px 35px; */
+  /* font-size: 18px; */
+}
+
+.valid {
+  color: rgb(0, 217, 255);
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "✔";
+}
+
+.invalid {
+  color: rgb(255, 0, 170);
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "✖";
+}

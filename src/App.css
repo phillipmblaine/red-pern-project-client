@@ -1,4 +1,12 @@
+body {
+  background: #101010;
+}
+
 .App {
+  background: #191016;
+  color: orange;
+  padding-top: 0.5rem;
+  padding-bottom: 2rem;
   text-align: center;
 }
 
