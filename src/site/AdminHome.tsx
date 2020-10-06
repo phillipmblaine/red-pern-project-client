@@ -3,7 +3,7 @@ import './AdminHome.css';
 
 type AdminHomeState = {}
 type AcceptedProps = {
-    // sessionToken: string | undefined;
+    sessionToken: string | undefined;
 }
 
 // AdminHome can be the AdminPortal

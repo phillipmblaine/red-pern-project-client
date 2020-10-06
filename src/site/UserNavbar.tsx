@@ -59,9 +59,9 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
                 <AppBarStyles position='fixed' style={routerLinkToolbarStyles}>
                     <Toolbar style={mainToolbarStyles}>
                         <Toolbar>
-                            <MenuItem><Link to='/userhome'>Admin Home</Link></MenuItem>
-                            <MenuItem><Link to='/userdestination'>Admin Destination</Link></MenuItem>
-                            <MenuItem><Link to='usertrip'>Admin Trip</Link></MenuItem>
+                            <MenuItem><Link to='/userhome'>User Home</Link></MenuItem>
+                            <MenuItem><Link to='/userdestination'>User Destination</Link></MenuItem>
+                            <MenuItem><Link to='usertrip'>User Trip</Link></MenuItem>
                         </Toolbar>
                         <Toolbar style={userToolbarStyles}>
                             <IconButton edge='start' color='inherit' aria-label='menu'>
@@ -83,9 +83,12 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
                 </div> */}
                 <div className='userNavbarRouterLinksOne'>
                     <Switch>
-                        <Route exact path='/userhome'><UserHome sessionToken={this.props.sessionToken} /></Route>
-                        <Route exact path='/usertrip'><UserTrip sessionToken={this.props.sessionToken} /></Route>
-                        <Route exact path='/userdestination'><UserDestination sessionToken={this.props.sessionToken} /></Route>
+                        <Route exact path='/userhome'>
+                            <UserHome sessionToken={this.props.sessionToken} /></Route>
+                        <Route exact path='/usertrip'>
+                            <UserTrip sessionToken={this.props.sessionToken} /></Route>
+                        <Route exact path='/userdestination'>
+                            <UserDestination sessionToken={this.props.sessionToken} /></Route>
                     </Switch>
                 </div>
 

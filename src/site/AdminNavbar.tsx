@@ -87,10 +87,14 @@ class AdminNavbar extends React.Component<AcceptedProps, AdminNavbarState>{
                 </div> */}
                 <div className='adminNavbarRouterLinksOne'>
                     <Switch>
-                        <Route exact path='/adminhome'><AdminHome /></Route>
-                        <Route exact path='/adminuser'><AdminUser /></Route>
-                        <Route exact path='/admindestination'><AdminDestination /></Route>
-                        <Route exact path='/admintrip'><AdminTrip /></Route>
+                        <Route exact path='/adminhome'>
+                            <AdminHome sessionToken={this.props.sessionToken} /></Route>
+                        <Route exact path='/adminuser'>
+                            <AdminUser sessionToken={this.props.sessionToken} /></Route>
+                        <Route exact path='/admindestination'>
+                            <AdminDestination sessionToken={this.props.sessionToken} /></Route>
+                        <Route exact path='/admintrip'>
+                            <AdminTrip sessionToken={this.props.sessionToken} /></Route>
                     </Switch>
                 </div>
             </div>
