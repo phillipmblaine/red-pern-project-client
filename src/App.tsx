@@ -34,7 +34,7 @@ class App extends React.Component<AcceptedProps, AppState> {
 
   componentDidUpdate() {
     console.log('App,tsx -> componentDidUpdate.')
-    console.log('Current App.tsx state:', this.state)
+    // console.log('Current App.tsx state:', this.state)
   }
 
   componentWillUnmount() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Register.css';
 import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 
 type AcceptedProps = {
     firstName: string;
@@ -97,60 +97,72 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
         <div className='registerMainDiv'>
             <h2>Hello from Register.tsx</h2>
             <form onSubmit={props.handleRegisterSubmit}>
-                <label htmlFor='firstName'>First Name: </label><br />
-                <input
+                <label htmlFor='firstName'></label><br />
+                <TextField
                     type='text'
                     id='firstName'
                     name='firstName'
                     placeholder='First Name'
                     onChange={props.handleFirstNameRegisterInput}
                     required
+                    label='First Name'
+                    variant='outlined'
                 /><br /><br />
 
-                <label htmlFor='lastName'>Last Name: </label><br />
-                <input
+                <label htmlFor='lastName'></label><br />
+                <TextField
                     type='text'
                     id='lastName'
                     name='lastName'
                     placeholder='Last Name'
                     onChange={props.handleLastNameRegisterInput}
                     required
+                    label='Last Name'
+                    variant='outlined'
                 /><br /><br />
 
-                <label htmlFor='registerUsername'>Username: </label><br />
-                <input
+                <label htmlFor='registerUsername'></label><br />
+                <TextField
                     type='text'
                     id='registerUsername'
                     name='registerUsername'
                     placeholder='Username'
                     onChange={props.handleUsernameRegisterInput}
                     required
+                    label='Username'
+                    variant='outlined'
                 /><br /><br />
 
-                <label htmlFor='registerEmail'>Email: </label><br />
-                <input
+                <label htmlFor='registerEmail'></label><br />
+                <TextField
                     type='registerEmail'
                     id='registerEmail'
                     name='registerEmail'
                     placeholder='email@email.com'
                     onChange={props.handleEmailRegisterInput}
-                    pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
+                    // pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
                     title='Please use a valid email address format: example@example.com'
                     required
+                    label='Email'
+                    variant='outlined'
+                    inputProps={{ pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$' }}
                 /><br /><br />
 
-                <label htmlFor='registerPassword'>Password: </label><br />
-                <input
+                <label htmlFor='registerPassword'></label><br />
+                <TextField
                     type='password'
                     id='registerPassword'
                     name='registerPassword'
-                    pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
+                    // pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
                     title='Password must contain: one number, one uppercase letter, one lowercase letter, at least 8 or more characters'
                     placeholder='Password'
                     onChange={props.handlePasswordRegisterInput}
                     onFocus={onFocusPasswordMessageStyling}
                     onBlur={onBlurPasswordMessageStyling}
                     onKeyUp={validatePasswordFormat}
+                    variant='outlined'
+                    label='Password'
+                    inputProps={{ pattern: '(?=.*)(?=.*[a-z])(?=.*[A-Z]).{8,}' }}
                     required
                 />
                 <div id='passwordMessage'>

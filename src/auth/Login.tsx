@@ -1,7 +1,9 @@
 import React from 'react';
 import './Login.css';
 import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, InputAdornment, TextField } from '@material-ui/core';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import LockIcon from '@material-ui/icons/Lock';
 
 type AcceptedProps = {
     username: string;
@@ -65,22 +67,33 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
             <form
                 onSubmit={props.handleLoginSubmit}
             >
-                <label htmlFor="loginUsername">Username: </label><br />
-                <input
-                    type="text"
-                    id="loginUsername"
-                    name="loginUsername"
+                <label htmlFor="loginUsername"></label><br />
+                <TextField
+                    type='text'
+                    id='loginUsername'
+                    name='loginUsername'
                     placeholder='Username'
                     onChange={props.handleUsernameLoginInput}
+                    label='Username'
+                    variant='outlined'
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><AccountCircleIcon /></InputAdornment>
+                    }}
                 /><br /><br />
 
-                <label htmlFor="loginPassword">Password: </label><br />
-                <input
-                    type="password"
-                    id="loginPassword"
-                    name="loginPassword"
+                <label htmlFor="loginPassword"></label><br />
+                <TextField
+                    type='password'
+                    id='loginPassword'
+                    name='loginPassword'
                     placeholder='Password'
                     onChange={props.handlePasswordLoginInput}
+                    label='Password'
+                    variant='outlined'
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment>
+                    }}
+                    // inputProps={{ pattern: '[a-g]{1,15}' }}
                 /><br /><br />
                 {/* <input
                     type='submit'
