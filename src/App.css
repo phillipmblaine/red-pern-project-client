@@ -2,9 +2,14 @@ body {
   background: #20476e;
 }
 
+input {
+  background-color: #ffffff00;
+}
+
 .App {
   background: #4b1f3c;
   color: orange;
+  font-family: 'Poppins', sans-serif;
   padding-top: 0.5rem;
   padding-bottom: 2rem;
   text-align: center;

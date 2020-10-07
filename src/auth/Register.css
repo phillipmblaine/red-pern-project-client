@@ -2,9 +2,52 @@
   background: rgba(0, 90, 48, 0.596);
 }
 
+/* @-webkit-keyframes autofill {
+  0%,
+  100% {
+    color: #666;
+    background: transparent;
+  }
+} */
+
+/* Change the color to your own background color */
+/* input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px #224f42 inset;
+  -webkit-text-fill-color: #333;
+  border-radius: inherit;
+} */
+
+/* your box-shadow */
+/* input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 50px #224f42 inset;
+  -webkit-text-fill-color: #333;
+  border-radius: inherit;
+} */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px #154D41 inset !important;
+  /* a hack way to get around the browser autofill from overriding styling. There must be a better way to do this?
+  /* also related, autoComplete is difficult to turn off on Textfields? */
+  /* -webkit-box-shadow: 0 0 0px 1000px black inset !important; */
+  /* border:blue !important; */
+}
+
+/* input:-webkit-autofill { */
+/* -webkit-animation-delay: 1s; Safari support - any positive time runs instantly */
+/* -webkit-animation-name: autofill; */
+/* -webkit-animation-fill-mode: both; */
+/* } */
+
+/* input:-internal-autofill-selected {
+  background: red;
+} */
+
 #passwordMessage {
   display: none;
-  background: rgba(0, 37, 20, 0.562);;
+  background: rgba(0, 37, 20, 0.562);
   color: rgb(255, 255, 255);
   position: relative;
   padding: 0.5rem;

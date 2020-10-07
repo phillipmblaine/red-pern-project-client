@@ -33,7 +33,7 @@ class App extends React.Component<AcceptedProps, AppState> {
   }
 
   componentDidUpdate() {
-    console.log('App,tsx -> componentDidUpdate.')
+    console.log('App.tsx -> componentDidUpdate.')
     // console.log('Current App.tsx state:', this.state)
   }
 
@@ -100,8 +100,7 @@ class App extends React.Component<AcceptedProps, AppState> {
                 </AdminRouter>
                 <Footer />
               </div>
-            )
-            : (
+            ) : (
               <div>
                 <p>Login success. User access granted.</p >
                 <UserRouter>
@@ -113,8 +112,7 @@ class App extends React.Component<AcceptedProps, AppState> {
                 <Footer />
               </div >
             )
-        )
-        : (
+        ) : (
           <div>
             <p>Please login.</p>
             <Auth
@@ -132,9 +130,9 @@ class App extends React.Component<AcceptedProps, AppState> {
         {/* <button onClick={() => { this.setState({ sessionToken: 'abcde' }) }}>Set sessionToken to a value.</button>
         <button onClick={() => { this.setState({ sessionToken: undefined }) }}>Set sessionToken to undefined.</button> */}
         <h2>Hello from App.tsx</h2>
-        <h6>Current role: <span>{this.state.role === ''
+        {/* <h6>Current role: <span>{this.state.role === ''
           ? 'No user role.'
-          : this.state.role}</span></h6>
+          : this.state.role}</span></h6> */}
         {/* {
           this.state.sessionToken !== undefined
             ? <h4>Access Granted.</h4>

@@ -79,6 +79,7 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
                     InputProps={{
                         startAdornment: <InputAdornment position="start"><AccountCircleIcon /></InputAdornment>
                     }}
+                    autoComplete='off'
                 /><br /><br />
 
                 <label htmlFor="loginPassword"></label><br />
@@ -93,6 +94,7 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
                     InputProps={{
                         startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment>
                     }}
+                    // autoComplete='off'
                     // inputProps={{ pattern: '[a-g]{1,15}' }}
                 /><br /><br />
                 {/* <input

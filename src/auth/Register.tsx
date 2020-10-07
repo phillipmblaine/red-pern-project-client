@@ -1,7 +1,11 @@
 import React from 'react';
 import './Register.css';
 import { withStyles } from '@material-ui/core/styles';
-import { Button, TextField } from '@material-ui/core';
+import { Button, InputAdornment, TextField } from '@material-ui/core';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import LockIcon from '@material-ui/icons/Lock';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 type AcceptedProps = {
     firstName: string;
@@ -106,7 +110,14 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     onChange={props.handleFirstNameRegisterInput}
                     required
                     label='First Name'
-                    variant='outlined'
+                    variant='standard'
+                    // inputProps={{ autoComplete: 'new-password', form: { autoComplete: 'off', input: { autoComplete: 'off' } } }}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><PersonAddIcon /></InputAdornment>,
+                        // autoComplete: 'off'
+                    }}
+                    color='secondary'
+                    // autoComplete='off'
                 /><br /><br />
 
                 <label htmlFor='lastName'></label><br />
@@ -118,7 +129,14 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     onChange={props.handleLastNameRegisterInput}
                     required
                     label='Last Name'
-                    variant='outlined'
+                    variant='standard'
+                    // inputProps={{ autoComplete: 'off' }}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><PersonAddIcon /></InputAdornment>,
+                        // autoComplete: 'off'
+                    }}
+                    color='secondary'
+                    // autoComplete='off'
                 /><br /><br />
 
                 <label htmlFor='registerUsername'></label><br />
@@ -130,7 +148,14 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     onChange={props.handleUsernameRegisterInput}
                     required
                     label='Username'
-                    variant='outlined'
+                    variant='standard'
+                    // inputProps={{ autoComplete: 'off' }}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><AccountCircleIcon /></InputAdornment>,
+                        // autoComplete: 'off'
+                    }}
+                    color='primary'
+                    // autoComplete='new-password'
                 /><br /><br />
 
                 <label htmlFor='registerEmail'></label><br />
@@ -144,8 +169,18 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     title='Please use a valid email address format: example@example.com'
                     required
                     label='Email'
-                    variant='outlined'
-                    inputProps={{ pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$' }}
+                    variant='standard'
+                    inputProps={{
+                        pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$',
+                        // autoComplete: 'off'
+                    }}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><AlternateEmailIcon /></InputAdornment>,
+                        // autoComplete: 'off'
+                    }}
+                    color='primary'
+                    margin='normal'
+                    // autoComplete='new-password'
                 /><br /><br />
 
                 <label htmlFor='registerPassword'></label><br />
@@ -160,10 +195,16 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     onFocus={onFocusPasswordMessageStyling}
                     onBlur={onBlurPasswordMessageStyling}
                     onKeyUp={validatePasswordFormat}
-                    variant='outlined'
+                    variant='standard'
                     label='Password'
-                    inputProps={{ pattern: '(?=.*)(?=.*[a-z])(?=.*[A-Z]).{8,}' }}
+                    inputProps={{
+                        pattern: '(?=.*)(?=.*[a-z])(?=.*[A-Z]).{8,}',
+                        // autoComplete: 'off'
+                    }}
                     required
+                    InputProps={{ startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment> }}
+                    color='primary'
+                    // autoComplete='new-password'
                 />
                 <div id='passwordMessage'>
                     <h5>Password must contain:</h5>

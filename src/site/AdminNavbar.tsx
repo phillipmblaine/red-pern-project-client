@@ -8,10 +8,13 @@ import './AdminNavbar.css';
 // makestyles for newer react, withstyles for older
 import { withStyles } from '@material-ui/core/styles';
 // this is the same
-import { AppBar, Button, IconButton, MenuItem, Toolbar } from '@material-ui/core';
+import { AppBar, Button, IconButton, Toolbar } from '@material-ui/core';
 // import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
+import HomeIcon from '@material-ui/icons/Home';
+import LanguageIcon from '@material-ui/icons/Language';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Radium from 'radium';
 
@@ -61,18 +64,18 @@ class AdminNavbar extends React.Component<AcceptedProps, AdminNavbarState>{
                 <AppBarStyles position='fixed' style={routerLinkToolbarStyles}>
                     <Toolbar style={mainToolbarStyles}>
                         <Toolbar>
-                            <MenuItem><Link to='/adminhome'>Admin Home</Link></MenuItem>
-                            <MenuItem><Link to='/adminuser'>Admin User</Link></MenuItem>
-                            <MenuItem><Link to='/admindestination'>Admin Destination</Link></MenuItem>
-                            <MenuItem><Link to='admintrip'>Admin Trip</Link></MenuItem>
+                            <Link to='/adminhome'><Button color='primary'><HomeIcon /></Button></Link>
+                            <Link to='/adminuser'><Button color='primary'><PersonIcon /></Button></Link>
+                            <Link to='/admindestination'><Button color='primary'><LocationOnIcon /></Button></Link>
+                            <Link to='admintrip'><Button color='primary'><LanguageIcon /></Button></Link>
                         </Toolbar>
                         <Toolbar style={userToolbarStyles}>
-                            <IconButton edge='start' color='inherit' aria-label='menu'>
+                            {/* <IconButton edge='start' color='inherit' aria-label='menu'>
                                 <MenuIcon />
                             </IconButton>
                             <IconButton edge='start' color='inherit' aria-label='menu'>
                                 <PersonIcon />
-                            </IconButton>
+                            </IconButton> */}
                             <Button variant='contained' onClick={this.props.clearUserLogin}><PersonOutlineIcon /> Logout</Button>
                         </Toolbar>
                     </Toolbar>

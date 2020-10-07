@@ -4,13 +4,16 @@ import UserHome from './UserHome';
 import UserTrip from '../components/UserTrip/UserTrip';
 import UserDestination from '../components/UserDestination/UserDestination';
 import './UserNavbar.css';
-// makestyles for newer react, withstyles for older
+// makestyles for newer react, withstyles for older, can't use hooks!
 import { withStyles } from '@material-ui/core/styles';
 // this is the same
-import { AppBar, Button, IconButton, MenuItem, Toolbar } from '@material-ui/core';
+import { AppBar, Button, IconButton, Toolbar } from '@material-ui/core';
 // import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
+import HomeIcon from '@material-ui/icons/Home';
+import LanguageIcon from '@material-ui/icons/Language';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Radium from 'radium';
 
@@ -44,7 +47,8 @@ const mainToolbarStyles = {
     width: '100%',
     justifyContent: 'space-between',
     paddingLeft: '5px',
-    paddingRight: '5px'
+    paddingRight: '5px',
+    color: 'navy'
 }
 
 const userToolbarStyles = {
@@ -59,17 +63,17 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
                 <AppBarStyles position='fixed' style={routerLinkToolbarStyles}>
                     <Toolbar style={mainToolbarStyles}>
                         <Toolbar>
-                            <MenuItem><Link to='/userhome'>User Home</Link></MenuItem>
-                            <MenuItem><Link to='/userdestination'>User Destination</Link></MenuItem>
-                            <MenuItem><Link to='usertrip'>User Trip</Link></MenuItem>
+                            <Link to='/userhome'><Button color='primary'><HomeIcon /></Button></Link>
+                            <Link to='/userdestination'><Button color='primary'><LocationOnIcon /></Button></Link>
+                            <Link to='usertrip'><Button color='primary'><LanguageIcon /></Button></Link>
                         </Toolbar>
                         <Toolbar style={userToolbarStyles}>
-                            <IconButton edge='start' color='inherit' aria-label='menu'>
+                            {/* <IconButton edge='start' color='inherit' aria-label='menu'>
                                 <MenuIcon />
                             </IconButton>
                             <IconButton edge='start' color='inherit' aria-label='menu'>
                                 <PersonIcon />
-                            </IconButton>
+                            </IconButton> */}
                             <Button variant='contained' onClick={this.props.clearUserLogin}><PersonOutlineIcon /> Logout</Button>
                         </Toolbar>
                     </Toolbar>
