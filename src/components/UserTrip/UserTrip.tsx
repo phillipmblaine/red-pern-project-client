@@ -24,7 +24,7 @@ interface TripData {
     stops: string[];
     numberOfStops?: number;
     tripBeginDate?: number;
-    tripEmdDate?: number;
+    tripEndDate?: number;
     userId?: number | null;
 }
 
@@ -55,7 +55,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 stops: [],
                 numberOfStops: 0,
                 tripBeginDate: 0,
-                tripEmdDate: 0,
+                tripEndDate: 0,
                 userId: null
             }
         }
@@ -70,6 +70,14 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
             console.log('UserTrip.tsx -> tripMapper.')
             return this.state.allUserTrips.map((value: TripData | null, index: number) => {
                 console.log(value, index)
+                if (value !== null) {
+                    console.log('Trip with ID ->', value.id)
+                    console.log('numberOfStops:', value.numberOfStops)
+                    console.log('stops:', value.tripBeginDate)
+                    console.log('tripBeginDate:', value.tripEndDate)
+                    console.log('tripEndDate:', value.tripName)
+                    console.log('userId:', value.userId)
+                }
             })
         }
     }
@@ -98,7 +106,6 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                         console.log(this.state.allUserTrips)
                     }
                 })
-
                 .catch(error => console.log(error))
         }
     }
