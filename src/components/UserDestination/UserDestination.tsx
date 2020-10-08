@@ -32,6 +32,7 @@ interface GeonameData {
     population: number;
     status: string;
     timezone: string;
+    tripId?: number;
 }
 
 class UserDestination extends React.Component<AcceptedProps, UserDestinationState>{
@@ -115,8 +116,8 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                                 <ListItemIcon><EmojiPeopleIcon /></ListItemIcon>
                                 {
                                     this.state.geonameFetchedData.population === 0
-                                        || this.state.geonameFetchedData.population === undefined
-                                        || this.state.geonameFetchedData === null
+                                        && this.state.geonameFetchedData.population === undefined
+                                        && this.state.geonameFetchedData === null
                                         ? <ListItemText primary='Population' secondary="Not available" />
                                         : <ListItemText primary='Population' secondary={this.state.geonameFetchedData.population} />
                                 }

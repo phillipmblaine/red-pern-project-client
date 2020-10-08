@@ -1,13 +1,79 @@
 import React from 'react';
 import APIURL from '../../helpers/environment';
+import { Button } from '@material-ui/core'
 // import './UserTrip.css';
 
-type UserTripState = {}
+type UserTripState = {
+    allUserTrips: [TripData | null];
+    tripData: TripData;
+    // response: [TripData | null];
+}
+
 type AcceptedProps = {
     sessionToken: string | undefined;
 }
 
+interface Response {
+    response: [TripData | null];
+    // response: TripData[];
+}
+
+interface TripData {
+    id: number | null;
+    tripName: string;
+    stops: string[];
+    numberOfStops?: number;
+    tripBeginDate?: number;
+    tripEmdDate?: number;
+    userId?: number | null;
+}
+
+// interface MapTripData {
+//     id: number | null;
+//     tripName: string;
+//     stops: string[];
+//     numberOfStops?: number;
+//     tripBeginDate?: number;
+//     tripEmdDate?: number;
+//     userId?: number | null;
+// }[]
+
+
+
+// interface TripFetchedData TripData[]
+
+
 class UserTrip extends React.Component<AcceptedProps, UserTripState>{
+    constructor(props: AcceptedProps) {
+        super(props)
+        this.state = {
+            allUserTrips: [null],
+            // response: null,
+            tripData: {
+                id: null,
+                tripName: '',
+                stops: [],
+                numberOfStops: 0,
+                tripBeginDate: 0,
+                tripEmdDate: 0,
+                userId: null
+            }
+        }
+    }
+
+    allUserTripsMapper = () => {
+        if (this.props.sessionToken !== undefined
+            && this.state.allUserTrips !== undefined
+            && this.state.allUserTrips !== null
+            && this.state.allUserTrips !== [null]
+            && Array.isArray(this.state.allUserTrips) === true) {
+            console.log('UserTrip.tsx -> tripMapper.')
+            return this.state.allUserTrips.map((value: TripData | null, index: number) => {
+                console.log(value, index)
+            })
+        }
+    }
+
     getUserTrips = (): void => {
         console.log('UserTrip.tsx -> getUserTrips.')
         if (this.props.sessionToken !== undefined) {
@@ -18,8 +84,21 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                     Authorization: this.props.sessionToken
                 })
             })
-                .then(response => response.json())
-                .then(data => console.log(data))
+                .then(response => {
+                    // console.log(response)
+                    return response.json()
+                })
+                .then((tripFetchedData: [TripData]) => {
+                    // console.log(tripFetchedData)
+                    this.setState({ allUserTrips: tripFetchedData })
+                })
+                .then(() => {
+                    if (this.state.allUserTrips !== null
+                        && this.state.allUserTrips !== [null]) {
+                        console.log(this.state.allUserTrips)
+                    }
+                })
+
                 .catch(error => console.log(error))
         }
     }
@@ -27,7 +106,12 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         return (
             <div className='userTripMainDiv'>
                 <h2>Hello from UserTrip.tsx</h2>
-                <button onClick={() => this.getUserTrips()}>getUserTrips</button>
+                <Button color='primary' variant='contained' onClick={() => this.getUserTrips()}>getUserTrips Test</Button>
+                {/* <Button color='primary' variant='contained' onClick={() => {
+                    console.log(typeof (this.state.tripData))
+                    console.log(Array.isArray(this.state.allUserTrips))
+                }}>tripData Console Log Tests</Button> */}
+                <Button color='secondary' variant='contained' onClick={() => this.allUserTripsMapper()}>allUsertripsMapper Test</Button>
             </div>
         )
     }
