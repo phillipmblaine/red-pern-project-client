@@ -6,11 +6,12 @@ import AdminDestination from '../components/AdminDestination/AdminDestination';
 import AdminTrip from '../components/AdminTrip/AdminTrip';
 import './AdminNavbar.css';
 // makestyles for newer react, withstyles for older
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 // this is the same
 import { AppBar, Button, IconButton, Toolbar } from '@material-ui/core';
 // import AppBar from '@material-ui/core/AppBar';
-import MenuIcon from '@material-ui/icons/Menu';
+// import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
 import LanguageIcon from '@material-ui/icons/Language';
@@ -22,26 +23,48 @@ type AdminNavbarState = {}
 type AcceptedProps = {
     sessionToken: string | undefined;
     clearUserLogin: () => void;
+    // classes: {
+    //     root: {
+    //         color: string;
+    //         background: string;
+    //     }
+    // };
 }
+
+// const styles = {
+//     root: {
+//         color: 'darkslategray',
+//         background: '#462784',
+//     }
+// }
 
 const AppBarStyles = withStyles({
     root: {
+        // #ff239e
         // fe6b8b, ff8e53
-        background: 'linear-gradient(45deg, #220000 70%, #ff239e 50%)',
+        // background: 'linear-gradient(45deg, #391111 70%, #572331 50%)',
+        background: 'linear-gradient(45deg, #111139 70%, #2123a0 50%)',
         border: 0,
         borderRadius: 3,
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: '0 3px 5px 2px rgba(135, 105, 255, .2)',
         color: 'white',
         height: 48,
         alignItems: 'flex-end',
         alignContent: 'space-between',
         justifyContent: 'center'
         // padding: '0 30px'
-    }
+    },
+    // button: {
+    //     background: 'black'
+    // }
 })(AppBar)
 
 const routerLinkToolbarStyles = {
-    // padding: 0    
+    Button: {
+        // background: 'pink',
+        color: '#0CA5F4'
+    }
 }
 
 const mainToolbarStyles = {
@@ -57,17 +80,24 @@ const userToolbarStyles = {
 
 
 class AdminNavbar extends React.Component<AcceptedProps, AdminNavbarState>{
+    constructor(props: AcceptedProps) {
+        super(props)
+    }
     render() {
+        // const { classes } = this.props;
+
         return (
             <div className='adminNavbarMainDiv'>
+                {console.log('props from AcceptedProps:', this.props)}
+                {/* {console.log('props from AcceptedProps:', this.props)} */}
                 {/* <h2>Hello from AdminNavbar.tsx</h2> */}
-                <AppBarStyles position='fixed' style={routerLinkToolbarStyles}>
+                <AppBarStyles position='fixed'>
                     <Toolbar style={mainToolbarStyles}>
                         <Toolbar>
-                            <Link to='/adminhome'><Button color='primary'><HomeIcon /></Button></Link>
-                            <Link to='/adminuser'><Button color='primary'><PersonIcon /></Button></Link>
-                            <Link to='/admindestination'><Button color='primary'><LocationOnIcon /></Button></Link>
-                            <Link to='admintrip'><Button color='primary'><LanguageIcon /></Button></Link>
+                            <Link to='/adminhome'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link>
+                            <Link to='/adminuser'><Button style={routerLinkToolbarStyles.Button}><PersonIcon /></Button></Link>
+                            <Link to='/admindestination'><Button style={routerLinkToolbarStyles.Button}><LocationOnIcon /></Button></Link>
+                            <Link to='admintrip'><Button style={routerLinkToolbarStyles.Button}><LanguageIcon /></Button></Link>
                         </Toolbar>
                         <Toolbar style={userToolbarStyles}>
                             {/* <IconButton edge='start' color='inherit' aria-label='menu'>
@@ -76,7 +106,7 @@ class AdminNavbar extends React.Component<AcceptedProps, AdminNavbarState>{
                             <IconButton edge='start' color='inherit' aria-label='menu'>
                                 <PersonIcon />
                             </IconButton> */}
-                            <Button variant='contained' onClick={this.props.clearUserLogin}><PersonOutlineIcon /> Logout</Button>
+                            <Button color='primary' variant='contained' onClick={this.props.clearUserLogin}><PersonOutlineIcon /> Logout</Button>
                         </Toolbar>
                     </Toolbar>
                 </AppBarStyles>

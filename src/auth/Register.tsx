@@ -6,6 +6,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import LockIcon from '@material-ui/icons/Lock';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import Radium from 'radium';
 
 type AcceptedProps = {
     firstName: string;
@@ -27,6 +28,10 @@ const ButtonStyles = withStyles({
         background: '#339977'
     }
 })(Button)
+
+const TextFieldStyles = {
+    width: '40vw'
+}
 
 const Register: React.FunctionComponent<AcceptedProps> = (props) => {
     let passwordMessageStyling: HTMLElement | null = document.getElementById('passwordMessage')
@@ -99,7 +104,8 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
 
     return (
         <div className='registerMainDiv'>
-            <h2>Hello from Register.tsx</h2>
+            <h2>New User?</h2>
+            {/* <h2>Hello from Register.tsx</h2> */}
             <form onSubmit={props.handleRegisterSubmit}>
                 <label htmlFor='firstName'></label><br />
                 <TextField
@@ -117,7 +123,8 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                         // autoComplete: 'off'
                     }}
                     color='secondary'
-                    // autoComplete='off'
+                    style={TextFieldStyles}
+                // autoComplete='off'
                 /><br /><br />
 
                 <label htmlFor='lastName'></label><br />
@@ -136,7 +143,8 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                         // autoComplete: 'off'
                     }}
                     color='secondary'
-                    // autoComplete='off'
+                    style={TextFieldStyles}
+                // autoComplete='off'
                 /><br /><br />
 
                 <label htmlFor='registerUsername'></label><br />
@@ -155,7 +163,8 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                         // autoComplete: 'off'
                     }}
                     color='primary'
-                    // autoComplete='new-password'
+                    style={TextFieldStyles}
+                // autoComplete='new-password'
                 /><br /><br />
 
                 <label htmlFor='registerEmail'></label><br />
@@ -170,6 +179,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     required
                     label='Email'
                     variant='standard'
+                    size='medium'
                     inputProps={{
                         pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$',
                         // autoComplete: 'off'
@@ -180,7 +190,8 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     }}
                     color='primary'
                     margin='normal'
-                    // autoComplete='new-password'
+                    style={TextFieldStyles}
+                // autoComplete='new-password'
                 /><br /><br />
 
                 <label htmlFor='registerPassword'></label><br />
@@ -204,7 +215,8 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     required
                     InputProps={{ startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment> }}
                     color='primary'
-                    // autoComplete='new-password'
+                    style={TextFieldStyles}
+                // autoComplete='new-password'
                 />
                 <div id='passwordMessage'>
                     <h5>Password must contain:</h5>
@@ -222,4 +234,4 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
     )
 }
 
-export default Register;
+export default Radium(Register);

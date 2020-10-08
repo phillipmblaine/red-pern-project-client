@@ -2,7 +2,7 @@ import React from 'react';
 import APIURL from '../../helpers/environment';
 import { Button, FormControl, InputAdornment, List, ListItem, TextField } from '@material-ui/core';
 import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
-// import './UserDestination.css';
+import './UserDestination.css';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
@@ -161,8 +161,8 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                 {/* how do I properly use the FormControl? */}
                 {/* {this.props.sessionToken} */}
                 <h2>Hello from UserDestination.tsx</h2>
-                <Button color='primary' variant='outlined' onClick={() => this.geonameFetch('Fort Wayne')}>geonameSearch Test</Button>
-                <Button color='primary' variant='outlined' onClick={() => this.getUserDestinations()}>getUserDestinations Test</Button>
+                <Button color='primary' variant='contained' onClick={() => this.geonameFetch('Fort Wayne')}>geonameSearch Test</Button>
+                <Button color='primary' variant='contained' onClick={() => this.getUserDestinations()}>getUserDestinations Test</Button>
                 <form onSubmit={this.handleGeonameSubmit}>
                     <FormControl>
                         <TextField
@@ -175,7 +175,7 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                                 startAdornment: <InputAdornment position="start"><LocationSearchingIcon /></InputAdornment>
                             }}
                         />
-                        <Button color='primary' variant='outlined' type='submit' value='submit'>Submit Search</Button>
+                        <Button color='primary' variant='contained' type='submit' value='submit'>Submit Search</Button>
                     </FormControl>
                 </form>
                 {this.showGeonameFetchedData()}

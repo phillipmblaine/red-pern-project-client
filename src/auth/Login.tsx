@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Button, InputAdornment, TextField } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
+import Radium from 'radium';
 
 type AcceptedProps = {
     username: string;
@@ -20,6 +21,10 @@ const ButtonStyles = withStyles({
         background: '#993355'
     }
 })(Button)
+
+const TextFieldStyles = {
+    width: '40vw'
+}
 
 const Login: React.FunctionComponent<AcceptedProps> = (props) => {
     // let loginFailMessageStyling: HTMLElement | null = document.getElementById('loginFailMessage')
@@ -80,6 +85,7 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
                         startAdornment: <InputAdornment position="start"><AccountCircleIcon /></InputAdornment>
                     }}
                     autoComplete='off'
+                    style={TextFieldStyles}
                 /><br /><br />
 
                 <label htmlFor="loginPassword"></label><br />
@@ -94,8 +100,9 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
                     InputProps={{
                         startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment>
                     }}
-                    // autoComplete='off'
-                    // inputProps={{ pattern: '[a-g]{1,15}' }}
+                    style={TextFieldStyles}
+                // autoComplete='off'
+                // inputProps={{ pattern: '[a-g]{1,15}' }}
                 /><br /><br />
                 {/* <input
                     type='submit'

@@ -26,7 +26,8 @@ type AcceptedProps = {
 const AppBarStyles = withStyles({
     root: {
         // fe6b8b, ff8e53
-        background: 'linear-gradient(45deg, #220000 70%, #ff239e 50%)',
+        // background: 'linear-gradient(45deg, #220000 70%, #ff239e 50%)',
+        background: 'linear-gradient(45deg, #220000 70%, #993355 50%)',
         border: 0,
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
@@ -40,7 +41,17 @@ const AppBarStyles = withStyles({
 })(AppBar)
 
 const routerLinkToolbarStyles = {
-    // padding: 0    
+    Button: {
+        // background: 'pink',
+        color: '#ab5476'
+    }
+}
+
+const logoutButtonStyle = {
+    // background: '#bc2433',
+    // background: '#de4566',
+    background: '#ab5476',
+    color: 'whitesmoke'
 }
 
 const mainToolbarStyles = {
@@ -60,12 +71,12 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
         return (
             <div className='userNavbarMainDiv'>
                 {/* <h2>Hello from UserNavbar.tsx</h2> */}
-                <AppBarStyles position='fixed' style={routerLinkToolbarStyles}>
+                <AppBarStyles position='fixed'>
                     <Toolbar style={mainToolbarStyles}>
                         <Toolbar>
-                            <Link to='/userhome'><Button color='primary'><HomeIcon /></Button></Link>
-                            <Link to='/userdestination'><Button color='primary'><LocationOnIcon /></Button></Link>
-                            <Link to='usertrip'><Button color='primary'><LanguageIcon /></Button></Link>
+                            <Link to='/userhome'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link>
+                            <Link to='/userdestination'><Button style={routerLinkToolbarStyles.Button}><LocationOnIcon /></Button></Link>
+                            <Link to='usertrip'><Button style={routerLinkToolbarStyles.Button}><LanguageIcon /></Button></Link>
                         </Toolbar>
                         <Toolbar style={userToolbarStyles}>
                             {/* <IconButton edge='start' color='inherit' aria-label='menu'>
@@ -74,7 +85,7 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
                             <IconButton edge='start' color='inherit' aria-label='menu'>
                                 <PersonIcon />
                             </IconButton> */}
-                            <Button variant='contained' onClick={this.props.clearUserLogin}><PersonOutlineIcon /> Logout</Button>
+                            <Button style={logoutButtonStyle} variant='contained' onClick={this.props.clearUserLogin}><PersonOutlineIcon /> Logout</Button>
                         </Toolbar>
                     </Toolbar>
                 </AppBarStyles>
