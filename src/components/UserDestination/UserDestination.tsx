@@ -161,7 +161,9 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
             <div className='userDestinationMainDiv'>
                 {/* how do I properly use the FormControl? */}
                 {/* {this.props.sessionToken} */}
-                <h2>Hello from UserDestination.tsx</h2>
+                {/* <h2>Hello from UserDestination.tsx</h2> */}
+                <h2>Explore Destinations</h2>
+                {/* <Button color='primary' variant='contained' onClick={() => this.geonameFetch('Fort Wayne')}>geonameSearch Test</Button> */}
                 <Button color='primary' variant='contained' onClick={() => this.geonameFetch('Fort Wayne')}>geonameSearch Test</Button>
                 <Button color='primary' variant='contained' onClick={() => this.getUserDestinations()}>getUserDestinations Test</Button>
                 <form onSubmit={this.handleGeonameSubmit}>

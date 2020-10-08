@@ -8,7 +8,7 @@ class Footer extends React.Component<AcceptedProps, FooterState>{
     render() {
         return (
             <div className='footerMainDiv'>
-                <h2>Hello from Footer.tsx</h2>
+                {/* <h2>Hello from Footer.tsx</h2> */}
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import React from 'react';
 import APIURL from '../../helpers/environment';
 import './AdminDestination.css';
+import { Button } from '@material-ui/core'
 
 type AdminDestinationState = {}
 type AcceptedProps = {
@@ -28,7 +29,7 @@ class AdminDestination extends React.Component<AcceptedProps, AdminDestinationSt
         return (
             <div className='adminDestinationMainDiv'>
                 <h2>Hello from AdminDestination.tsx</h2>
-                <button onClick={() => this.getAllDestinations()}>getAllDestinations</button>
+                <Button variant='contained' color='primary' onClick={() => this.getAllDestinations()}>getAllDestinations</Button>
             </div>
         )
     }

@@ -114,7 +114,7 @@ class App extends React.Component<AcceptedProps, AppState> {
             )
         ) : (
           <div>
-            <p>Please login.</p>
+            <p>Welcome. Please login.</p>
             <Auth
               updateToken={this.updateToken}
               updateRole={this.updateRole} />
@@ -129,7 +129,7 @@ class App extends React.Component<AcceptedProps, AppState> {
         <Toolbar />
         {/* <button onClick={() => { this.setState({ sessionToken: 'abcde' }) }}>Set sessionToken to a value.</button>
         <button onClick={() => { this.setState({ sessionToken: undefined }) }}>Set sessionToken to undefined.</button> */}
-        <h2>Hello from App.tsx</h2>
+        {/* <h2>Hello from App.tsx</h2> */}
         {/* <h6>Current role: <span>{this.state.role === ''
           ? 'No user role.'
           : this.state.role}</span></h6> */}

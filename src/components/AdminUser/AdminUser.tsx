@@ -1,6 +1,7 @@
 import React from 'react';
 import APIURL from '../../helpers/environment';
 import './AdminUser.css';
+import { Button } from '@material-ui/core'
 
 type AdminUserState = {}
 type AcceptedProps = {
@@ -9,7 +10,7 @@ type AcceptedProps = {
 
 class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
     getAllUsers = (): void => {
-        console.log('UserTrip.tsx -> getAllUsers.')
+        console.log('AdminUser.tsx -> getAllUsers.')
         if (this.props.sessionToken !== undefined) {
             fetch(`${APIURL}/user/getallusers`, {
                 method: 'GET',
@@ -27,7 +28,7 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
         return (
             <div className='adminUserMainDiv'>
                 <h2>Hello from AdminUser.tsx</h2>
-                <button onClick={() => this.getAllUsers()}>getAllUsers</button>
+                <Button variant='contained' color='primary' onClick={() => this.getAllUsers()}>getAllUsers</Button>
             </div>
         )
     }
