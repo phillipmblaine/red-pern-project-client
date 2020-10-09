@@ -1,11 +1,11 @@
 import React from 'react';
 import './UserTripDisplayTable.css'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddLocationIcon from '@material-ui/icons/AddLocation';
+// import IconButton from '@material-ui/core/IconButton';
+// import DeleteIcon from '@material-ui/icons/Delete';
+// import AddLocationIcon from '@material-ui/icons/AddLocation';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import Radium from 'radium';
+// import Radium from 'radium';
 
 type AcceptedProps = {
     openEditDialog: boolean;
@@ -16,8 +16,9 @@ type AcceptedProps = {
     allUserTripsMapper: () => (JSX.Element | undefined)[] | undefined;
     handleClickEditDialogOpen: (a: TripData) => (any);
     handleEditDialogClose: () => (any);
-    handleClickDeleteDialogOpen: () => (any);
+    handleClickDeleteDialogOpen: (a: TripData) => (any);
     handleDeleteDialogClose: () => (any);
+    handleDeleteTrip: (b: any) => (any);
     setEditDialogDataState: any;
 }
 
@@ -122,10 +123,10 @@ const UserTripDisplayTable: React.FunctionComponent<AcceptedProps> = (props) => 
             </Dialog>
 
             <Dialog open={props.openDeleteDialog} onClose={props.handleDeleteDialogClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Delete Trip</DialogTitle>
+                <DialogTitle id="form-dialog-title">Delete Trip {props.editDialogData.tripName}</DialogTitle>
                 <DialogContent style={styles.DialogContent}>
                     <DialogContentText>Confirm Delete</DialogContentText>
-                    <Button onClick={props.handleDeleteDialogClose} color="secondary" variant='contained'><DeleteForeverIcon /></Button>
+                    <Button onClick={props.handleDeleteTrip(props.editDialogData.id)} color="secondary" variant='contained'><DeleteForeverIcon /></Button>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.handleDeleteDialogClose} color="primary" variant='contained'>Cancel</Button>

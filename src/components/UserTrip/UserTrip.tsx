@@ -1,6 +1,8 @@
 import React from 'react';
 import APIURL from '../../helpers/environment';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+import { Button, Snackbar, TableCell, TableRow } from '@material-ui/core';
+// { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Table, TableBody, TableContainer, TableHead, TextField }
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 // { MenuItem, withStyles }
 import Radium from 'radium';
 // for now, the data table seems more approachable. The customized sortable table for stretch ...
@@ -12,7 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 // import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 // import PostAddIcon from '@material-ui/icons/PostAdd';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+// import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import './UserTrip.css';
 // Maybe table is more appealing, with effort I can probably get the sort table working
 import UserTripDisplayTable from './UserTripDisplayTable/UserTripDisplayTable';
@@ -26,7 +28,10 @@ type UserTripState = {
     // response: [TripData | null];
     openEditDialog: boolean;
     openDeleteDialog: boolean;
+    openDeletedAlert: boolean;
+    openUpdatedAlert: boolean;
     editDialogData: TripData;
+    emptyEditDialogData: TripData;
 }
 
 type AcceptedProps = {
@@ -60,32 +65,32 @@ interface TripData {
 
 // interface TripFetchedData TripData[]
 
-const styles = {
-    table: {
-        minWidth: 650,
-    },
-    // aligning not needed since tables have their own align properties
-    TableRow: {
-        // textAlign: 'center'
-        // background: '#232020'
-        // color: 'white',
-        // fontWeight: 'bold'
-    },
-    TableCell: {
-        textAlign: 'center',
-        color: 'white',
-        background: 'gray'
-    },
-    TableHead: {
-        backgroundColor: 'gray',
-        color: 'white'
-    },
-    DialogContent: {
-        // textAlign: 'center'
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-}
+// const styles = {
+//     table: {
+//         minWidth: 650,
+//     },
+//     // aligning not needed since tables have their own align properties
+//     TableRow: {
+//         // textAlign: 'center'
+//         // background: '#232020'
+//         // color: 'white',
+//         // fontWeight: 'bold'
+//     },
+//     TableCell: {
+//         textAlign: 'center',
+//         color: 'white',
+//         background: 'gray'
+//     },
+//     TableHead: {
+//         backgroundColor: 'gray',
+//         color: 'white'
+//     },
+//     DialogContent: {
+//         // textAlign: 'center'
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//     }
+// }
 
 class UserTrip extends React.Component<AcceptedProps, UserTripState>{
     constructor(props: AcceptedProps) {
@@ -122,7 +127,18 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 tripBeginDate: 0,
                 tripEndDate: 0,
                 userId: null
-            }
+            },
+            emptyEditDialogData: {
+                id: null,
+                tripName: '',
+                stops: [],
+                numberOfStops: 0,
+                tripBeginDate: 0,
+                tripEndDate: 0,
+                userId: null,
+            },
+            openDeletedAlert: false,
+            openUpdatedAlert: false,
         }
     }
 
@@ -180,7 +196,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                             </TableCell>
 
                             <TableCell align='right'>
-                                <IconButton color='secondary' aria-label="delete" onClick={this.handleClickDeleteDialogOpen}><DeleteIcon /></IconButton>
+                                <IconButton color='secondary' aria-label="delete" onClick={this.handleClickDeleteDialogOpen(value)}><DeleteIcon /></IconButton>
                             </TableCell>
                         </TableRow>
                     )
@@ -237,6 +253,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                             handleDeleteDialogClose={this.handleDeleteDialogClose}
                             editDialogData={this.state.editDialogData}
                             setEditDialogDataState={this.setEditDialogDataState}
+                            handleDeleteTrip={this.handleDeleteTrip}
                         />
                         {console.log(this.state.allUserTrips)}
                     </div>
@@ -252,18 +269,61 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
             editDialogData: a
         })
     }
-    handleEditDialogClose = () => {
-        this.setState({ openEditDialog: false })
-    }
-    handleClickDeleteDialogOpen = () => {
-        this.setState({ openDeleteDialog: true })
+    handleEditDialogClose = () => { this.setState({ openEditDialog: false }) }
+    handleClickDeleteDialogOpen = (a: TripData) => () => {
+        this.setState({
+            openDeleteDialog: true,
+            editDialogData: a
+        })
     }
     handleDeleteDialogClose = () => {
         this.setState({ openDeleteDialog: false })
     }
-
     setEditDialogDataState = (a: TripData) => {
         this.setState({ editDialogData: a })
+    }
+    handleDeleteTrip = (b: any) => () => {
+        console.log('UserTrip.tsx -> handleDeleteTrip.')
+        // console.log('Should be the id of the trip to delete:', b)
+        this.deleteTrip(b)
+        this.setState({
+            editDialogData: this.state.emptyEditDialogData,
+            openDeleteDialog: false
+        })
+        this.handleDeletedAlertOpen()
+    }
+    TripDeletedAlert(props: AlertProps) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+    TripUpdatedAlert(props: AlertProps) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+    handleDeletedAlertOpen = () => { this.setState({ openDeletedAlert: true }) }
+    handleDeletedAlertClose = () => { this.setState({ openDeletedAlert: false }) }
+    handleUpdatedAlertOpen = () => { this.setState({ openUpdatedAlert: true }) }
+    handleUpdatedAlertClose = () => { this.setState({ openUpdatedAlert: false }) }
+
+    deleteTrip = (deleteTripId: any) => {
+        if (this.props.sessionToken !== undefined) {
+            fetch(`${APIURL}/trip/delete/${deleteTripId}`, {
+                method: 'DELETE',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'Authorization': this.props.sessionToken,
+                })
+            })
+                .then(response => {
+                    if (response.ok === true) {
+                        console.log(`Trip with the id ${deleteTripId} deleted.`)
+                    } else {
+                        console.log('Trip not deleted.')
+                    }
+                })
+                .then(() => this.getUserTrips())
+                .catch((error: Error) => console.log(error))
+        } else {
+            console.log(`Trip not deleted.`)
+        }
     }
 
     render() {
@@ -280,6 +340,21 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 {/* <DataGrid rows={this.state.rows} columns={this.state.columns} pageSize={5} checkboxSelection /> */}
                 {/* {this.showTrips()} */}
                 {this.showTrips()}
+
+                <Snackbar open={this.state.openDeletedAlert} autoHideDuration={5000} onClose={this.handleDeletedAlertClose}>
+                    <this.TripDeletedAlert onClose={this.handleDeletedAlertClose} severity="warning">
+                        Trip Deleted.
+                    </this.TripDeletedAlert>
+                </Snackbar>
+                <Button variant='contained' color='default' onClick={() => this.handleDeletedAlertOpen()}>Click Me (Test Deleted Snackbar)</Button>
+
+                <Snackbar open={this.state.openUpdatedAlert} autoHideDuration={5000} onClose={this.handleUpdatedAlertClose}>
+                    <this.TripUpdatedAlert onClose={this.handleUpdatedAlertClose} severity="success">
+                        Trip Updated.
+                    </this.TripUpdatedAlert>
+                </Snackbar>
+
+                <Button variant='contained' color='default' onClick={() => this.handleUpdatedAlertOpen()}>Click Me (Test Updated Snackbar)</Button>
             </div>
         )
     }
