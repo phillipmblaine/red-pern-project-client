@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Button, InputAdornment, TextField } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
-import Radium from 'radium';
+// import Radium from 'radium';
 
 type AcceptedProps = {
     username: string;
@@ -67,7 +67,9 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
 
     return (
         <div className='loginMainDiv'>
-            <h2>Hello from Login.tsx</h2>
+            {/* <h2>Hello from Login.tsx</h2> */}
+            <h2>Welcome</h2>
+            <h3>Login</h3>
             {/* <p>props.loginAttemptedFailed: {props.loginAttemptFailed.toString()}</p> */}
             <form
                 onSubmit={props.handleLoginSubmit}

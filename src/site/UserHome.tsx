@@ -10,7 +10,7 @@ class UserHome extends React.Component<AcceptedProps, UserHomeState>{
     render() {
         return (
             <div className='userHomeMainDiv'>
-                <h2>Hello from UserHome.tsx</h2>
+                <h2>Home</h2>
             </div>
         )
     }

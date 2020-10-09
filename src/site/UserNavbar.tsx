@@ -7,10 +7,11 @@ import './UserNavbar.css';
 // makestyles for newer react, withstyles for older, can't use hooks!
 import { withStyles } from '@material-ui/core/styles';
 // this is the same
-import { AppBar, Button, IconButton, Toolbar } from '@material-ui/core';
+import { AppBar, Button, Toolbar } from '@material-ui/core';
+// { IconButton }
 // import AppBar from '@material-ui/core/AppBar';
-import MenuIcon from '@material-ui/icons/Menu';
-import PersonIcon from '@material-ui/icons/Person';
+// import MenuIcon from '@material-ui/icons/Menu';
+// import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
 import LanguageIcon from '@material-ui/icons/Language';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -36,7 +37,6 @@ const AppBarStyles = withStyles({
         alignItems: 'flex-end',
         alignContent: 'space-between',
         justifyContent: 'center'
-        // padding: '0 30px'
     }
 })(AppBar)
 
@@ -70,7 +70,6 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
     render() {
         return (
             <div className='userNavbarMainDiv'>
-                {/* <h2>Hello from UserNavbar.tsx</h2> */}
                 <AppBarStyles position='fixed'>
                     <Toolbar style={mainToolbarStyles}>
                         <Toolbar>
@@ -79,23 +78,10 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
                             <Link to='usertrip'><Button style={routerLinkToolbarStyles.Button}><LanguageIcon /></Button></Link>
                         </Toolbar>
                         <Toolbar style={userToolbarStyles}>
-                            {/* <IconButton edge='start' color='inherit' aria-label='menu'>
-                                <MenuIcon />
-                            </IconButton>
-                            <IconButton edge='start' color='inherit' aria-label='menu'>
-                                <PersonIcon />
-                            </IconButton> */}
                             <Button style={logoutButtonStyle} variant='contained' onClick={this.props.clearUserLogin}><PersonOutlineIcon /> Logout</Button>
                         </Toolbar>
                     </Toolbar>
                 </AppBarStyles>
-                {/* <div className='userNavbarRouterLinksOne'>
-                    <p>
-                        <Link to='/userhome'>User Home</Link>
-                        <Link to='usertrip'>User Trip</Link>
-                        <Link to='userdestination'>User Destination</Link>
-                    </p>
-                </div> */}
                 <div className='userNavbarRouterLinksOne'>
                     <Switch>
                         <Route exact path='/userhome'>
@@ -106,8 +92,6 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
                             <UserDestination sessionToken={this.props.sessionToken} /></Route>
                     </Switch>
                 </div>
-
-
             </div >
         )
     }

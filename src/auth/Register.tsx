@@ -105,6 +105,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
     return (
         <div className='registerMainDiv'>
             <h2>New User?</h2>
+            <h3>Register</h3>
             {/* <h2>Hello from Register.tsx</h2> */}
             <form onSubmit={props.handleRegisterSubmit}>
                 <label htmlFor='firstName'></label><br />

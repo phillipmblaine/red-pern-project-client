@@ -27,7 +27,7 @@ class AdminTrip extends React.Component<AcceptedProps, AdminTripState>{
     render() {
         return (
             <div className='adminTripMainDiv'>
-                <h2>Hello from AdminTrip.tsx</h2>
+                <h2>Trips</h2>
                 <Button variant='contained' color='primary' onClick={() => this.getAllTrips()}>getAllTrips</Button>
             </div>
         )

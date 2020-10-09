@@ -28,7 +28,7 @@ class AdminDestination extends React.Component<AcceptedProps, AdminDestinationSt
     render() {
         return (
             <div className='adminDestinationMainDiv'>
-                <h2>Hello from AdminDestination.tsx</h2>
+                <h2>Destinations</h2>
                 <Button variant='contained' color='primary' onClick={() => this.getAllDestinations()}>getAllDestinations</Button>
             </div>
         )

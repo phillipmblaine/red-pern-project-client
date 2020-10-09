@@ -6,10 +6,11 @@ import AdminDestination from '../components/AdminDestination/AdminDestination';
 import AdminTrip from '../components/AdminTrip/AdminTrip';
 import './AdminNavbar.css';
 // makestyles for newer react, withstyles for older
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 // this is the same
-import { AppBar, Button, IconButton, Toolbar } from '@material-ui/core';
+import { AppBar, Button, Toolbar } from '@material-ui/core';
+// IconButton
 // import AppBar from '@material-ui/core/AppBar';
 // import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
@@ -80,9 +81,9 @@ const userToolbarStyles = {
 
 
 class AdminNavbar extends React.Component<AcceptedProps, AdminNavbarState>{
-    constructor(props: AcceptedProps) {
-        super(props)
-    }
+    // constructor(props: AcceptedProps) {
+    //     super(props)
+    // }
     render() {
         // const { classes } = this.props;
 

@@ -28,7 +28,7 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
     render() {
         return (
             <div className='adminHomeMainDiv'>
-                <h2>Hello from AdminHome.tsx</h2>
+                <h2>Home</h2>
                 <Button variant='contained' color='primary' onClick={() => this.getUser()}>getUser</Button>
             </div>
         )
