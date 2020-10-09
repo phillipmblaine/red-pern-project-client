@@ -17,7 +17,7 @@ import AddLocationIcon from '@material-ui/icons/AddLocation';
 // import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import './UserTrip.css';
 // Maybe table is more appealing, with effort I can probably get the sort table working
-import UserTripDisplayTable from './UserTripDisplayTable/UserTripDisplayTable';
+import UserTripDisplay from './UserTripDisplay/UserTripDisplay';
 
 type UserTripState = {
     // allUserTrips: [TripData | null];
@@ -28,10 +28,24 @@ type UserTripState = {
     // response: [TripData | null];
     openEditDialog: boolean;
     openDeleteDialog: boolean;
+
     openDeletedAlert: boolean;
     openUpdatedAlert: boolean;
+
     editDialogData: TripData;
     emptyEditDialogData: TripData;
+
+    updateTripName: string;
+    updateStops: string[];
+    updateNumberOfStops: number;
+    updateTripBeginDate: number;
+    updateTripEndDate: number;
+
+    createTripName: string;
+    createStops: string[];
+    createNumberOfStops: number;
+    createTripBeginDate: number;
+    createTripEndDate: number;
 }
 
 type AcceptedProps = {
@@ -137,8 +151,21 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 tripEndDate: 0,
                 userId: null,
             },
+
             openDeletedAlert: false,
             openUpdatedAlert: false,
+
+            updateTripName: '',
+            updateStops: [],
+            updateNumberOfStops: 0,
+            updateTripBeginDate: 0,
+            updateTripEndDate: 0,
+
+            createTripName: '',
+            createStops: [],
+            createNumberOfStops: 0,
+            createTripBeginDate: 0,
+            createTripEndDate: 0,
         }
     }
 
@@ -241,7 +268,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
             this.state.allUserTrips !== [] && this.state.allUserTrips.length !== 0
                 ? (
                     <div>
-                        <UserTripDisplayTable
+                        <UserTripDisplay
                             openEditDialog={this.state.openEditDialog}
                             openDeleteDialog={this.state.openDeleteDialog}
                             allUserTrips={this.state.allUserTrips}
@@ -303,9 +330,84 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
     handleUpdatedAlertOpen = () => { this.setState({ openUpdatedAlert: true }) }
     handleUpdatedAlertClose = () => { this.setState({ openUpdatedAlert: false }) }
 
-    deleteTrip = (deleteTripId: any) => {
+    // ******************** CREATE, UPDATE, DELETE TRIPS ******************** //
+    createTrip = () => {
+        console.log('UserTrip.tsx -> createTrip.tsx.')
         if (this.props.sessionToken !== undefined) {
-            fetch(`${APIURL}/trip/delete/${deleteTripId}`, {
+            fetch(`${APIURL}/trip/create`, {
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'Authorization': this.props.sessionToken,
+                }),
+                body: JSON.stringify(
+                    {
+                        trip: {
+                            tripName: this.state.createTripName,
+                            stops: this.state.createStops,
+                            numberOfStops: this.state.createNumberOfStops,
+                            tripBeginDate: this.state.createTripBeginDate,
+                            tripEndDate: this.state.createTripEndDate
+                        }
+                    }
+                )
+            })
+                .then(response => {
+                    if (response.ok === true) {
+                        return response.json()
+                            .then(createdData => {
+                                console.log('Trip created.')
+                                console.log('createdData:', createdData)
+                            })
+                    } else {
+                        console.log('Trip not created.')
+                    }
+                })
+                .catch((error: Error) => console.log(error))
+        }
+    }
+
+    updateTrip = (updateTripId: any) => {
+        console.log('UserTrip.tsx -> updateTrip.tsx.')
+        if (this.props.sessionToken !== undefined) {
+            fetch(`${APIURL}/trip/edit/${updateTripId}`, {
+                method: 'PUT',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'Authorization': this.props.sessionToken,
+                }),
+                body: JSON.stringify(
+                    {
+                        trip: {
+                            tripName: this.state.updateTripName,
+                            stops: this.state.updateStops,
+                            numberOfStops: this.state.updateNumberOfStops,
+                            tripBeginDate: this.state.updateTripBeginDate,
+                            tripEndDate: this.state.updateTripEndDate
+                        }
+                    }
+                )
+            })
+                .then(response => {
+                    if (response.ok === true) {
+                        return response.json()
+                            .then(updatedData => {
+                                console.log(`Trip at id ${updateTripId} updated.`)
+                                console.log('updatedData:', updatedData)
+                            })
+                    } else {
+                        console.log('Trip not updated.')
+                    }
+                })
+                .catch((error: Error) => console.log(error))
+        }
+    }
+
+
+    deleteTrip = (deleteTripId: any) => {
+        console.log('UserTrip.tsx -> deleteTrip.')
+        if (this.props.sessionToken !== undefined) {
+            fetch(`${APIURL} / trip / delete /${deleteTripId}`, {
                 method: 'DELETE',
                 headers: new Headers({
                     'Content-Type': 'application/json',
@@ -326,6 +428,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         }
     }
 
+    // ******************** RENDER USERTRIP ******************** //
     render() {
         return (
             <div className='userTripMainDiv'>

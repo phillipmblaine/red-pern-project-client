@@ -156,6 +156,26 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
         }
     }
 
+    // ******************** CREATE, UPDATE, DELETE DESTINATIONS ******************** //
+    createDestination = () => {
+        if (this.props.sessionToken !== undefined) {
+            console.log('UserDestination.tsx -> createDestination.')
+        }
+    }
+
+    updateDestination = (updateDestinationId: any) => {
+        if (this.props.sessionToken !== undefined) {
+            console.log('UserDestination.tsx -> updateDestination.')
+        }
+    }
+
+    deleteDestination = (deleteDestinationId: any) => {
+        if (this.props.sessionToken !== undefined) {
+            console.log('UserDestination.tsx -> deleteDestination.')
+        }
+    }
+    
+    // ******************** RENDER USERDESTINATION ******************** //
     render() {
         return (
             <div className='userDestinationMainDiv'>

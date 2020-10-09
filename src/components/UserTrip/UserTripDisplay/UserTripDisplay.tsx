@@ -1,5 +1,5 @@
 import React from 'react';
-import './UserTripDisplayTable.css'
+import './UserTripDisplay.css'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
 // import IconButton from '@material-ui/core/IconButton';
 // import DeleteIcon from '@material-ui/icons/Delete';
@@ -59,9 +59,9 @@ const styles = {
     }
 }
 
-const UserTripDisplayTable: React.FunctionComponent<AcceptedProps> = (props) => {
+const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
     return (
-        <div>
+        <div className='userTripDisplayMainDiv'>
             {/* <h2>Hello from UserTripDisplayTable.tsx</h2> */}
             {/* {console.log(props.allUserTrips)} */}
             <div>
@@ -132,9 +132,9 @@ const UserTripDisplayTable: React.FunctionComponent<AcceptedProps> = (props) => 
                     <Button onClick={props.handleDeleteDialogClose} color="primary" variant='contained'>Cancel</Button>
                 </DialogActions>
             </Dialog>
-            {console.log('props.editDialogData:', props.editDialogData)}
+            {/* {console.log('props.editDialogData:', props.editDialogData)} */}
         </div>
     )
 }
 
-export default UserTripDisplayTable;
+export default UserTripDisplay;
