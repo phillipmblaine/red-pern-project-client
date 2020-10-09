@@ -191,7 +191,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
             return this.state.allUserTrips.map((value: TripData, index: number): (JSX.Element | undefined) => {
                 // console.log(value, index)
                 if (value !== null) {
-                    console.log('Trip with ID ->', value.id, 'mapped.', this.state.allUserTrips[index])
+                    // console.log('Trip with ID ->', value.id, 'mapped.', this.state.allUserTrips[index])
                     // console.log('numberOfStops:', value.numberOfStops)
                     // console.log('stops:', value.tripBeginDate)
                     // console.log('tripBeginDate:', value.tripEndDate)
@@ -317,7 +317,6 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
             editDialogData: this.state.emptyEditDialogData,
             openDeleteDialog: false
         })
-        this.handleDeletedAlertOpen()
     }
     TripDeletedAlert(props: AlertProps) {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -406,8 +405,9 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
 
     deleteTrip = (deleteTripId: any) => {
         console.log('UserTrip.tsx -> deleteTrip.')
+        // console.log(this.props.sessionToken)
         if (this.props.sessionToken !== undefined) {
-            fetch(`${APIURL} / trip / delete /${deleteTripId}`, {
+            fetch(`${APIURL}/trip/delete/${deleteTripId}`, {
                 method: 'DELETE',
                 headers: new Headers({
                     'Content-Type': 'application/json',
@@ -415,8 +415,10 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 })
             })
                 .then(response => {
+                    console.log(response.ok)
                     if (response.ok === true) {
                         console.log(`Trip with the id ${deleteTripId} deleted.`)
+                        this.handleDeletedAlertOpen()
                     } else {
                         console.log('Trip not deleted.')
                     }
