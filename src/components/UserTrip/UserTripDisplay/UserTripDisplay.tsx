@@ -19,7 +19,10 @@ type AcceptedProps = {
     handleClickDeleteDialogOpen: (a: TripData) => (any);
     handleDeleteDialogClose: () => (any);
     handleDeleteTrip: (b: any) => (any);
-    setEditDialogDataState: any;
+    handleUpdateTripNameInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleUpdateTripBeginDateInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleUpdateTripEndDateInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleUpdateTrip: (c: any) => (any)
 }
 
 interface TripData {
@@ -96,6 +99,7 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                         type="text"
                         variant='outlined'
                         fullWidth
+                        onChange={props.handleUpdateTripNameInput}
                     />
                     <TextField
                         autoFocus
@@ -104,6 +108,7 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                         type="date"
                         variant='outlined'
                         fullWidth
+                        onChange={props.handleUpdateTripBeginDateInput}
                         InputLabelProps={{ shrink: true }}
                     />
                     <TextField
@@ -113,12 +118,13 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                         type="date"
                         variant='outlined'
                         fullWidth
+                        onChange={props.handleUpdateTripEndDateInput}
                         InputLabelProps={{ shrink: true }}
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.handleEditDialogClose} color="secondary" variant='contained'>Cancel</Button>
-                    <Button onClick={props.handleEditDialogClose} color="primary" variant='contained'>Accept Changes</Button>
+                    <Button onClick={props.handleUpdateTrip(props.editDialogData.id)} color="primary" variant='contained'>Accept Changes</Button>
                 </DialogActions>
             </Dialog>
 
