@@ -253,7 +253,7 @@ class Auth extends React.Component<AcceptedProps, AuthState> {
     render() {
         return (
             <div className='authMainDiv'>
-                <h2>Hello from Auth.tsx</h2>
+                {/* <h2>Hello from Auth.tsx</h2> */}
                 {/* <p>this.state.loginAttemptFailed: {this.state.loginAttemptFailed.toString()}</p> */}
                 <Login
                     username={this.state.username}

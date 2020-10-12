@@ -1,10 +1,17 @@
 body {
-  background: #101010;
+  background: #2a3644;
+  /* background: #202020; */
+}
+
+input {
+  background-color: #ffffff00;
 }
 
 .App {
-  background: #191016;
-  color: orange;
+  /* background: #4b1f3c; */
+  background: #191919;
+  color: white;
+  font-family: 'Poppins', sans-serif;
   padding-top: 0.5rem;
   padding-bottom: 2rem;
   text-align: center;
