@@ -1,13 +1,12 @@
 import React from 'react';
 import APIURL from '../helpers/environment';
-import './AdminHome.css';
+import './UserHome.css';
 import { Button } from '@material-ui/core';
 
-type AdminHomeState = {}
+type UserHomeState = {}
 type AcceptedProps = { sessionToken: string | undefined; }
 
-// AdminHome can be the AdminPortal
-class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
+class UserHome extends React.Component<AcceptedProps, UserHomeState>{
     getUser = (): void => {
         console.log('AdminHome.tsx -> getUser.')
         if (this.props.sessionToken !== undefined) {
@@ -25,7 +24,7 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
     }
     render() {
         return (
-            <div className='adminHomeMainDiv'>
+            <div className='userHomeMainDiv'>
                 <h2>Home</h2>
                 <Button variant='contained' color='primary' onClick={() => this.getUser()}>getUser</Button>
             </div>
@@ -33,4 +32,4 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
     }
 }
 
-export default AdminHome;
+export default UserHome;
