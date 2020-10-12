@@ -1,12 +1,10 @@
 import React from 'react';
 import APIURL from '../helpers/environment';
 import './AdminHome.css';
-import { Button } from '@material-ui/core'
+import { Button } from '@material-ui/core';
 
 type AdminHomeState = {}
-type AcceptedProps = {
-    sessionToken: string | undefined;
-}
+type AcceptedProps = { sessionToken: string | undefined; }
 
 // AdminHome can be the AdminPortal
 class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{

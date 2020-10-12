@@ -24,18 +24,13 @@ type AcceptedProps = {
 }
 
 const ButtonStyles = withStyles({
-    root: {
-        background: '#339977'
-    }
+    root: { background: '#339977' }
 })(Button)
 
-const TextFieldStyles = {
-    width: '40vw'
-}
+const TextFieldStyles = { width: '40vw' }
 
 const Register: React.FunctionComponent<AcceptedProps> = (props) => {
     let passwordMessageStyling: HTMLElement | null = document.getElementById('passwordMessage')
-    // let passwordInput: unknown = document.getElementById('registerPassword')
     let passwordInput: HTMLElement | null = document.getElementById('registerPassword')
 
     function onFocusPasswordMessageStyling() {
@@ -106,93 +101,78 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
         <div className='registerMainDiv'>
             <h2>New User?</h2>
             <h3>Register</h3>
-            {/* <h2>Hello from Register.tsx</h2> */}
             <form onSubmit={props.handleRegisterSubmit}>
                 <label htmlFor='firstName'></label><br />
                 <TextField
+                    required
                     type='text'
                     id='firstName'
                     name='firstName'
                     placeholder='First Name'
-                    onChange={props.handleFirstNameRegisterInput}
-                    required
                     label='First Name'
                     variant='standard'
-                    // inputProps={{ autoComplete: 'new-password', form: { autoComplete: 'off', input: { autoComplete: 'off' } } }}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><PersonAddIcon /></InputAdornment>,
-                        // autoComplete: 'off'
-                    }}
                     color='secondary'
                     style={TextFieldStyles}
-                // autoComplete='off'
+                    onChange={props.handleFirstNameRegisterInput}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><PersonAddIcon /></InputAdornment>
+                    }}
                 /><br /><br />
 
                 <label htmlFor='lastName'></label><br />
                 <TextField
+                    required
                     type='text'
                     id='lastName'
                     name='lastName'
                     placeholder='Last Name'
-                    onChange={props.handleLastNameRegisterInput}
-                    required
                     label='Last Name'
                     variant='standard'
-                    // inputProps={{ autoComplete: 'off' }}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><PersonAddIcon /></InputAdornment>,
-                        // autoComplete: 'off'
-                    }}
                     color='secondary'
                     style={TextFieldStyles}
-                // autoComplete='off'
+                    onChange={props.handleLastNameRegisterInput}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><PersonAddIcon /></InputAdornment>
+                    }}
                 /><br /><br />
 
                 <label htmlFor='registerUsername'></label><br />
                 <TextField
+                    required
                     type='text'
                     id='registerUsername'
                     name='registerUsername'
                     placeholder='Username'
-                    onChange={props.handleUsernameRegisterInput}
-                    required
                     label='Username'
                     variant='standard'
-                    // inputProps={{ autoComplete: 'off' }}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><AccountCircleIcon /></InputAdornment>,
-                        // autoComplete: 'off'
-                    }}
                     color='primary'
                     style={TextFieldStyles}
-                // autoComplete='new-password'
+                    onChange={props.handleUsernameRegisterInput}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><AccountCircleIcon /></InputAdornment>
+                    }}
                 /><br /><br />
 
                 <label htmlFor='registerEmail'></label><br />
                 <TextField
+                    required
                     type='registerEmail'
                     id='registerEmail'
                     name='registerEmail'
                     placeholder='email@email.com'
-                    onChange={props.handleEmailRegisterInput}
-                    // pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
-                    title='Please use a valid email address format: example@example.com'
-                    required
                     label='Email'
                     variant='standard'
                     size='medium'
-                    inputProps={{
-                        pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$',
-                        // autoComplete: 'off'
-                    }}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><AlternateEmailIcon /></InputAdornment>,
-                        // autoComplete: 'off'
-                    }}
                     color='primary'
                     margin='normal'
                     style={TextFieldStyles}
-                // autoComplete='new-password'
+                    onChange={props.handleEmailRegisterInput}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><AlternateEmailIcon /></InputAdornment>
+                    }}
+                    inputProps={{
+                        pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$'
+                    }}
                 /><br /><br />
 
                 <label htmlFor='registerPassword'></label><br />
@@ -200,34 +180,30 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     type='password'
                     id='registerPassword'
                     name='registerPassword'
-                    // pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
                     title='Password must contain: one number, one uppercase letter, one lowercase letter, at least 8 or more characters'
                     placeholder='Password'
+                    variant='standard'
+                    label='Password'
                     onChange={props.handlePasswordRegisterInput}
                     onFocus={onFocusPasswordMessageStyling}
                     onBlur={onBlurPasswordMessageStyling}
                     onKeyUp={validatePasswordFormat}
-                    variant='standard'
-                    label='Password'
                     inputProps={{
-                        pattern: '(?=.*)(?=.*[a-z])(?=.*[A-Z]).{8,}',
-                        // autoComplete: 'off'
+                        pattern: '(?=.*)(?=.*[a-z])(?=.*[A-Z]).{8,}'
                     }}
                     required
                     InputProps={{ startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment> }}
                     color='primary'
                     style={TextFieldStyles}
-                // autoComplete='new-password'
                 />
+
                 <div id='passwordMessage'>
                     <h5>Password must contain:</h5>
                     <p id='passwordLowercaseLetter' className='invalid'>One lowercase letter</p>
                     <p id='passwordUppercaseLetter' className='invalid'>One uppercase letter</p>
                     <p id='passwordNumber' className='invalid'>One number</p>
                     <p id='passwordLength' className='invalid'>At least 8 characters in length</p>
-                </div>
-
-                <br /><br />
+                </div><br /><br />
 
                 <ButtonStyles type='submit' value='Submit' variant='contained'>Submit</ButtonStyles>
             </form>

@@ -73,7 +73,8 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
                 <AppBarStyles position='fixed'>
                     <Toolbar style={mainToolbarStyles}>
                         <Toolbar>
-                            <Link to='/userhome'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link>
+                            <Link to='/'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link>
+                            {/* <Link to='/userhome'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link> */}
                             <Link to='/userdestination'><Button style={routerLinkToolbarStyles.Button}><LocationOnIcon /></Button></Link>
                             <Link to='usertrip'><Button style={routerLinkToolbarStyles.Button}><LanguageIcon /></Button></Link>
                         </Toolbar>
@@ -84,8 +85,10 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
                 </AppBarStyles>
                 <div className='userNavbarRouterLinksOne'>
                     <Switch>
-                        <Route exact path='/userhome'>
+                        <Route exact path='/'>
                             <UserHome sessionToken={this.props.sessionToken} /></Route>
+                        {/* <Route exact path='/userhome'>
+                            <UserHome sessionToken={this.props.sessionToken} /></Route> */}
                         <Route exact path='/usertrip'>
                             <UserTrip sessionToken={this.props.sessionToken} /></Route>
                         <Route exact path='/userdestination'>

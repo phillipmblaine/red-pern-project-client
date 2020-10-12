@@ -95,7 +95,8 @@ class AdminNavbar extends React.Component<AcceptedProps, AdminNavbarState>{
                 <AppBarStyles position='fixed'>
                     <Toolbar style={mainToolbarStyles}>
                         <Toolbar>
-                            <Link to='/adminhome'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link>
+                            <Link to='/'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link>
+                            {/* <Link to='/adminhome'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link> */}
                             <Link to='/adminuser'><Button style={routerLinkToolbarStyles.Button}><PersonIcon /></Button></Link>
                             <Link to='/admindestination'><Button style={routerLinkToolbarStyles.Button}><LocationOnIcon /></Button></Link>
                             <Link to='admintrip'><Button style={routerLinkToolbarStyles.Button}><LanguageIcon /></Button></Link>
@@ -121,8 +122,10 @@ class AdminNavbar extends React.Component<AcceptedProps, AdminNavbarState>{
                 </div> */}
                 <div className='adminNavbarRouterLinksOne'>
                     <Switch>
-                        <Route exact path='/adminhome'>
+                        <Route exact path='/'>
                             <AdminHome sessionToken={this.props.sessionToken} /></Route>
+                        {/* <Route exact path='/adminhome'>
+                            <AdminHome sessionToken={this.props.sessionToken} /></Route> */}
                         <Route exact path='/adminuser'>
                             <AdminUser sessionToken={this.props.sessionToken} /></Route>
                         <Route exact path='/admindestination'>

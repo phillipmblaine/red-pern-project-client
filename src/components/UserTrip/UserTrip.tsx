@@ -1,6 +1,6 @@
 import React from 'react';
 import APIURL from '../../helpers/environment';
-import { Button, Snackbar, TableCell, TableRow } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, TableCell, TableRow, TextField } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import Radium from 'radium';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,10 +22,12 @@ import UserTripDisplay from './UserTripDisplay/UserTripDisplay';
 type UserTripState = {
     allUserTrips: TripData[];
     tripData: TripData;
+    openCreateDialog: boolean;
     openEditDialog: boolean;
     openDeleteDialog: boolean;
     openDeletedAlert: boolean;
     openUpdatedAlert: boolean;
+    openCreatedAlert: boolean;
     editDialogData: TripData;
     emptyEditDialogData: TripData;
     updateTripName: string; // draw from the already-created editDialogData instead of dedicated values like this?
@@ -72,6 +74,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 tripEndDate: 0,
                 userId: null
             },
+            openCreateDialog: false,
             openEditDialog: false,
             openDeleteDialog: false,
             editDialogData: {
@@ -94,6 +97,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
             },
             openDeletedAlert: false,
             openUpdatedAlert: false,
+            openCreatedAlert: false,
             updateTripName: '',
             updateStops: [],
             updateNumberOfStops: 0,
@@ -117,8 +121,8 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         }
     }
 
-    componentDidMount() { console.log('UserTrip.tsx => componentDidMount.') }
-    componentDidUpdate() { console.log('UserTrip.tsx -> componentDidUpdate.') }
+    // componentDidMount() { console.log('UserTrip.tsx -> componentDidMount.') }
+    // componentDidUpdate() { console.log('UserTrip.tsx -> componentDidUpdate.') }
 
     // ******************** USER TRIP MAPPER ******************** //
     allUserTripsMapper = () => {
@@ -126,32 +130,39 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
             && this.state.allUserTrips !== undefined
             && this.state.allUserTrips !== null
             && Array.isArray(this.state.allUserTrips) === true) {
-            console.log('UserTrip.tsx -> tripMapper.')
+            console.log('UserTrip.tsx -> allUserTripsMapper.')
             return this.state.allUserTrips.map((value: TripData, index: number): (JSX.Element | undefined) => {
                 if (value !== null) {
                     return (
                         <TableRow key={index}>
                             <TableCell align='right' component='th' scope='row'>{value.id}</TableCell>
+
                             <TableCell align='right'>{value.tripName}</TableCell>
+
                             {
                                 value.stops !== [] && value.stops !== null && value.stops.length !== null
                                     ? <TableCell align='right'>{value.stops.length}</TableCell>
                                     : <TableCell align='right'>N/A</TableCell>
                             }
+
                             {
                                 value.tripBeginDate !== null
                                     ? <TableCell align='right'>{value.tripBeginDate}</TableCell>
                                     : <TableCell align='right'>N/A</TableCell>
                             }
+
                             {
                                 value.tripEndDate !== null
                                     ? <TableCell align='right'>{value.tripEndDate}</TableCell>
                                     : <TableCell align='right'>N/A</TableCell>
                             }
+
                             <TableCell align='right'>{value.userId}</TableCell>
+
                             <TableCell align='right'>
                                 <IconButton color='primary' aria-label="editTrip" onClick={this.handleClickEditDialogOpen(value)}><AddLocationIcon /></IconButton>
                             </TableCell>
+
                             <TableCell align='right'>
                                 <IconButton color='secondary' aria-label="delete" onClick={this.handleClickDeleteDialogOpen(value)}><DeleteIcon /></IconButton>
                             </TableCell>
@@ -162,35 +173,16 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         }
     }
 
-    showTrips = () => {
-        return (
-            this.state.allUserTrips !== [] && this.state.allUserTrips.length !== 0
-                ? (
-                    <div>
-                        <UserTripDisplay
-                            openEditDialog={this.state.openEditDialog}
-                            openDeleteDialog={this.state.openDeleteDialog}
-                            allUserTrips={this.state.allUserTrips}
-                            sessionToken={this.props.sessionToken}
-                            allUserTripsMapper={this.allUserTripsMapper}
-                            handleClickEditDialogOpen={this.handleClickEditDialogOpen}
-                            handleEditDialogClose={this.handleEditDialogClose}
-                            handleClickDeleteDialogOpen={this.handleClickDeleteDialogOpen}
-                            handleDeleteDialogClose={this.handleDeleteDialogClose}
-                            editDialogData={this.state.editDialogData}
-                            handleDeleteTrip={this.handleDeleteTrip}
-                            handleUpdateTripNameInput={this.handleUpdateTripNameInput}
-                            handleUpdateTripBeginDateInput={this.handleUpdateTripBeginDateInput}
-                            handleUpdateTripEndDateInput={this.handleUpdateTripEndDateInput}
-                            handleUpdateTrip={this.handleUpdateTrip} />
-                    </div>
-                ) : (
-                    console.log(this.state.allUserTrips)
-                )
-        )
+    // ******************** HANDLERS AND RELATED FUNCTIONS ******************** //
+    handleClickCreateDialogOpen = () => {
+        console.log('UserTrip.tsx -> handleClickCreateDialogOpen.')
+        this.setState({ openCreateDialog: true })
     }
 
-    // ******************** HANDLERS AND RELATED FUNCTIONS ******************** //
+    handleCreateDialogClose = () => {
+        console.log('UserTrip.tsx -> handleCreateDialogClose.')
+        this.setState({ openCreateDialog: false })
+    }
 
     handleClickEditDialogOpen = (a: TripData) => () => {
         console.log('UserTrip.tsx -> handleClickEditDialogOpen.')
@@ -198,6 +190,11 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
             openEditDialog: true,
             editDialogData: a
         })
+    }
+
+    handleEditDialogClose = () => {
+        console.log('UserTrip.tsx -> handleEditDialogClose.')
+        this.setState({ openEditDialog: false })
     }
 
     handleClickDeleteDialogOpen = (a: TripData) => () => {
@@ -208,14 +205,43 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         })
     }
 
-    handleEditDialogClose = () => {
-        console.log('UserTrip.tsx -> handleEditDialogClose.')
-        this.setState({ openEditDialog: false })
-    }
-
     handleDeleteDialogClose = () => {
         console.log('UserTrip.tsx -> handleDeleteDialogClose.')
         this.setState({ openDeleteDialog: false })
+    }
+
+    handleCreateTripNameInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        console.log('UserTrip.tsx -> handleCreateTripNameInput.')
+        this.setState({ createTripName: e.target.value })
+    }
+
+    handleUpdateTripNameInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        console.log('UserTrip.tsx -> handleUpdateTripNameInput.')
+        this.setState({ updateTripName: e.target.value })
+    }
+
+    handleUpdateTripBeginDateInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        console.log('UserTrip.tsx -> handleUpdateTripBeginDateInput.')
+        this.setState({ updateTripBeginDate: e.target.value })
+    }
+
+    handleUpdateTripEndDateInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        console.log('UserTrip.tsx -> handleUpdateTripEndDateInput.')
+        this.setState({ updateTripEndDate: e.target.value })
+    }
+
+    handleCreateTrip = (e: React.FormEvent): void => {
+        e.preventDefault()
+        console.log('UserTrip.tsx -> handleCreateTrip.')
+        this.createTrip()
+        this.setState({ openCreateDialog: false })
+    }
+
+    handleUpdateTrip = (e: React.FormEvent): void => {
+        e.preventDefault()
+        console.log('UserTrip.tsx -> handleUpdateTrip.')
+        this.updateTrip(this.state.editDialogData.id)
+        this.setState({ openEditDialog: false })
     }
 
     handleDeleteTrip = (b: any) => () => {
@@ -227,39 +253,9 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         })
     }
 
-    TripDeletedAlert(props: AlertProps) {
-        console.log('UserTrip.tsx -> TripDeletedAlert.')
+    TripCreatedAlert(props: AlertProps) {
+        console.log('UserTrip.tsx -> TripCreatedAlert.')
         return <MuiAlert elevation={6} variant="filled" {...props} />;
-    }
-
-    handleUpdateTripNameInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        console.log('UserTrip.tsx -> handleUpdateTripNameInput.')
-        this.setState({
-            updateTripName: e.target.value
-        })
-    }
-
-    handleUpdateTripBeginDateInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        console.log('UserTrip.tsx -> handleUpdateTripBeginDateInput.')
-        this.setState({
-            updateTripBeginDate: e.target.value
-        })
-    }
-
-    handleUpdateTripEndDateInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        console.log('UserTrip.tsx -> handleUpdateTripEndDateInput.')
-        this.setState({
-            updateTripEndDate: e.target.value
-        })
-    }
-
-    handleUpdateTrip = (c: any) => () => {
-        console.log('UserTrip.tsx -> handleUpdateTrip.')
-        this.updateTrip(c)
-        this.setState({
-            editDialogData: this.state.emptyEditDialogData,
-            openEditDialog: false
-        })
     }
 
     TripUpdatedAlert(props: AlertProps) {
@@ -267,10 +263,17 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         return <MuiAlert elevation={6} variant="filled" {...props} />;
     }
 
+    TripDeletedAlert(props: AlertProps) {
+        console.log('UserTrip.tsx -> TripDeletedAlert.')
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+
     handleDeletedAlertOpen = () => { this.setState({ openDeletedAlert: true }) }
     handleDeletedAlertClose = () => { this.setState({ openDeletedAlert: false }) }
     handleUpdatedAlertOpen = () => { this.setState({ openUpdatedAlert: true }) }
     handleUpdatedAlertClose = () => { this.setState({ openUpdatedAlert: false }) }
+    handleCreatedAlertOpen = () => { this.setState({ openCreatedAlert: true }) }
+    handleCreatedAlertClose = () => { this.setState({ openCreatedAlert: false }) }
 
     // ******************** CREATE, READ, UPDATE, DELETE TRIPS ******************** //
     // C (POST) //
@@ -283,17 +286,15 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                     'Content-Type': 'application/json',
                     'Authorization': this.props.sessionToken,
                 }),
-                body: JSON.stringify(
-                    {
-                        trip: {
-                            tripName: this.state.createTripName,
-                            stops: this.state.createStops,
-                            numberOfStops: this.state.createNumberOfStops,
-                            tripBeginDate: this.state.createTripBeginDate,
-                            tripEndDate: this.state.createTripEndDate
-                        }
+                body: JSON.stringify({
+                    trip: {
+                        tripName: this.state.createTripName,
+                        stops: this.state.createStops,
+                        numberOfStops: this.state.createNumberOfStops,
+                        tripBeginDate: this.state.createTripBeginDate,
+                        tripEndDate: this.state.createTripEndDate
                     }
-                )
+                })
             })
                 .then(response => {
                     if (response.ok === true) {
@@ -301,11 +302,13 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                             .then(createdData => {
                                 console.log('Trip created.')
                                 console.log('createdData:', createdData)
+                                this.handleCreatedAlertOpen()
                             })
                     } else {
                         console.log('Trip not created.')
                     }
                 })
+                .then(() => this.getUserTrips())
                 .catch((error: Error) => console.log(error))
         }
     }
@@ -314,7 +317,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
     getUserTrips = (): void => {
         console.log('UserTrip.tsx -> getUserTrips.')
         if (this.props.sessionToken !== undefined) {
-            fetch(`${APIURL}/trip/getalltrips`, {
+            fetch(`${APIURL}/trip/getusertrips`, {
                 method: 'GET',
                 headers: new Headers({
                     'Content-Type': 'application/json',
@@ -351,8 +354,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                             tripBeginDate: this.state.updateTripBeginDate,
                             tripEndDate: this.state.updateTripEndDate
                         }
-                    }
-                )
+                    })
             })
                 .then(response => {
                     if (response.ok === true) {
@@ -401,26 +403,98 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         }
     }
 
+    // ******************** PROPS FOR UserTripDisplay.tsx, DISPLAY UserTripDisplay.tsx, CALLED IN THE RENDER BELOW ******************** //
+    showTrips = () => {
+        return (
+            this.state.allUserTrips !== [] && this.state.allUserTrips.length !== 0
+                ? (
+                    <div>
+                        <UserTripDisplay
+                            openEditDialog={this.state.openEditDialog}
+                            openDeleteDialog={this.state.openDeleteDialog}
+                            openCreateDialog={this.state.openCreateDialog}
+                            allUserTrips={this.state.allUserTrips}
+                            sessionToken={this.props.sessionToken}
+                            allUserTripsMapper={this.allUserTripsMapper}
+                            handleClickEditDialogOpen={this.handleClickEditDialogOpen}
+                            handleEditDialogClose={this.handleEditDialogClose}
+                            handleClickDeleteDialogOpen={this.handleClickDeleteDialogOpen}
+                            handleDeleteDialogClose={this.handleDeleteDialogClose}
+                            editDialogData={this.state.editDialogData}
+                            handleDeleteTrip={this.handleDeleteTrip}
+                            handleUpdateTripNameInput={this.handleUpdateTripNameInput}
+                            handleUpdateTripBeginDateInput={this.handleUpdateTripBeginDateInput}
+                            handleUpdateTripEndDateInput={this.handleUpdateTripEndDateInput}
+                            handleUpdateTrip={this.handleUpdateTrip}
+                            handleClickCreateDialogOpen={this.handleClickCreateDialogOpen}
+                            handleCreateDialogClose={this.handleCreateDialogClose}
+                            handleCreateTripNameInput={this.handleCreateTripNameInput}
+                            handleCreateTrip={this.handleCreateTrip}
+                        />
+                    </div>
+                ) : (
+                    console.log(this.state.allUserTrips)
+                )
+        )
+    }
+
     // ******************** RENDER USERTRIP ******************** //
     render() {
         return (
             <div className='userTripMainDiv'>
                 <h2>Your Trips</h2>
-                <Button color='primary' variant='contained' onClick={() => this.getUserTrips()}>getUserTrips Test</Button>
-                <Button color='primary' variant='contained' onClick={() => this.allUserTripsMapper()}>allUserTripsMapper Test</Button>
+                <Button color='primary' variant='contained' onClick={this.handleClickCreateDialogOpen}>+ Create New Trip +</Button><br /><br />
+
+                <Button color='primary' variant='contained' onClick={() => this.getUserTrips()}>&#8595; Show Your Trips &#8595;</Button>
                 {this.showTrips()}
-                <Snackbar open={this.state.openDeletedAlert} autoHideDuration={5000} onClose={this.handleDeletedAlertClose}>
-                    <this.TripDeletedAlert onClose={this.handleDeletedAlertClose} severity="warning">
-                        Trip Deleted.
-                    </this.TripDeletedAlert>
+
+                <Dialog open={this.state.openCreateDialog} onClose={this.handleCreateDialogClose} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Create Trip</DialogTitle>
+                    <form onSubmit={this.handleCreateTrip}>
+                        <DialogContent>
+                            <DialogContentText>Create Trip {this.state.editDialogData.tripName}</DialogContentText>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                label="Trip Name"
+                                type="text"
+                                variant='outlined'
+                                fullWidth
+                                onChange={this.handleCreateTripNameInput}
+                                required
+                                helperText='Please enter a trip name.'
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleCreateDialogClose} color="secondary" variant='contained'>Cancel</Button>
+                            {/* <Button onClick={props.handleUpdateTrip(props.editDialogData.id)} color="primary" variant='contained'>Accept Changes</Button> */}
+                            <Button type='submit' value='Submit' color="primary" variant='contained'>Create Trip</Button>
+                        </DialogActions>
+                    </form>
+                </Dialog>
+
+                <Snackbar open={this.state.openCreatedAlert} autoHideDuration={5000} onClose={this.handleCreatedAlertClose}>
+                    <this.TripCreatedAlert onClose={this.handleCreatedAlertClose} severity="success">
+                        Trip Created.
+                    </this.TripCreatedAlert>
                 </Snackbar>
-                <Button variant='contained' color='default' onClick={() => this.handleDeletedAlertOpen()}>Click Me (Test Deleted Snackbar)</Button>
+
                 <Snackbar open={this.state.openUpdatedAlert} autoHideDuration={5000} onClose={this.handleUpdatedAlertClose}>
-                    <this.TripUpdatedAlert onClose={this.handleUpdatedAlertClose} severity="success">
+                    <this.TripUpdatedAlert onClose={this.handleUpdatedAlertClose} severity="warning">
                         Trip Updated.
                     </this.TripUpdatedAlert>
                 </Snackbar>
-                <Button variant='contained' color='default' onClick={() => this.handleUpdatedAlertOpen()}>Click Me (Test Updated Snackbar)</Button>
+
+                <Snackbar open={this.state.openDeletedAlert} autoHideDuration={5000} onClose={this.handleDeletedAlertClose}>
+                    <this.TripDeletedAlert onClose={this.handleDeletedAlertClose} severity="error">
+                        Trip Deleted.
+                    </this.TripDeletedAlert>
+                </Snackbar>
+
+                {/* <Button variant='contained' color='default' onClick={() => this.handleCreatedAlertOpen()}>Test Created Snackbar</Button>
+                <Button variant='contained' color='default' onClick={() => this.handleUpdatedAlertOpen()}>Test Updated Snackbar</Button>
+                <Button variant='contained' color='default' onClick={() => this.handleDeletedAlertOpen()}>Test Deleted Snackbar</Button> */}
+
                 {console.log("editDialogData:", this.state.editDialogData)}
                 {/* <DataGrid rows={this.state.rows} columns={this.state.columns} pageSize={5} checkboxSelection /> */}
                 {/* {this.showTrips()} */}
