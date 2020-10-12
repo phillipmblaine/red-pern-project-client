@@ -109,7 +109,7 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                             variant='outlined'
                             fullWidth
                             onChange={props.handleUpdateDescriptionInput}
-                            required
+                            // required
                             helperText='A description for your destination.'
                         />
 
@@ -123,7 +123,7 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                             fullWidth
                             onChange={props.handleUpdateKindsInput}
                             InputLabelProps={{ shrink: true }}
-                            required
+                            // required
                             helperText='What kind(s) of things to see and do at this destination? Notes to write down and remember for later ...'
                         />
 
@@ -140,7 +140,7 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                         />
 
                         <FormControl>
-                            <InputLabel htmlFor="demo-dialog-native">Assign Destination To A Trip</InputLabel>
+                            <InputLabel htmlFor="demo-dialog-native">Trip Assignment</InputLabel>
                             <Select
                                 native
                                 // value={age}
