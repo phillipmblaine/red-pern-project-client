@@ -6,10 +6,12 @@ import AdminNavbar from './site/AdminNavbar'
 import { BrowserRouter as AdminRouter } from 'react-router-dom';
 import { BrowserRouter as UserRouter } from 'react-router-dom';
 import { BrowserRouter as FooterRouter } from 'react-router-dom';
+import { BrowserRouter as AuthRouter } from 'react-router-dom';
 // user role access pages
 import UserNavbar from './site/UserNavbar';
 import Footer from './site/Footer';
 import { Toolbar } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 
 type AppState = {
   sessionToken: string | undefined;
@@ -59,7 +61,13 @@ class App extends React.Component<AcceptedProps, AppState> {
       sessionToken: '',
       role: ''
     })
+    // this.redirectLogout()
   }
+
+  // redirectLogout = () => {
+  //   return <Redirect to='/' />
+  // }
+
 
   protectedViews = () => {
     return (
@@ -71,6 +79,7 @@ class App extends React.Component<AcceptedProps, AppState> {
                 {/* <p>Login success. Admin access granted.</p> */}
                 <AdminRouter>
                   <AdminNavbar
+                  role={this.state.role}
                     sessionToken={this.state.sessionToken}
                     clearUserLogin={this.clearUserLogin}
                   />
@@ -101,9 +110,13 @@ class App extends React.Component<AcceptedProps, AppState> {
             )
         ) : (
           <div>
-            <Auth
-              updateToken={this.updateToken}
-              updateRole={this.updateRole} />
+            <AuthRouter>
+              <Auth
+                sessionToken={this.state.sessionToken}
+                role={this.state.role}
+                updateToken={this.updateToken}
+                updateRole={this.updateRole} />
+            </AuthRouter>
           </div>
         )
     )
@@ -112,6 +125,10 @@ class App extends React.Component<AcceptedProps, AppState> {
   render() {
     return (
       <div className='App'>
+        {
+          this.state.role === 'admin' && this.state.sessionToken !== undefined
+            ? <Redirect to='/adminhome' /> : <Redirect to='/' />
+        }
         <Toolbar />
         {/* <h6>Current role: <span>{this.state.role === ''
           ? 'No user role.'
