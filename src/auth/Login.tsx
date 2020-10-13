@@ -44,6 +44,7 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
             <form onSubmit={props.handleLoginSubmit}>
                 <label htmlFor="loginUsername"></label><br />
                 <TextField
+                    autoFocus
                     required
                     type='text'
                     id='loginUsername'
