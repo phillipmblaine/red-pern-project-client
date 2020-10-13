@@ -1,3 +1,12 @@
 .userHomeMainDiv {
   background: rgba(163, 2, 51, 0.747);
+  align-items: center;
+  text-align: center;
 }
+
+/* #centeringGrid {
+  display: flex;
+  justify-content: center;
+  width: 90vw;
+  margin: auto;
+} */

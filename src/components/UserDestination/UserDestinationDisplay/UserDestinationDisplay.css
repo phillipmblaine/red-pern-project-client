@@ -16,3 +16,44 @@
     background: rgba(161, 111, 207, 0.788);
     color: white;
 } */
+
+/* .MuiRadio-root {
+    color: navy;
+}
+
+input {
+    background: #202020;
+} */
+
+/* .PrivateSwitchBase-input-11 {
+    backgroundColor: 'gray';
+} */
+
+.MuiDialogContent-root {
+  background: #ffffff;
+}
+
+.MuiDialogTitle-root {
+  background: rgb(176, 176, 245);
+}
+
+.MuiDialogActions-root {
+  background: rgb(176, 176, 245);
+}
+
+/* input[type="radio" i] {
+  background: green;
+} */
+
+/* .MuiFormControlLabel-root {
+  background: gray;
+} */
+
+/* .MuiFormControlLabel-labelPlacementStart {
+  color: green;
+  background: gray;
+} */
+
+/* .MuiFormControlLabel-label {
+  background: gray;
+} */
