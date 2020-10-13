@@ -5,6 +5,6 @@ switch (window.location.hostname) {
         APIURL = 'http://localhost:3000';
         break
     case 'pmb-red-pern-project-client.herokuapp.com':
-        APIURL = 'https://pmb-red-pern-project-client.herokuapp.com';
+        APIURL = 'https://pmb-red-pern-project-server.herokuapp.com';
 }
 export default APIURL;
