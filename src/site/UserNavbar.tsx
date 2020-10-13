@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import UserHome from './UserHome';
 import UserTrip from '../components/UserTrip/UserTrip';
 import UserDestination from '../components/UserDestination/UserDestination';
@@ -70,6 +70,11 @@ class UserNavbar extends React.Component<AcceptedProps, UserNavbarState>{
     render() {
         return (
             <div className='userNavbarMainDiv'>
+                {
+                    this.props.sessionToken === undefined && this.props.sessionToken === '' ?
+                        <Redirect to='/' />
+                        : <span></span>
+                }
                 <AppBarStyles position='fixed'>
                     <Toolbar style={mainToolbarStyles}>
                         <Toolbar>

@@ -1,10 +1,11 @@
 import React from 'react';
 // import APIURL from '../../../helpers/environment';
-import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Input, InputLabel, Paper, Radio, RadioGroup, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+// Checkbox, Input, InputLabel, Select
 // import { withStyles } from '@material-ui/core'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { withStyles } from '@material-ui/core/styles';
-import { ImportantDevices } from '@material-ui/icons';
+// import { withStyles } from '@material-ui/core/styles';
+// import { ImportantDevices } from '@material-ui/icons';
 import Radium from 'radium';
 
 type AcceptedProps = {
