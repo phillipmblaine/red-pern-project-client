@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import AdminHome from './AdminHome';
 import AdminUser from '../components/AdminUser/AdminUser';
 import AdminDestination from '../components/AdminDestination/AdminDestination';
@@ -24,6 +24,7 @@ type AdminNavbarState = {}
 type AcceptedProps = {
     sessionToken: string | undefined;
     clearUserLogin: () => void;
+    role: string;
     // classes: {
     //     root: {
     //         color: string;
@@ -89,13 +90,17 @@ class AdminNavbar extends React.Component<AcceptedProps, AdminNavbarState>{
 
         return (
             <div className='adminNavbarMainDiv'>
+                {
+                    this.props.role === 'admin' && this.props.sessionToken !== undefined
+                        ? <Redirect to='/adminhome' /> : <Redirect to='/' />
+                }
                 {console.log('props from AcceptedProps:', this.props)}
                 {/* {console.log('props from AcceptedProps:', this.props)} */}
                 {/* <h2>Hello from AdminNavbar.tsx</h2> */}
                 <AppBarStyles position='fixed'>
                     <Toolbar style={mainToolbarStyles}>
                         <Toolbar>
-                            <Link to='/'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link>
+                            <Link to='/adminhome'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link>
                             {/* <Link to='/adminhome'><Button style={routerLinkToolbarStyles.Button}><HomeIcon /></Button></Link> */}
                             <Link to='/adminuser'><Button style={routerLinkToolbarStyles.Button}><PersonIcon /></Button></Link>
                             <Link to='/admindestination'><Button style={routerLinkToolbarStyles.Button}><LocationOnIcon /></Button></Link>
@@ -122,7 +127,7 @@ class AdminNavbar extends React.Component<AcceptedProps, AdminNavbarState>{
                 </div> */}
                 <div className='adminNavbarRouterLinksOne'>
                     <Switch>
-                        <Route exact path='/'>
+                        <Route exact path='/adminhome'>
                             <AdminHome sessionToken={this.props.sessionToken} /></Route>
                         {/* <Route exact path='/adminhome'>
                             <AdminHome sessionToken={this.props.sessionToken} /></Route> */}
