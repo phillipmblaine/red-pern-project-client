@@ -4,6 +4,7 @@ import Login from './Login';
 import Register from './Register';
 import APIURL from '../helpers/environment';
 import './Auth.css';
+import { Redirect } from 'react-router-dom';
 
 type AuthState = {
     firstName: string;
@@ -19,6 +20,8 @@ type AuthState = {
 type AcceptedProps = {
     updateToken: (newToken: string) => void;
     updateRole: (newRole: string) => void;
+    role: string;
+    sessionToken: string | undefined;
 }
 
 class Auth extends React.Component<AcceptedProps, AuthState> {
@@ -95,6 +98,9 @@ class Auth extends React.Component<AcceptedProps, AuthState> {
                                 loginAttemptFailed: false
                             })
                         })
+                    // .then(() => {
+                    //     return <Redirect to='/' />
+                    // })
                 } else {
                     this.setState({
                         loginFetchState: response.ok,
@@ -253,7 +259,11 @@ class Auth extends React.Component<AcceptedProps, AuthState> {
     render() {
         return (
             <div className='authMainDiv'>
-                <h2>Hello from Auth.tsx</h2>
+                {
+                    this.props.role === 'admin' && this.props.sessionToken !== undefined
+                        ? <Redirect to='/adminhome' /> : <Redirect to='/' />
+                }
+                {/* <h2>Hello from Auth.tsx</h2> */}
                 {/* <p>this.state.loginAttemptFailed: {this.state.loginAttemptFailed.toString()}</p> */}
                 <Login
                     username={this.state.username}

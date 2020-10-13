@@ -1,16 +1,17 @@
 import React from 'react';
 import APIURL from '../helpers/environment';
-import './AdminHome.css';
-import { Button } from '@material-ui/core';
+import './UserHome.css';
 import { Grid, Paper } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import AdminHomeDisplay from './AdminHomeDisplay';
+import UserHomeDisplay from './UserHomeDisplay';
 import Radium from 'radium';
 import { CSSProperties } from '@material-ui/core/styles/withStyles';
 
-type AdminHomeState = {
+type UserHomeState = {
     fetchedUserData: FetchedUserData;
 }
+
 type AcceptedProps = { sessionToken: string | undefined; }
 
 interface FetchedUserData {
@@ -100,8 +101,9 @@ const stylePaperTwo: CSSProperties = {
     backgroundColor: '#6E7AA9',
 }
 
-// AdminHome can be the AdminPortal
-class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
+// let c: CSSProperties = center
+
+class UserHome extends React.Component<AcceptedProps, UserHomeState>{
     constructor(props: AcceptedProps) {
         super(props)
         this.state =
@@ -121,7 +123,7 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
     }
 
     componentDidMount() {
-        console.log('AdminHome.tsx -> componentDidMount.')
+        console.log('UserHome.tsx -> componentDidMount.')
         // this.getUser()
     }
 
@@ -147,7 +149,7 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
         if (this.props.sessionToken !== undefined &&
             this.state.fetchedUserData.info.id !== null &&
             this.state.fetchedUserData.info.trips.length !== 0) {
-            console.log('AdminHome.tsx -> userTripMapper.')
+            console.log('UserHome.tsx -> userTripMapper.')
             return this.state.fetchedUserData.info.trips.map((value: TripData, index: number): (JSX.Element | undefined) => {
                 if (value !== null) {
                     console.log(value.id)
@@ -181,7 +183,7 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
         if (this.props.sessionToken !== undefined &&
             this.state.fetchedUserData.info.id !== null &&
             this.state.fetchedUserData.info.destinations.length !== 0) {
-            console.log('AdminHome.tsx -> userTripMapper.')
+            console.log('UserHome.tsx -> userTripMapper.')
             return this.state.fetchedUserData.info.destinations.map((value: DestinationData, index: number): (JSX.Element | undefined) => {
                 if (value !== null) {
                     console.log(value.name)
@@ -204,13 +206,13 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
     }
 
     showUser = () => {
-        console.log('AdminHome.tsx -> showUser.')
+        console.log('UserHome.tsx -> showUser.')
         return (
             this.state.fetchedUserData.info.id !== null
                 ? (
                     <div>
                         <h2>Hello, {this.state.fetchedUserData.info.username}</h2>
-                        <AdminHomeDisplay
+                        <UserHomeDisplay
                             userTripMapper={this.userTripMapper}
                             userDestinationMapper={this.userDestinationMapper}
                             tripLength={this.state.fetchedUserData.info.trips.length}
@@ -225,12 +227,11 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
 
     render() {
         return (
-            <div className='adminHomeMainDiv'>
+            <div className='userHomeMainDiv'>
                 <h2>Home</h2>
                 {/* <Button variant='contained' color='primary' onClick={() => this.getUser()}>getUser</Button> */}
-                {/* <h2>Welcome, {this.state.fetchedUserData.info.username}</h2> */}
-                {/* <Button variant='contained' color='primary' onClick={() => this.getUser()}>getUser</Button> */}
                 {/* <Button variant='contained' color='primary' onClick={() => this.userTripMapper()}>Mapper Test</Button> */}
+                {/* <Button variant='contained' color='primary' onClick={() => this.getUser()}>getUser</Button> */}
                 <Button variant='contained' color='primary' onClick={() => this.getUser()}>&#8595; Show My User Information &#8595;</Button>
                 {this.showUser()}
                 {console.log('fetchedUserData:', this.state.fetchedUserData)}
@@ -239,4 +240,4 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
     }
 }
 
-export default Radium(AdminHome);
+export default Radium(UserHome);
