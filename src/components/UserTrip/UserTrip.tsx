@@ -1,6 +1,6 @@
 import React from 'react';
 import APIURL from '../../helpers/environment';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, TableCell, TableRow, TextField } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import Radium from 'radium';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,6 +8,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import './UserTrip.css';
 import UserTripDisplay from './UserTripDisplay/UserTripDisplay';
+import { UpdateOutputFileStampsProject } from 'typescript';
+import { withStyles } from '@material-ui/core/styles';
 // for now, the data table seems more approachable. The customized sortable table for stretch ...
 // { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Table, TableBody, TableContainer, TableHead, TextField }
 // { MenuItem, withStyles }
@@ -38,8 +40,9 @@ type UserTripState = {
     createTripName: string;
     createStops: string[];
     createNumberOfStops: number;
-    createTripBeginDate: number;
-    createTripEndDate: number;
+    createTripBeginDate: Date | null; // i can use Date datatype
+    createTripEndDate: Date | null;
+    fetchedTripData: FetchedTripData;
     // allUserTrips: [TripData | null];
     // rows: any[];
     // columns: ColDef[];
@@ -50,15 +53,66 @@ type AcceptedProps = {
     sessionToken: string | undefined;
 }
 
+interface FetchedTripData {
+    id: number | null;
+    destinations: FetchedDestination[]
+    tripName: string;
+    stops: string[];
+    numberOfStops?: number;
+    tripBeginDate?: string;
+    tripEndDate?: string;
+    userId?: number | null;
+}
+
 interface TripData {
     id: number | null;
     tripName: string;
     stops: string[];
     numberOfStops?: number;
-    tripBeginDate?: number;
-    tripEndDate?: number;
+    tripBeginDate?: string;
+    tripEndDate?: string;
     userId?: number | null;
 }
+
+interface FetchedDestination {
+    id: number | null,
+    xid?: string,
+    name: string,
+    country?: string,
+    latitude?: number,
+    longitude?: number,
+    description?: string,
+    kinds?: string,
+    rating?: number,
+    favorite?: boolean,
+    tripId: number | null
+}
+
+const CardStyles = withStyles({
+    root: {
+        minWidth: 275,
+        color: '#d5c8d3',
+        backgroundColor: '#1e1545'
+    },
+    bullet: {
+        display: 'inline-block',
+        margin: '0 2px',
+        transform: 'scale(0.8)',
+    },
+    title: {
+        fontSize: 14,
+    },
+    pos: {
+        marginBottom: 12,
+    },
+})(Card)
+
+const TypographyStyles = withStyles({
+    root: {
+        color: '#6b63b2'
+    }
+})(Typography)
+
 
 class UserTrip extends React.Component<AcceptedProps, UserTripState>{
     constructor(props: AcceptedProps) {
@@ -70,8 +124,8 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 tripName: '',
                 stops: [],
                 numberOfStops: 0,
-                tripBeginDate: 0,
-                tripEndDate: 0,
+                tripBeginDate: '',
+                tripEndDate: '',
                 userId: null
             },
             openCreateDialog: false,
@@ -82,8 +136,8 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 tripName: '',
                 stops: [],
                 numberOfStops: 0,
-                tripBeginDate: 0,
-                tripEndDate: 0,
+                tripBeginDate: '',
+                tripEndDate: '',
                 userId: null
             },
             emptyEditDialogData: {
@@ -91,8 +145,8 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 tripName: '',
                 stops: [],
                 numberOfStops: 0,
-                tripBeginDate: 0,
-                tripEndDate: 0,
+                tripBeginDate: '',
+                tripEndDate: '',
                 userId: null,
             },
             openDeletedAlert: false,
@@ -106,8 +160,20 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
             createTripName: '',
             createStops: [],
             createNumberOfStops: 0,
-            createTripBeginDate: 0,
-            createTripEndDate: 0,
+            // createTripBeginDate: new Date(),
+            createTripBeginDate: null,
+            // createTripEndDate: new Date('9000/09/09')
+            createTripEndDate: null,
+            fetchedTripData: {
+                id: null,
+                destinations: [],
+                tripName: '',
+                stops: [],
+                numberOfStops: 0,
+                tripBeginDate: '',
+                tripEndDate: '',
+                userId: null
+            }
             // columns: [
             //     { field: 'id', headerName: 'Id', type: 'number', width: 70 },
             //     { field: 'tripName', headerName: 'Trip Name', width: 130 },
@@ -139,12 +205,31 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
 
                             <TableCell align='right'>{value.tripName}</TableCell>
 
-                            {
+                            {/* {
                                 value.stops !== [] && value.stops !== null && value.stops.length !== null
                                     ? <TableCell align='right'>{value.stops.length}</TableCell>
                                     : <TableCell align='right'>N/A</TableCell>
+                            } */}
+                            {
+                                value.id !== null
+                                    ? (
+                                        <TableCell align='right'>
+                                            <Button
+                                                variant='contained'
+                                                color="default"
+                                                onClick={() => {
+                                                    console.log('Fetch the selected with its destinations.')
+                                                    if (value.id !== null) {
+                                                        this.getTrip(value.id)
+                                                    }
+                                                }}
+                                            >Info
+                                </Button>
+                                        </TableCell>
+                                    ) : (
+                                        <TableCell align='right'>N/A</TableCell>
+                                    )
                             }
-
                             {
                                 value.tripBeginDate !== null
                                     ? <TableCell align='right'>{value.tripBeginDate}</TableCell>
@@ -167,6 +252,120 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                                 <IconButton color='secondary' aria-label="delete" onClick={this.handleClickDeleteDialogOpen(value)}><DeleteIcon /></IconButton>
                             </TableCell>
                         </TableRow>
+                    )
+                }
+            })
+        }
+    }
+
+    fetchedDestinationsMapper = () => {
+        if (this.props.sessionToken !== undefined
+            && this.state.fetchedTripData.destinations !== []
+            && this.state.fetchedTripData.destinations.length !== 0) {
+            console.log('UserTrip.tsx -> fetchedDestinationsMapper.')
+            return this.state.fetchedTripData.destinations.map((value: FetchedDestination, index: number): (JSX.Element | undefined) => {
+                if (value !== null) {
+                    return (
+                        <CardStyles variant="outlined">
+                            <CardContent>
+                                <TypographyStyles color="textSecondary" gutterBottom>
+                                    {value.id}
+                                </TypographyStyles>
+                                <Typography variant="h5" component="h2">
+                                    Destination: {value.name}
+                                </Typography>
+                                {
+                                    value.country !== null && value.country !== undefined && value.country !== ''
+                                        ?
+                                        <Typography variant="h5" component="h2">
+                                            Country: {value.country}
+                                        </Typography>
+                                        :
+                                        <Typography variant="h5" component="h2">
+                                            Country: N/A
+                                        </Typography>
+                                }
+                                {
+                                    value.latitude !== null && value.latitude !== undefined
+                                        ?
+                                        <TypographyStyles color="textSecondary">
+                                            Latitude: {value.latitude}
+                                        </TypographyStyles>
+                                        :
+                                        <TypographyStyles color="textSecondary">
+                                            Latitude: N/A
+                                        </TypographyStyles>
+                                }
+                                {
+                                    value.longitude !== null && value.longitude !== undefined
+                                        ?
+                                        <TypographyStyles color="textSecondary">
+                                            Longitude: {value.longitude}
+                                        </TypographyStyles>
+                                        :
+                                        <TypographyStyles color="textSecondary">
+                                            Longitude: N/A
+                                        </TypographyStyles>
+                                }
+                                {
+                                    value.description !== null && value.description !== undefined && value.description !== ''
+                                        ?
+                                        <TypographyStyles>
+                                            Description: {value.description}
+                                        </TypographyStyles>
+                                        :
+                                        <TypographyStyles>
+                                            Description: N/A
+                                        </TypographyStyles>
+                                }
+                                {
+                                    value.kinds !== null && value.kinds !== undefined && value.kinds !== ''
+                                        ?
+                                        <TypographyStyles variant="body2">
+                                            Kinds: {value.kinds}
+                                        </TypographyStyles>
+                                        :
+                                        <TypographyStyles variant="body2">
+                                            Kinds: N/A
+                                        </TypographyStyles>
+                                }
+                                {
+                                    value.rating !== null && value.rating !== undefined
+                                        ?
+                                        <TypographyStyles>
+                                            Rating: {value.rating}
+                                        </TypographyStyles>
+                                        :
+                                        <TypographyStyles>
+                                            Rating: N/A
+                                        </TypographyStyles>
+                                }
+                                {
+                                    value.favorite === true
+                                        ? (
+                                            <TypographyStyles>
+                                                Favorite: Yes
+                                            </TypographyStyles>
+                                        ) :
+                                        value.favorite === false
+                                            ? (
+                                                <TypographyStyles>
+                                                    Favorite: No
+                                                </TypographyStyles>
+
+                                            ) : (
+                                                <TypographyStyles>
+                                                    Favorite: N/A
+                                                </TypographyStyles>
+
+                                            )
+                                }
+
+                            </CardContent>
+                            {/* <CardActions>
+                                <Button size="small">Click Me</Button>
+                            </CardActions> */}
+                        </CardStyles >
                     )
                 }
             })
@@ -293,6 +492,8 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                         numberOfStops: this.state.createNumberOfStops,
                         tripBeginDate: this.state.createTripBeginDate,
                         tripEndDate: this.state.createTripEndDate
+                        // tripBeginDate: 100,
+                        // tripEndDate: 200
                     }
                 })
             })
@@ -332,6 +533,28 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                     if (this.state.allUserTrips !== null) { console.log(this.state.allUserTrips) }
                 })
                 .catch(error => console.log(error))
+        }
+    }
+
+    getTrip = (getTripId: number): void => {
+        console.log('UserTrip.tsx -> getTrip.')
+        if (this.props.sessionToken !== undefined) {
+            fetch(`${APIURL}/trip/gettrip/${getTripId}`, {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'Authorization': this.props.sessionToken
+                })
+            })
+                .then(response => {
+                    return response.json()
+                })
+                .then((response) => {
+                    // console.log(response)
+                    this.setState({ fetchedTripData: response })
+                })
+                .then(() => console.log('fetchedTripData:', this.state.fetchedTripData))
+                .catch((error: Error) => console.log(error))
         }
     }
 
@@ -403,6 +626,10 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         }
     }
 
+    showTripDestinationInfo = () => {
+
+    }
+
     // ******************** PROPS FOR UserTripDisplay.tsx, DISPLAY UserTripDisplay.tsx, CALLED IN THE RENDER BELOW ******************** //
     showTrips = () => {
         return (
@@ -438,6 +665,34 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         )
     }
 
+    // ******************** SHOW DESTINATIONS INFO ******************** //
+    showDestinationsInfo = () => {
+        return (
+            this.state.fetchedTripData.id === null
+                ? (
+                    <div>
+                        {/* <h4>
+                            'Destinations Info' has not been pressed yet.
+                        </h4> */}
+                    </div>
+                ) :
+                this.state.fetchedTripData.destinations !== [] && this.state.fetchedTripData.destinations.length !== 0
+                    ? (
+                        <div>
+                            <h4>Destination Information is available:</h4>
+                            <h2>{this.state.fetchedTripData.tripName}'s Destinations</h2>
+                            {this.fetchedDestinationsMapper()}
+                        </div>
+                    ) : (
+                        <div>
+                            <h4>
+                                No Destination Information Available. Click on a 'Destinations Info' button to check the destinations of a trip!
+                            </h4>
+                        </div>
+                    )
+        )
+    }
+
     // ******************** RENDER USERTRIP ******************** //
     render() {
         return (
@@ -446,7 +701,8 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 <Button color='primary' variant='contained' onClick={this.handleClickCreateDialogOpen}>+ Create New Trip +</Button><br /><br />
 
                 <Button color='primary' variant='contained' onClick={() => this.getUserTrips()}>&#8595; Show Your Trips &#8595;</Button>
-                {this.showTrips()}
+                {this.showTrips()}<br /><br />
+                {this.showDestinationsInfo()}
 
                 <Dialog open={this.state.openCreateDialog} onClose={this.handleCreateDialogClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Create Trip</DialogTitle>
@@ -495,9 +751,12 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 <Button variant='contained' color='default' onClick={() => this.handleUpdatedAlertOpen()}>Test Updated Snackbar</Button>
                 <Button variant='contained' color='default' onClick={() => this.handleDeletedAlertOpen()}>Test Deleted Snackbar</Button> */}
 
-                {console.log("editDialogData:", this.state.editDialogData)}
+                {/* {console.log("editDialogData:", this.state.editDialogData)} */}
+                {console.log("fetchedTripData:", this.state.fetchedTripData)}
                 {/* <DataGrid rows={this.state.rows} columns={this.state.columns} pageSize={5} checkboxSelection /> */}
                 {/* {this.showTrips()} */}
+                {/* {console.log()} */}
+                <br />
             </div>
         )
     }

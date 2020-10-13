@@ -104,6 +104,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
             <form onSubmit={props.handleRegisterSubmit}>
                 <label htmlFor='firstName'></label><br />
                 <TextField
+                    // autoFocus
                     required
                     type='text'
                     id='firstName'
@@ -160,6 +161,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     id='registerEmail'
                     name='registerEmail'
                     placeholder='email@email.com'
+                    helperText="Please enter a valid email address: email@email.com"
                     label='Email'
                     variant='standard'
                     size='medium'

@@ -36,8 +36,8 @@ interface TripData {
     tripName: string;
     stops: string[];
     numberOfStops?: number;
-    tripBeginDate?: number;
-    tripEndDate?: number;
+    tripBeginDate?: string;
+    tripEndDate?: string;
     userId?: number | null;
 }
 
@@ -81,7 +81,7 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                             <TableRow style={styles.TableRow}>
                                 <TableCell align='right'>id</TableCell>
                                 <TableCell align='right'>TripName</TableCell>
-                                <TableCell align='right'>stops</TableCell>
+                                <TableCell align='right'>Destinations Info</TableCell>
                                 <TableCell align='right'>tripBeginDate</TableCell>
                                 <TableCell align='right'>tripEndDate</TableCell>
                                 <TableCell align='right'>userId</TableCell>

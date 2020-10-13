@@ -126,7 +126,7 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                 longitude: 0,
                 description: '',
                 kinds: '',
-                rating: 0,
+                // rating: 0,
                 favorite: false,
                 tripId: null
             },
@@ -219,7 +219,7 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                                     : <TableCell align='right'>N/A</TableCell>
                             }
                             {
-                                value.rating !== null
+                                value.rating !== null && value.rating !== undefined
                                     ? <TableCell align='right'>{value.rating}</TableCell>
                                     : <TableCell align='right'>N/A</TableCell>
                             }
@@ -357,9 +357,9 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
         this.setState({ updateKinds: e.target.value })
     }
 
-    handleUpdateRatingInput = (e: any): void => {
+    handleUpdateRatingInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
         console.log('UserDestination.tsx -> handleUpdateRatingInput.')
-        this.setState({ updateRating: e.target.value })
+        this.setState({ updateRating: Number((e.target as HTMLInputElement).value) })
     }
 
     handleUpdateFavoriteInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -482,7 +482,7 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                     </div >
                 ) : (
                     <div>
-                        <h5>No search results. Try a search!</h5>
+                        <h5>Try a search!</h5>
                     </div>
                 )
         )
@@ -504,8 +504,10 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                         name: this.state.geonameFetchedData.name,
                         country: this.state.geonameFetchedData.country,
                         // it would be nice if i can find a way to store decimals in the db, i think there is a sequelize convert decimals to strings problem that is mismatching the data, the fetch response has 500 error
-                        latitude: Number(this.state.geonameFetchedData.lat.toFixed(0)),
-                        longitude: Number(this.state.geonameFetchedData.lon.toFixed(0))
+                        // latitude: Number(this.state.geonameFetchedData.lat.toFixed(0)),
+                        latitude: this.state.geonameFetchedData.lat,
+                        // longitude: Number(this.state.geonameFetchedData.lon.toFixed(0))
+                        longitude: this.state.geonameFetchedData.lon,
                     }
                 })
             })
@@ -636,7 +638,9 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                             handleUpdateDestination={this.handleUpdateDestination}
                             assignTripMapper={this.assignTripMapper}
                             handleUpdateAssignTripInput={this.handleUpdateAssignTripInput}
-                            updateAssignTripId={this.state.updateAssignTripId} />
+                            updateAssignTripId={this.state.updateAssignTripId}
+                            updateRating={this.state.updateRating}
+                        />
                     </div>
                 ) : (
                     console.log('allUserDestinations:', this.state.allUserDestinations)
