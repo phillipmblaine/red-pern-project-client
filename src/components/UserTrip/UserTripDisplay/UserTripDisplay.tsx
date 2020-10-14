@@ -11,17 +11,17 @@ type AcceptedProps = {
     sessionToken: string | undefined;
     editDialogData: TripData;
     allUserTripsMapper: () => (JSX.Element | undefined)[] | undefined;
-    handleClickEditDialogOpen: (a: TripData) => any;
-    handleEditDialogClose: () => any;
-    handleClickDeleteDialogOpen: (a: TripData) => any;
-    handleDeleteDialogClose: () => any;
-    handleDeleteTrip: (b: any) => any;
+    handleClickEditDialogOpen: (a: TripData) => void;
+    handleEditDialogClose: () => void;
+    handleClickDeleteDialogOpen: (a: TripData) => void;
+    handleDeleteDialogClose: () => void;
+    handleDeleteTrip: (b: number | null) => () => void;
     handleUpdateTripNameInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateTripBeginDateInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateTripEndDateInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateTrip: (e: React.FormEvent<HTMLFormElement>) => void;
-    handleClickCreateDialogOpen: () => any
-    handleCreateDialogClose: () => any;
+    handleClickCreateDialogOpen: () => void;
+    handleCreateDialogClose: () => void;
     handleCreateTripNameInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleCreateTrip: (e: React.FormEvent<HTMLFormElement>) => void;
 }
@@ -97,7 +97,6 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                             helperText='Please enter a trip name.'
                         />
                         <TextField
-                            autoFocus
                             margin="dense"
                             label="Trip Begin Date"
                             type="date"
@@ -109,7 +108,6 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                             helperText='Please enter a valid trip begin date.'
                         />
                         <TextField
-                            autoFocus
                             margin="dense"
                             label="Trip End Date"
                             type="date"

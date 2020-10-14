@@ -5,9 +5,9 @@ import Radium from 'radium';
 
 type AcceptedProps = {
     allUsersMapper: () => (JSX.Element | undefined)[] | undefined;
-    handleEditDialogClose: () => any;
-    handleDeleteDialogClose: () => any;
-    handleDeleteUser: (b: any) => any;
+    handleEditDialogClose: () => void;
+    handleDeleteDialogClose: () => void;
+    handleDeleteUser: (b: number | null) => () => void;
     openDeleteDialog: boolean;
     editDialogData: UserData;
     openEditDialog: boolean;
@@ -16,7 +16,7 @@ type AcceptedProps = {
     handleUpdateFirstNameInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateLastNameInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateEmailInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleUpdateRoleInput: (e: any) => any;
+    handleUpdateRoleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateUser: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
@@ -51,7 +51,7 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
             <TableContainer component={Paper}>
                 <Table style={styles.table} aria-label='simple table'>
                     <TableHead style={styles.TableHead}>
-                        <TableRow style={styles.TableRow}>
+                        <TableRow>
                             <TableCell align='right'>id</TableCell>
                             <TableCell align='right'>lastName</TableCell>
                             <TableCell align='right'>firstName</TableCell>
@@ -75,27 +75,29 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                     <DialogContent>
                         <DialogContentText>Edit User {props.editDialogData.username}</DialogContentText>
                         <TextField
+                            required
                             margin="dense"
                             label="firstName"
                             type="text"
                             variant='outlined'
                             fullWidth
                             onChange={props.handleUpdateFirstNameInput}
-                            defaultValue={props.editDialogData.firstName}
                             helperText='Please enter a first name.'
+                            autoComplete='new-password'
                         />
                         <TextField
-                            autoFocus
+                            required
                             margin="dense"
                             label="lastName"
                             type="text"
                             variant='outlined'
                             fullWidth
                             onChange={props.handleUpdateLastNameInput}
-                            defaultValue={props.editDialogData.lastName}
                             helperText='Please enter a last name.'
+                            autoComplete='new-password'
                         />
                         <TextField
+                            required
                             margin="dense"
                             label="Username"
                             type="text"
@@ -103,15 +105,19 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                             fullWidth
                             onChange={props.handleUpdateUsernameInput}
                             helperText='Please enter a username.'
+                            autoComplete='new-password'
                         />
                         <TextField
+                            required
                             margin="dense"
                             label="Email"
                             type="text"
                             variant='outlined'
                             fullWidth
+                            autoComplete='new-password'
                             onChange={props.handleUpdateEmailInput}
-                            helperText='Please enter a valid email address.'
+                            inputProps={{ pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$' }}
+                            helperText="Please enter a valid email address: email@email.com"
                         />
                         <FormControl component="fieldset">
                             <FormLabel component="legend">ROLE</FormLabel>
@@ -140,6 +146,7 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                     <Button onClick={props.handleDeleteDialogClose} color="primary" variant='contained'>Cancel</Button>
                 </DialogActions>
             </Dialog>
+            {console.log(props.updateRole)}
         </div>
     )
 }

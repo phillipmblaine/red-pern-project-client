@@ -92,7 +92,7 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
             && this.state.allUsersData !== null
             && this.state.allUsersData !== []
             && this.state.allUsersData.length !== 0) {
-            console.log('AdminUser.tsx -> allUsersMappers.')
+            console.log('AdminUser.tsx -> allUsersMapper.')
             return this.state.allUsersData.map((value: UserData, index: number): (JSX.Element | undefined) => {
                 if (value !== null) {
                     return (
@@ -130,34 +130,36 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
     }
 
     handleUpdateUsernameInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        console.log('AdminHome.tsx -> handleUpdateUsernameInput.')
+        console.log('AdminUser.tsx -> handleUpdateUsernameInput.')
         this.setState({ updateUsername: e.target.value })
     }
 
     handleUpdateFirstNameInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        console.log('AdminHome.tsx -> handleUpdateFirstNameInput.')
+        console.log('AdminUser.tsx -> handleUpdateFirstNameInput.')
         this.setState({ updateFirstName: e.target.value })
     }
 
     handleUpdateLastNameInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        console.log('AdminHome.tsx -> handleUpdateLastNameInput.')
+        console.log('AdminUser.tsx -> handleUpdateLastNameInput.')
         this.setState({ updateLastName: e.target.value })
     }
 
     handleUpdateEmailInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        console.log('AdminHome.tsx -> handleUpdateEmailInput.')
+        console.log('AdminUser.tsx -> handleUpdateEmailInput.')
         this.setState({ updateEmail: e.target.value })
     }
 
     handleUpdateRoleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        console.log('UserDestination.tsx -> handleUpdateRoleInput.')
+        console.log('AdminUser.tsx -> handleUpdateRoleInput.')
         this.setState({ updateRole: ((e.target as HTMLInputElement).value) })
     }
 
     handleUpdateUser = (e: React.FormEvent): void => {
         e.preventDefault()
         console.log('AdminUser.tsx -> handleUpdateUser.')
-        this.adminUpdateUser(this.state.editDialogData.id)
+        if (this.state.editDialogData.id !== null) {
+            this.adminUpdateUser(this.state.editDialogData.id)
+        }
         this.setState({ openEditDialog: false })
     }
 
@@ -174,7 +176,7 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
         this.setState({ openDeleteDialog: false })
     }
 
-    handleDeleteUser = (b: any) => () => {
+    handleDeleteUser = (b: number | null) => () => {
         console.log('AdminUser.tsx -> handleDeleteUser.')
         this.adminDeleteUser(b)
         this.setState({
@@ -216,15 +218,14 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
                         handleUpdateEmailInput={this.handleUpdateEmailInput}
                         handleUpdateRoleInput={this.handleUpdateRoleInput}
                         handleUpdateUser={this.handleUpdateUser}
-                        updateRole={this.state.updateRole}
-                    />
+                        updateRole={this.state.updateRole} />
                 ) : (
                     <div></div>
                 )
         )
     }
     // U (PUT) //
-    adminUpdateUser = (updateUserId: any) => {
+    adminUpdateUser = (updateUserId: number) => {
         console.log('AdminUser.tsx -> adminUpdateUser.')
         if (this.props.sessionToken !== undefined) {
             fetch(`${APIURL}/user/edit/${updateUserId}`, {
@@ -238,7 +239,9 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
                         user: {
                             firstName: this.state.updateFirstName,
                             lastName: this.state.updateLastName,
-                            username: this.state.updateUsername
+                            username: this.state.updateUsername,
+                            role: this.state.updateRole,
+                            email: this.state.updateEmail
                         }
                     })
             })
@@ -258,7 +261,7 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
     }
 
     // D (DELETE) //
-    adminDeleteUser = (deleteUserId: any) => {
+    adminDeleteUser = (deleteUserId: number | null) => {
         console.log('AdminUser.tsx -> adminDeleteUser.')
         if (this.props.sessionToken !== undefined) {
             fetch(`${APIURL}/user/delete/${deleteUserId}`, {
@@ -300,6 +303,7 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
                         User Deleted.
                     </this.UserDeletedAlert>
                 </Snackbar>
+                {console.log(this.state.updateEmail)}
             </div>
         )
     }

@@ -387,13 +387,17 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
     handleUpdateTrip = (e: React.FormEvent): void => {
         e.preventDefault()
         console.log('UserTrip.tsx -> handleUpdateTrip.')
-        this.updateTrip(this.state.editDialogData.id)
+        if (this.state.editDialogData.id !== null) {
+            this.updateTrip(this.state.editDialogData.id)
+        }
         this.setState({ openEditDialog: false })
     }
 
-    handleDeleteTrip = (b: any) => () => {
+    handleDeleteTrip = (b: number | null) => () => {
         console.log('UserTrip.tsx -> handleDeleteTrip.')
-        this.deleteTrip(b)
+        if (b !== null) {
+            this.deleteTrip(b)
+        }
         this.setState({
             editDialogData: this.state.emptyEditDialogData,
             openDeleteDialog: false
@@ -496,7 +500,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
     }
 
     // U (PUT) //
-    updateTrip = (updateTripId: any) => {
+    updateTrip = (updateTripId: number) => {
         console.log('UserTrip.tsx -> updateTrip.tsx.')
         if (this.props.sessionToken !== undefined) {
             fetch(`${APIURL}/trip/edit/${updateTripId}`, {
@@ -534,7 +538,7 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
     }
 
     // D (DELETE) //
-    deleteTrip = (deleteTripId: any) => {
+    deleteTrip = (deleteTripId: number) => {
         console.log('UserTrip.tsx -> deleteTrip.')
         if (this.props.sessionToken !== undefined) {
             fetch(`${APIURL}/trip/delete/${deleteTripId}`, {

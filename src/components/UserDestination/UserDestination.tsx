@@ -87,7 +87,6 @@ const ButtonStyles = withStyles({
             color: 'black'
         }
     },
-
 })(Button)
 
 class UserDestination extends React.Component<AcceptedProps, UserDestinationState>{
@@ -214,14 +213,18 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                                     : <TableCell align='right'>N/A</TableCell>
                             }
                             {
-                                value.rating !== null && value.rating !== undefined
+                                value.rating !== null && value.rating !== undefined && value.rating !== 0
                                     ? <TableCell align='right'>{value.rating}</TableCell>
                                     : <TableCell align='right'>N/A</TableCell>
                             }
                             {
-                                value.favorite !== null && value.favorite !== undefined
-                                    ? <TableCell align='right'>{value.favorite.toString()}</TableCell>
-                                    : <TableCell align='right'>N/A</TableCell>
+                                value.favorite !== null && value.favorite !== undefined ? (
+                                    value.favorite === true
+                                        ? (<TableCell align='right'>Yes</TableCell>) :
+                                        (value.favorite === false)
+                                            ? <TableCell align='right'>No</TableCell> :
+                                            <TableCell>N/A</TableCell>
+                                ) : (<TableCell align='right'>N/A</TableCell>)
                             }
                             {
                                 value.tripId !== null && value.tripId !== undefined
@@ -379,9 +382,9 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
         this.setState({ openDeleteDialog: false })
     }
 
-    handleDeleteDestination = (b: any) => () => {
+    handleDeleteDestination = (b: number | null) => () => {
         console.log('UserDestination.tsx -> handleDeleteDestination.')
-        this.deleteDestination(b)
+        if (b !== null) { this.deleteDestination(b) }
         this.setState({
             editDialogData: this.state.emptyEditDialogData,
             openDeleteDialog: false
@@ -540,7 +543,7 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
     }
 
     // U //
-    updateDestination = (updateDestinationId: any) => {
+    updateDestination = (updateDestinationId: number | null) => {
         console.log('UserDestination.tsx -> updateDestination.')
         if (this.props.sessionToken !== undefined) {
             fetch(`${APIURL}/destination/edit/${updateDestinationId}`, {

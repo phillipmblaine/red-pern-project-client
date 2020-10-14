@@ -44,7 +44,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
 
     function validatePasswordFormat() {
         if (passwordInput instanceof HTMLInputElement) {
-            let lowercaseCheck: any = document.getElementById('passwordLowercaseLetter')
+            let lowercaseCheck: HTMLElement | null = document.getElementById('passwordLowercaseLetter')
             let lowercaseLetters: RegExp = /[a-z]/g;
             if (passwordInput !== null && lowercaseCheck !== null) {
                 if (passwordInput.value.match(lowercaseLetters)) {
@@ -104,6 +104,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     type='text'
                     id='firstName'
                     name='firstName'
+                    autoComplete='new-password'
                     placeholder='First Name'
                     label='First Name'
                     variant='standard'
@@ -117,6 +118,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                 <TextField
                     required
                     type='text'
+                    autoComplete='new-password'
                     id='lastName'
                     name='lastName'
                     placeholder='Last Name'
@@ -131,6 +133,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                 <label htmlFor='registerUsername'></label><br />
                 <TextField
                     required
+                    autoComplete='new-password'
                     type='text'
                     id='registerUsername'
                     name='registerUsername'
@@ -146,14 +149,12 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                 <label htmlFor='registerEmail'></label><br />
                 <TextField
                     required
-                    type='registerEmail'
+                    type='text'
                     id='registerEmail'
                     name='registerEmail'
-                    placeholder='email@email.com'
                     helperText="Please enter a valid email address: email@email.com"
                     label='Email'
                     variant='standard'
-                    size='medium'
                     color='primary'
                     margin='normal'
                     style={TextFieldStyles}

@@ -9,16 +9,16 @@ type AcceptedProps = {
     editDialogData: DestinationData;
     openDeleteDialog: boolean;
     openEditDialog: boolean;
-    handleDeleteDialogClose: () => any;
-    handleDeleteDestination: (deleteDestinationId: any) => any;
-    handleEditDialogClose: () => any
+    handleDeleteDialogClose: () => void;
+    handleDeleteDestination: (deleteDestinationId: number | null) => () => void;
+    handleEditDialogClose: () => void;
     handleUpdateDescriptionInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateKindsInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleUpdateRatingInput: (e: any) => any;
-    handleUpdateDestination: (e: any) => any;
+    handleUpdateRatingInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleUpdateDestination: (e: React.FormEvent) => void;
     updateFavorite: boolean;
     handleUpdateFavoriteInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleUpdateAssignTripInput: (e: any) => any;
+    handleUpdateAssignTripInput: (e: any) => void;
     updateAssignTripId: number | null;
     updateRating: number;
 }
@@ -61,7 +61,7 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
             <TableContainer component={Paper}>
                 <Table style={styles.table} aria-label='simple-table'>
                     <TableHead style={styles.TableHead}>
-                        <TableRow style={styles.TableRow}>
+                        <TableRow>
                             <TableCell align='right'>id</TableCell>
                             <TableCell align='right'>Destination (Name)</TableCell>
                             <TableCell align='right'>Country</TableCell>
@@ -130,7 +130,7 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                                 onChange={props.handleUpdateAssignTripInput}
                                 input={<Input id="demo-dialog-native" />}
                             >
-                                <option id='oID' aria-label="None">No Trip Assigned</option>
+                                <option aria-label="None">No Trip Assigned</option>
                                 {props.assignTripMapper()}
                             </Select>
                         </FormControl><br /><br />
