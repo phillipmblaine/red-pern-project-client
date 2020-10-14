@@ -1,13 +1,11 @@
 import React from 'react';
 import './App.css';
 import Auth from './auth/Auth';
-// admin role access pages
 import AdminNavbar from './site/AdminNavbar'
 import { BrowserRouter as AdminRouter } from 'react-router-dom';
 import { BrowserRouter as UserRouter } from 'react-router-dom';
 import { BrowserRouter as FooterRouter } from 'react-router-dom';
 import { BrowserRouter as AuthRouter } from 'react-router-dom';
-// user role access pages
 import UserNavbar from './site/UserNavbar';
 import Footer from './site/Footer';
 import { Toolbar } from '@material-ui/core';
@@ -34,26 +32,16 @@ class App extends React.Component<AcceptedProps, AppState> {
     this.clearUserLogin()
   }
 
-  componentDidUpdate() {
-    console.log('App.tsx -> componentDidUpdate.')
-  }
+  componentDidUpdate() { console.log('App.tsx -> componentDidUpdate.') }
 
-  componentWillUnmount() {
-    console.log('App.tsx -> componentWillUnmount.')
-  }
+  componentWillUnmount() { console.log('App.tsx -> componentWillUnmount.') }
 
   updateToken = (newToken: string) => {
     localStorage.setItem('token', newToken)
-    this.setState({
-      sessionToken: newToken
-    })
+    this.setState({ sessionToken: newToken })
   }
 
-  updateRole = (newRole: string) => {
-    this.setState({
-      role: newRole
-    })
-  }
+  updateRole = (newRole: string) => { this.setState({ role: newRole }) }
 
   clearUserLogin = () => {
     localStorage.clear();
@@ -61,12 +49,7 @@ class App extends React.Component<AcceptedProps, AppState> {
       sessionToken: '',
       role: ''
     })
-    // this.redirectLogout()
   }
-
-  // redirectLogout = () => {
-  //   return <Redirect to='/' />
-  // }
 
 
   protectedViews = () => {
@@ -76,10 +59,9 @@ class App extends React.Component<AcceptedProps, AppState> {
           this.state.role === 'admin'
             ? (
               <div>
-                {/* <p>Login success. Admin access granted.</p> */}
                 <AdminRouter>
                   <AdminNavbar
-                  role={this.state.role}
+                    role={this.state.role}
                     sessionToken={this.state.sessionToken}
                     clearUserLogin={this.clearUserLogin}
                   />
@@ -93,7 +75,6 @@ class App extends React.Component<AcceptedProps, AppState> {
               </div>
             ) : (
               <div>
-                {/* <p>Login success. User access granted.</p > */}
                 <UserRouter>
                   <UserNavbar
                     sessionToken={this.state.sessionToken}
@@ -130,21 +111,7 @@ class App extends React.Component<AcceptedProps, AppState> {
             ? <Redirect to='/adminhome' /> : <Redirect to='/' />
         }
         <Toolbar />
-        {/* <h6>Current role: <span>{this.state.role === ''
-          ? 'No user role.'
-          : this.state.role}</span></h6> */}
-        {/* {
-          this.state.sessionToken !== undefined
-            ? <h4>Access Granted.</h4>
-            : <Auth />
-        } */}
         {this.protectedViews()}
-        {/* <h6>Current user token: <span>{this.state.sessionToken === ''
-          ? 'No user token.'
-          : this.state.sessionToken}</span></h6>
-        <h6>Local storage token: <span>{localStorage.getItem('token') === null
-          ? 'No local storage token.'
-          : localStorage.getItem('token')}</span></h6> */}
         <Toolbar />
       </div >
     )

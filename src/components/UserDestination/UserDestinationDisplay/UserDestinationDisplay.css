@@ -1,34 +1,3 @@
-/* .UserDestinationDisplayMainDiv {
-    background-color: black;
-    color: green;
-} */
-
-/* table {
-    background: black;
-    color: white;
-} */
-
-/* #overrideTableCellStyling {
-    color: white;
-} */
-
-/* .MuiTableCell-root {
-    background: rgba(161, 111, 207, 0.788);
-    color: white;
-} */
-
-/* .MuiRadio-root {
-    color: navy;
-}
-
-input {
-    background: #202020;
-} */
-
-/* .PrivateSwitchBase-input-11 {
-    backgroundColor: 'gray';
-} */
-
 .MuiDialogContent-root {
   background: #ffffff;
 }
@@ -40,20 +9,3 @@ input {
 .MuiDialogActions-root {
   background: rgb(176, 176, 245);
 }
-
-/* input[type="radio" i] {
-  background: green;
-} */
-
-/* .MuiFormControlLabel-root {
-  background: gray;
-} */
-
-/* .MuiFormControlLabel-labelPlacementStart {
-  color: green;
-  background: gray;
-} */
-
-/* .MuiFormControlLabel-label {
-  background: gray;
-} */

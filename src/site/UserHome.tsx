@@ -43,9 +43,6 @@ interface DestinationData {
 const GridStylesOne = withStyles({
     root: {
         flexGrow: 1,
-        // backgroundColor: '#232020',
-        // backgroundColor: '#36243f',
-        // backgroundColor: '#272636',
         backgroundColor: '#292032',
         padding: '0.5rem',
         width: '70vw',
@@ -53,22 +50,15 @@ const GridStylesOne = withStyles({
         fontSize: '1.2rem'
     },
     paper: {
-        // padding: theme.spacing(2),
         textAlign: 'center',
         paddingTop: '1rem',
         paddingBottom: '1rem'
-        // width: '80%'
-        // padding: '1rem'
-        // color: theme.palette.text.secondary
     }
 })(Grid)
 
 const GridStylesTwo = withStyles({
     root: {
         flexGrow: 1,
-        // backgroundColor: '#232020',
-        // backgroundColor: '#36243f',
-        // backgroundColor: '#272636',
         backgroundColor: '#302340',
         padding: '0.5rem',
         width: '70vw',
@@ -76,32 +66,22 @@ const GridStylesTwo = withStyles({
         fontSize: '1.2rem'
     },
     paper: {
-        // padding: theme.spacing(2),
         textAlign: 'center',
         paddingTop: '1rem',
         paddingBottom: '1rem'
-        // width: '80%'
-        // padding: '1rem'
-        // color: theme.palette.text.secondary
     }
 })(Grid)
 
 const centering: CSSProperties = { textAlign: 'center', margin: '1rem auto' }
 const stylePaperOne: CSSProperties = {
     color: 'whitesmoke',
-    // backgroundColor: '#272636'
     backgroundColor: '#46243f',
 }
 
 const stylePaperTwo: CSSProperties = {
     color: 'whitesmoke',
-    // backgroundColor: '#272636'
-    // backgroundColor: '#46243f',
-    // backgroundColor: '#613C49',
     backgroundColor: '#6E7AA9',
 }
-
-// let c: CSSProperties = center
 
 class UserHome extends React.Component<AcceptedProps, UserHomeState>{
     constructor(props: AcceptedProps) {
@@ -122,10 +102,7 @@ class UserHome extends React.Component<AcceptedProps, UserHomeState>{
         }
     }
 
-    componentDidMount() {
-        console.log('UserHome.tsx -> componentDidMount.')
-        // this.getUser()
-    }
+    componentDidMount() { console.log('UserHome.tsx -> componentDidMount.') }
 
     getUser = (): void => {
         console.log('AdminHome.tsx -> getUser.')
@@ -138,9 +115,7 @@ class UserHome extends React.Component<AcceptedProps, UserHomeState>{
                 })
             })
                 .then(response => response.json())
-                .then((userData: FetchedUserData) => {
-                    this.setState({ fetchedUserData: userData })
-                })
+                .then((userData: FetchedUserData) => { this.setState({ fetchedUserData: userData }) })
                 .catch((error: Error) => console.log(error))
         }
     }
@@ -229,9 +204,6 @@ class UserHome extends React.Component<AcceptedProps, UserHomeState>{
         return (
             <div className='userHomeMainDiv'>
                 <h2>Home</h2>
-                {/* <Button variant='contained' color='primary' onClick={() => this.getUser()}>getUser</Button> */}
-                {/* <Button variant='contained' color='primary' onClick={() => this.userTripMapper()}>Mapper Test</Button> */}
-                {/* <Button variant='contained' color='primary' onClick={() => this.getUser()}>getUser</Button> */}
                 <Button variant='contained' color='primary' onClick={() => this.getUser()}>&#8595; Show My User Information &#8595;</Button>
                 {this.showUser()}
                 {console.log('fetchedUserData:', this.state.fetchedUserData)}

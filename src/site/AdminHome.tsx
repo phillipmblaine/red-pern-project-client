@@ -42,9 +42,6 @@ interface DestinationData {
 const GridStylesOne = withStyles({
     root: {
         flexGrow: 1,
-        // backgroundColor: '#232020',
-        // backgroundColor: '#36243f',
-        // backgroundColor: '#272636',
         backgroundColor: '#292032',
         padding: '0.5rem',
         width: '70vw',
@@ -52,22 +49,15 @@ const GridStylesOne = withStyles({
         fontSize: '1.2rem'
     },
     paper: {
-        // padding: theme.spacing(2),
         textAlign: 'center',
         paddingTop: '1rem',
         paddingBottom: '1rem'
-        // width: '80%'
-        // padding: '1rem'
-        // color: theme.palette.text.secondary
     }
 })(Grid)
 
 const GridStylesTwo = withStyles({
     root: {
         flexGrow: 1,
-        // backgroundColor: '#232020',
-        // backgroundColor: '#36243f',
-        // backgroundColor: '#272636',
         backgroundColor: '#302340',
         padding: '0.5rem',
         width: '70vw',
@@ -75,28 +65,20 @@ const GridStylesTwo = withStyles({
         fontSize: '1.2rem'
     },
     paper: {
-        // padding: theme.spacing(2),
         textAlign: 'center',
         paddingTop: '1rem',
         paddingBottom: '1rem'
-        // width: '80%'
-        // padding: '1rem'
-        // color: theme.palette.text.secondary
     }
 })(Grid)
 
 const centering: CSSProperties = { textAlign: 'center', margin: '1rem auto' }
 const stylePaperOne: CSSProperties = {
     color: 'whitesmoke',
-    // backgroundColor: '#272636'
     backgroundColor: '#46243f',
 }
 
 const stylePaperTwo: CSSProperties = {
     color: 'whitesmoke',
-    // backgroundColor: '#272636'
-    // backgroundColor: '#46243f',
-    // backgroundColor: '#613C49',
     backgroundColor: '#6E7AA9',
 }
 
@@ -122,7 +104,6 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
 
     componentDidMount() {
         console.log('AdminHome.tsx -> componentDidMount.')
-        // this.getUser()
     }
 
     getUser = (): void => {
@@ -227,10 +208,6 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
         return (
             <div className='adminHomeMainDiv'>
                 <h2>Home</h2>
-                {/* <Button variant='contained' color='primary' onClick={() => this.getUser()}>getUser</Button> */}
-                {/* <h2>Welcome, {this.state.fetchedUserData.info.username}</h2> */}
-                {/* <Button variant='contained' color='primary' onClick={() => this.getUser()}>getUser</Button> */}
-                {/* <Button variant='contained' color='primary' onClick={() => this.userTripMapper()}>Mapper Test</Button> */}
                 <Button variant='contained' color='primary' onClick={() => this.getUser()}>&#8595; Show My User Information &#8595;</Button>
                 {this.showUser()}
                 {console.log('fetchedUserData:', this.state.fetchedUserData)}

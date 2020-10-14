@@ -4,9 +4,7 @@ import './AdminDestination.css';
 import { Button } from '@material-ui/core'
 
 type AdminDestinationState = {}
-type AcceptedProps = {
-    sessionToken: string | undefined;
-}
+type AcceptedProps = { sessionToken: string | undefined; }
 
 class AdminDestination extends React.Component<AcceptedProps, AdminDestinationState>{
     getAllDestinations = (): void => {

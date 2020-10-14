@@ -2,17 +2,11 @@ import React from 'react';
 import APIURL from '../../helpers/environment';
 import './AdminUser.css';
 import { Button, Snackbar, TableCell, TableRow } from '@material-ui/core';
-// Card, CardActions, CardContent, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-// import Radium from 'radium';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-// import AddLocationIcon from '@material-ui/icons/AddLocation';
-// import { UpdateOutputFileStampsProject } from 'typescript';
-// import { withStyles } from '@material-ui/core/styles';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
 import AdminUserDisplay from './AdminUserDisplay/AdminUserDisplay';
-// import { ThreeSixty } from '@material-ui/icons';
 
 type AdminUserState = {
     allUsersData: UserData[];
@@ -29,18 +23,7 @@ type AdminUserState = {
     updateRole: string;
 }
 
-type AcceptedProps = {
-    sessionToken: string | undefined;
-}
-
-// interface FetchedUserData {
-//     id: number | null,
-//     firstName: string,
-//     lastName: string,
-//     username: string,
-//     email: string,
-//     role: string
-// }
+type AcceptedProps = { sessionToken: string | undefined; }
 
 interface UserData {
     id: number | null,
@@ -50,18 +33,6 @@ interface UserData {
     email: string,
     role: string
 }
-
-// interface TripData {
-//     id: number | null,
-//     tripName: string,
-//     tripBeginDate?: string,
-//     tripEndDate?: string
-// }
-
-// interface DestinationData {
-//     name: string,
-//     country?: string
-// }
 
 class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
     constructor(props: AcceptedProps) {
@@ -158,7 +129,6 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
         this.setState({ openEditDialog: false })
     }
 
-
     handleUpdateUsernameInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
         console.log('AdminHome.tsx -> handleUpdateUsernameInput.')
         this.setState({ updateUsername: e.target.value })
@@ -250,7 +220,6 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
                     />
                 ) : (
                     <div></div>
-                    // <div>No user data available.</div>
                 )
         )
     }
@@ -281,17 +250,12 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
                                 console.log('updatedData:', updatedData)
                                 this.handleUpdatedAlertOpen()
                             })
-                    } else {
-                        console.log('User not updated.')
-                    }
+                    } else { console.log('User not updated.') }
                 })
                 .then(() => this.getAllUsers())
                 .catch((error: Error) => console.log(error))
-        } else {
-            console.log('User not updated.')
-        }
+        } else { console.log('User not updated.') }
     }
-
 
     // D (DELETE) //
     adminDeleteUser = (deleteUserId: any) => {
@@ -315,9 +279,7 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
                 })
                 .then(() => this.getAllUsers())
                 .catch((error: Error) => console.log(error))
-        } else {
-            console.log('User not deleted.')
-        }
+        } else { console.log('User not deleted.') }
     }
 
     render() {
@@ -338,11 +300,6 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
                         User Deleted.
                     </this.UserDeletedAlert>
                 </Snackbar>
-                {/* {console.log('editDialogData (User):', this.state.editDialogData)}
-                {console.log('First Name:', this.state.updateFirstName)}
-                {console.log('Last Name:', this.state.updateLastName)}
-                {console.log('Username:', this.state.updateUsername)}
-                {console.log('Role', this.state.updateRole)} */}
             </div>
         )
     }

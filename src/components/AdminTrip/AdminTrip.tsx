@@ -4,9 +4,7 @@ import './AdminTrip.css';
 import { Button } from '@material-ui/core'
 
 type AdminTripState = {}
-type AcceptedProps = {
-    sessionToken: string | undefined;
-}
+type AcceptedProps = { sessionToken: string | undefined; }
 
 class AdminTrip extends React.Component<AcceptedProps, AdminTripState>{
     getAllTrips = (): void => {

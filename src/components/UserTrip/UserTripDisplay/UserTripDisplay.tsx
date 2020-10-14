@@ -1,12 +1,7 @@
 import React from 'react';
 import './UserTripDisplay.css'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
-// import { withStyles } from'@material-ui/core/styles;
-// import IconButton from '@material-ui/core/IconButton';
-// import DeleteIcon from '@material-ui/icons/Delete';
-// import AddLocationIcon from '@material-ui/icons/AddLocation';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-// import Radium from 'radium';
 
 type AcceptedProps = {
     openCreateDialog: boolean;
@@ -42,27 +37,16 @@ interface TripData {
 }
 
 const styles = {
-    table: {
-        minWidth: 650,
-    },
-    // aligning not needed since tables have their own align properties
-    TableRow: {
-        // textAlign: 'center'
-        // background: '#232020'
-        // color: 'white',
-        // fontWeight: 'bold'
-    },
+    table: { minWidth: 650, },
     TableCell: {
         textAlign: 'center',
         color: 'white',
-        // background: 'gray'
     },
     TableHead: {
         backgroundColor: 'magenta',
         color: 'white'
     },
     DialogContent: {
-        // textAlign: 'center'
         justifyContent: 'center',
         alignItems: 'center'
     }
@@ -72,13 +56,12 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
     return (
         <div className='userTripDisplayMainDiv'>
             {/* // Dialog for CREATE Trip */}
-            {/* // Maybe CREATE Dialog fits better in parent class */}
             <div>
                 {/* // Table for READ (Show Trips) */}
                 <TableContainer component={Paper}>
                     <Table style={styles.table} aria-label='simple table'>
                         <TableHead style={styles.TableHead}>
-                            <TableRow style={styles.TableRow}>
+                            <TableRow>
                                 <TableCell align='right'>id</TableCell>
                                 <TableCell align='right'>TripName</TableCell>
                                 <TableCell align='right'>Destinations Info</TableCell>
@@ -140,7 +123,6 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={props.handleEditDialogClose} color="secondary" variant='contained'>Cancel</Button>
-                        {/* <Button onClick={props.handleUpdateTrip(props.editDialogData.id)} color="primary" variant='contained'>Accept Changes</Button> */}
                         <Button type='submit' value='Submit' color="primary" variant='contained'>Accept Changes</Button>
                     </DialogActions>
                 </form>

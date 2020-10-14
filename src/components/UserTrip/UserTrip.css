@@ -6,12 +6,6 @@
     text-align: center;
 }
 
-.MuiPaper-root {
-    /* background: rgb(194, 131, 131); */
-}
-
-
 .MuiTableCell-root {
     background: rgba(0, 87, 128, 0.575);
-    /* color: white; */
 }

@@ -15,10 +15,7 @@ type AcceptedProps = {
     handleLoginSubmit: (e: React.FormEvent) => void;
 }
 
-const ButtonStyles = withStyles({
-    root: { background: '#993355' }
-})(Button)
-
+const ButtonStyles = withStyles({ root: { background: '#993355' } })(Button)
 const TextFieldStyles = { width: '40vw' }
 
 const Login: React.FunctionComponent<AcceptedProps> = (props) => {
@@ -55,9 +52,7 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
                     autoComplete='off'
                     onChange={props.handleUsernameLoginInput}
                     style={TextFieldStyles}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><AccountCircleIcon /></InputAdornment>
-                    }}
+                    InputProps={{ startAdornment: <InputAdornment position="start"><AccountCircleIcon /></InputAdornment> }}
                 /><br /><br />
 
                 <label htmlFor="loginPassword"></label><br />
@@ -71,9 +66,7 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
                     variant='outlined'
                     style={TextFieldStyles}
                     onChange={props.handlePasswordLoginInput}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment>
-                    }}
+                    InputProps={{ startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment> }}
                 /><br /><br />
 
                 <ButtonStyles type='submit' value='Submit' variant='contained'>Submit</ButtonStyles>

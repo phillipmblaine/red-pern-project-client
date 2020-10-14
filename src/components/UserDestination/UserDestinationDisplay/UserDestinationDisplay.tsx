@@ -1,11 +1,7 @@
 import React from 'react';
-// import APIURL from '../../../helpers/environment';
 import './UserDestinationDisplay.css';
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Input, InputLabel, Paper, Radio, RadioGroup, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
-// import { withStyles } from '@material-ui/core'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-// import { withStyles } from '@material-ui/core/styles';
-// import { ImportantDevices } from '@material-ui/icons';
 
 type AcceptedProps = {
     allUserDestinationsMapper: () => (JSX.Element | undefined)[] | undefined;
@@ -23,7 +19,6 @@ type AcceptedProps = {
     updateFavorite: boolean;
     handleUpdateFavoriteInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateAssignTripInput: (e: any) => any;
-    // handleUpdateAssignTripInput: (e: React.ChangeEvent<{ value: number }>) => void;
     updateAssignTripId: number | null;
     updateRating: number;
 }
@@ -43,16 +38,7 @@ type DestinationData = {
 }
 
 const styles = {
-    table: {
-        minWidth: 650,
-    },
-    // aligning not needed since tables have their own align properties
-    TableRow: {
-        // textAlign: 'center'
-        // background: '#232020'
-        // color: 'white',
-        // fontWeight: 'bold'
-    },
+    table: { minWidth: 650 },
     TableCell: {
         textAlign: 'center',
         color: 'white',
@@ -63,74 +49,10 @@ const styles = {
         color: 'white'
     },
     DialogContent: {
-        // textAlign: 'center'
         justifyContent: 'center',
         alignItems: 'center'
     }
 }
-
-// const RadioStyles = withStyles({
-//     root: {
-//         // '&:hover': {
-//         //     backgroundColor: '#5bc0de44',
-//         // },
-//         // '&:after': {
-//         //     backgroundColor: 'navy'
-//         }
-
-//     // },
-//     // icon: {
-//     //     borderRadius: '50%',
-//     //     width: 16,
-//     //     height: 16,
-//     //     boxShadow: 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
-//     //     backgroundColor: '#f5f8fa',
-//     //     backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))',
-//     //     '$root.Mui-focusVisible &': {
-//     //         outline: '2px auto rgba(19,124,189,.6)',
-//     //         outlineOffset: 2,
-//     //     },
-//     //     'input:hover ~ &': {
-//     //         backgroundColor: '#ebf1f5',
-//     //     },
-//     //     'input:disabled ~ &': {
-//     //         boxShadow: 'none',
-//     //         background: 'rgba(206,217,224,.5)',
-//     //     },
-//     // },
-//     // checkedIcon: {
-//     //     backgroundColor: '#137cbd',
-//     //     backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
-//     //     '&:before': {
-//     //         display: 'block',
-//     //         width: 16,
-//     //         height: 16,
-//     //         backgroundImage: 'radial-gradient(#000,#fff 28%,transparent 32%)',
-//     //         content: '""',
-//     //     },
-//     //     // '&:after': {
-//     //     //     color: 'green',
-//     //     //     backgroundColor: 'orange'
-//     //     // },
-//     //     'input:hover ~ &': {
-//     //         backgroundColor: '#106ba3',
-//     //     },
-//     // },
-// })(Radio)
-
-// const FormControlStyles = withStyles({
-//     root: {
-//         background: 'orange',
-//         color: 'purple'
-//     }
-// })(FormControl)
-
-// const FormControlLabelStyles = withStyles({
-//     root: {
-//         background: 'darkslategray',
-//         color: 'crimson'
-//     }
-// })(FormControlLabel)
 
 const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
     return (
@@ -175,21 +97,17 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                             variant='outlined'
                             fullWidth
                             onChange={props.handleUpdateDescriptionInput}
-                            // required
                             helperText='A description for your destination.'
                         />
 
                         <TextField
                             multiline
-                            // autoFocus
                             margin="dense"
                             label="Destination Kinds"
                             type="text"
                             variant='outlined'
                             fullWidth
                             onChange={props.handleUpdateKindsInput}
-                            // InputLabelProps={{ shrink: true }}
-                            // required
                             helperText='What kind(s) of things to see and do at this destination? Notes to write down and remember for later ...'
                         />
 
@@ -209,7 +127,6 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                             <InputLabel htmlFor="demo-dialog-native">Trip Assignment</InputLabel>
                             <Select
                                 native
-                                // value={age}
                                 onChange={props.handleUpdateAssignTripInput}
                                 input={<Input id="demo-dialog-native" />}
                             >
@@ -226,11 +143,6 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                                 <FormControlLabel value={3} control={<Radio />} label="3" />
                                 <FormControlLabel value={4} control={<Radio />} label="4" />
                                 <FormControlLabel value={5} control={<Radio />} label="5" />
-                                {/* <FormControlLabelStyles value={1} control={<RadioStyles />} label="1" />
-                                <FormControlLabel value={2} control={<RadioStyles />} label="2" />
-                                <FormControlLabel value={3} control={<RadioStyles />} label="3" />
-                                <FormControlLabel value={4} control={<RadioStyles />} label="4" />
-                                <FormControlLabel value={5} control={<RadioStyles />} label="5" /> */}
                             </RadioGroup>
                         </FormControl>
 
