@@ -87,7 +87,7 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                 <DialogTitle id="form-dialog-title">Destination {props.editDialogData.name}</DialogTitle>
                 <form onSubmit={props.handleUpdateDestination}>
                     <DialogContent>
-                        <DialogContentText>Edit {props.editDialogData.name}</DialogContentText>
+                        <DialogContentText>Edit Destination {props.editDialogData.name}</DialogContentText>
                         <TextField
                             autoFocus
                             multiline
