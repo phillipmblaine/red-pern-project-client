@@ -23,10 +23,7 @@ type AcceptedProps = {
     handleRegisterSubmit: (e: React.FormEvent) => void;
 }
 
-const ButtonStyles = withStyles({
-    root: { background: '#339977' }
-})(Button)
-
+const ButtonStyles = withStyles({ root: { background: '#339977' } })(Button)
 const TextFieldStyles = { width: '40vw' }
 
 const Register: React.FunctionComponent<AcceptedProps> = (props) => {
@@ -47,8 +44,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
 
     function validatePasswordFormat() {
         if (passwordInput instanceof HTMLInputElement) {
-            // console.log(passwordInput.nodeName)
-            let lowercaseCheck: any = document.getElementById('passwordLowercaseLetter')
+            let lowercaseCheck: HTMLElement | null = document.getElementById('passwordLowercaseLetter')
             let lowercaseLetters: RegExp = /[a-z]/g;
             if (passwordInput !== null && lowercaseCheck !== null) {
                 if (passwordInput.value.match(lowercaseLetters)) {
@@ -104,26 +100,25 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
             <form onSubmit={props.handleRegisterSubmit}>
                 <label htmlFor='firstName'></label><br />
                 <TextField
-                    // autoFocus
                     required
                     type='text'
                     id='firstName'
                     name='firstName'
+                    autoComplete='new-password'
                     placeholder='First Name'
                     label='First Name'
                     variant='standard'
                     color='secondary'
                     style={TextFieldStyles}
                     onChange={props.handleFirstNameRegisterInput}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><PersonAddIcon /></InputAdornment>
-                    }}
+                    InputProps={{ startAdornment: <InputAdornment position="start"><PersonAddIcon /></InputAdornment> }}
                 /><br /><br />
 
                 <label htmlFor='lastName'></label><br />
                 <TextField
                     required
                     type='text'
+                    autoComplete='new-password'
                     id='lastName'
                     name='lastName'
                     placeholder='Last Name'
@@ -132,14 +127,13 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     color='secondary'
                     style={TextFieldStyles}
                     onChange={props.handleLastNameRegisterInput}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><PersonAddIcon /></InputAdornment>
-                    }}
+                    InputProps={{ startAdornment: <InputAdornment position="start"><PersonAddIcon /></InputAdornment> }}
                 /><br /><br />
 
                 <label htmlFor='registerUsername'></label><br />
                 <TextField
                     required
+                    autoComplete='new-password'
                     type='text'
                     id='registerUsername'
                     name='registerUsername'
@@ -149,32 +143,24 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     color='primary'
                     style={TextFieldStyles}
                     onChange={props.handleUsernameRegisterInput}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><AccountCircleIcon /></InputAdornment>
-                    }}
+                    InputProps={{ startAdornment: <InputAdornment position="start"><AccountCircleIcon /></InputAdornment> }}
                 /><br /><br />
 
                 <label htmlFor='registerEmail'></label><br />
                 <TextField
                     required
-                    type='registerEmail'
+                    type='text'
                     id='registerEmail'
                     name='registerEmail'
-                    placeholder='email@email.com'
                     helperText="Please enter a valid email address: email@email.com"
                     label='Email'
                     variant='standard'
-                    size='medium'
                     color='primary'
                     margin='normal'
                     style={TextFieldStyles}
                     onChange={props.handleEmailRegisterInput}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><AlternateEmailIcon /></InputAdornment>
-                    }}
-                    inputProps={{
-                        pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$'
-                    }}
+                    InputProps={{ startAdornment: <InputAdornment position="start"><AlternateEmailIcon /></InputAdornment> }}
+                    inputProps={{ pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$' }}
                 /><br /><br />
 
                 <label htmlFor='registerPassword'></label><br />
@@ -190,9 +176,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     onFocus={onFocusPasswordMessageStyling}
                     onBlur={onBlurPasswordMessageStyling}
                     onKeyUp={validatePasswordFormat}
-                    inputProps={{
-                        pattern: '(?=.*)(?=.*[a-z])(?=.*[A-Z]).{8,}'
-                    }}
+                    inputProps={{ pattern: '(?=.*)(?=.*[a-z])(?=.*[A-Z]).{8,}' }}
                     required
                     InputProps={{ startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment> }}
                     color='primary'

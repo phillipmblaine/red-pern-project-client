@@ -3,7 +3,6 @@
 }
 
 #loginFailMessage {
-    /* display: none; */
     background: rgba(53, 0, 12, 0.685);
     color: rgb(255, 221, 70);
     position: relative;

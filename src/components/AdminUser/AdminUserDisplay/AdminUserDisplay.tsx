@@ -1,18 +1,13 @@
 import React from 'react';
-// import APIURL from '../../../helpers/environment';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
-// Checkbox, Input, InputLabel, Select
-// import { withStyles } from '@material-ui/core'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-// import { withStyles } from '@material-ui/core/styles';
-// import { ImportantDevices } from '@material-ui/icons';
 import Radium from 'radium';
 
 type AcceptedProps = {
     allUsersMapper: () => (JSX.Element | undefined)[] | undefined;
-    handleEditDialogClose: () => any;
-    handleDeleteDialogClose: () => any;
-    handleDeleteUser: (b: any) => any;
+    handleEditDialogClose: () => void;
+    handleDeleteDialogClose: () => void;
+    handleDeleteUser: (b: number | null) => () => void;
     openDeleteDialog: boolean;
     editDialogData: UserData;
     openEditDialog: boolean;
@@ -21,7 +16,7 @@ type AcceptedProps = {
     handleUpdateFirstNameInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateLastNameInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateEmailInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleUpdateRoleInput: (e: any) => any;
+    handleUpdateRoleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateUser: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
@@ -35,28 +30,16 @@ interface UserData {
 }
 
 const styles = {
-    table: {
-        minWidth: 650,
-    },
-    // aligning not needed since tables have their own align properties
-    TableRow: {
-        // textAlign: 'center'
-        // background: '#232020'
-        // color: 'white',
-        // fontWeight: 'bold'
-    },
+    table: { minWidth: 650, },
     TableCell: {
         textAlign: 'center',
         color: 'white',
-        // background: 'gray'
     },
     TableHead: {
-        // backgroundColor: 'magenta',
         backgroundColor: '#2880B3',
         color: 'white'
     },
     DialogContent: {
-        // textAlign: 'center'
         justifyContent: 'center',
         alignItems: 'center'
     }
@@ -65,19 +48,18 @@ const styles = {
 const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
     return (
         <div className='adminUserDisplayMainDiv'>
-            {/* <h2>Hello from AdminUserDisplay.tsx.</h2> */}
             <TableContainer component={Paper}>
                 <Table style={styles.table} aria-label='simple table'>
                     <TableHead style={styles.TableHead}>
-                        <TableRow style={styles.TableRow}>
-                            <TableCell align='right'>id</TableCell>
-                            <TableCell align='right'>lastName</TableCell>
-                            <TableCell align='right'>firstName</TableCell>
-                            <TableCell align='right'>username</TableCell>
-                            <TableCell align='right'>email</TableCell>
-                            <TableCell align='right'>role</TableCell>
+                        <TableRow>
+                            <TableCell align='right'>ID</TableCell>
+                            <TableCell align='right'>Last Name</TableCell>
+                            <TableCell align='right'>First Name</TableCell>
+                            <TableCell align='right'>Username</TableCell>
+                            <TableCell align='right'>Email</TableCell>
+                            <TableCell align='right'>Role</TableCell>
                             <TableCell align='right'>Edit User</TableCell>
-                            <TableCell align='right'>Delete?</TableCell>
+                            <TableCell align='right'>Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -88,58 +70,58 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
 
             {/* Dialog for UPDATE Users */}
             <Dialog open={props.openEditDialog} onClose={props.handleEditDialogClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Edit User</DialogTitle>
+                <DialogTitle id="form-dialog-title">{props.editDialogData.username}</DialogTitle>
                 <form onSubmit={props.handleUpdateUser}>
                     <DialogContent>
-                        <DialogContentText>Edit User {props.editDialogData.username}</DialogContentText>
+                        <DialogContentText>Edit {props.editDialogData.username}</DialogContentText>
                         <TextField
-                            // autoFocus
+                            required
+                            defaultValue={props.editDialogData.firstName}
                             margin="dense"
                             label="firstName"
                             type="text"
                             variant='outlined'
                             fullWidth
                             onChange={props.handleUpdateFirstNameInput}
-                            defaultValue={props.editDialogData.firstName}
-                            // InputLabelProps={{ shrink: true }}
-                            // required
                             helperText='Please enter a first name.'
+                            autoComplete='new-password'
                         />
                         <TextField
-                            autoFocus
+                            required
+                            defaultValue={props.editDialogData.lastName}
                             margin="dense"
                             label="lastName"
                             type="text"
                             variant='outlined'
                             fullWidth
                             onChange={props.handleUpdateLastNameInput}
-                            defaultValue={props.editDialogData.lastName}
-                            // required
                             helperText='Please enter a last name.'
+                            autoComplete='new-password'
                         />
                         <TextField
-                            // autoFocus
+                            required
+                            defaultValue={props.editDialogData.username}
                             margin="dense"
                             label="Username"
                             type="text"
                             variant='outlined'
                             fullWidth
                             onChange={props.handleUpdateUsernameInput}
-                            // InputLabelProps={{ shrink: true }}
-                            // required
                             helperText='Please enter a username.'
+                            autoComplete='new-password'
                         />
                         <TextField
-                            // autoFocus
+                            defaultValue={props.editDialogData.email}
+                            required
                             margin="dense"
                             label="Email"
                             type="text"
                             variant='outlined'
                             fullWidth
+                            autoComplete='new-password'
                             onChange={props.handleUpdateEmailInput}
-                            // InputLabelProps={{ shrink: true }}
-                            // required
-                            helperText='Please enter a valid email address.'
+                            inputProps={{ pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$' }}
+                            helperText="Please enter a valid email address: email@email.com"
                         />
                         <FormControl component="fieldset">
                             <FormLabel component="legend">ROLE</FormLabel>
@@ -168,9 +150,9 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                     <Button onClick={props.handleDeleteDialogClose} color="primary" variant='contained'>Cancel</Button>
                 </DialogActions>
             </Dialog>
+            {console.log(props.updateRole)}
         </div>
     )
 }
-
 
 export default Radium(AdminUserDisplay);

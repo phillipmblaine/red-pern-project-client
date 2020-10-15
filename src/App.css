@@ -1,6 +1,5 @@
 body {
   background: #2a3644;
-  /* background: #202020; */
 }
 
 input {
@@ -8,7 +7,6 @@ input {
 }
 
 .App {
-  /* background: #4b1f3c; */
   background: #191919;
   color: white;
   font-family: 'Poppins', sans-serif;

@@ -1,7 +1,6 @@
 import React from 'react';
 import APIURL from '../../helpers/environment';
 import { Button, FormControl, InputAdornment, List, ListItem, Snackbar, TableCell, TableRow, TextField } from '@material-ui/core';
-// Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -17,8 +16,6 @@ import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import UserDestinationDisplay from './UserDestinationDisplay/UserDestinationDisplay';
 import { withStyles } from '@material-ui/core/styles';
-// import { DeleteTwoTone } from '@material-ui/icons';
-// import { tuple } from 'antd/lib/_util/type';
 
 let key: string = '5ae2e3f221c38a28845f05b6df066c617c109b7aa5380d2ef8cef9ee'
 let baseUrl: string = 'https://api.opentripmap.com/0.1/en/places/geoname?'
@@ -37,10 +34,10 @@ type UserDestinationState = {
     openUpdatedAlert: boolean;
     openDeletedAlert: boolean;
     openEditDialog: boolean;
-    updateDescription: string;
-    updateKinds: string;
-    updateRating: number;
-    updateFavorite: boolean;
+    updateDescription?: string;
+    updateKinds?: string;
+    updateRating?: number;
+    updateFavorite?: boolean;
     updateAssignTripId: number | null;
     updateAssignTripName: string;
     updateAssignTripOpen: boolean;
@@ -70,7 +67,6 @@ interface AssignTripData {
     tripName: string;
 }
 
-// I believe this can also be written as a type, for this purpose should have the same function. For now, types will be used for props or class states, interfaces for api calls
 interface GeonameData {
     country: string;
     lat: number;
@@ -91,7 +87,6 @@ const ButtonStyles = withStyles({
             color: 'black'
         }
     },
-
 })(Button)
 
 class UserDestination extends React.Component<AcceptedProps, UserDestinationState>{
@@ -176,8 +171,7 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
 
     componentDidMount() {
         console.log('UserDestination.tsx -> componentDidMount.')
-        this.assignTripFetch() // seems to work fine, but i wonder if the fetch might not finish in time
-        // this.assignTripMapper()
+        this.assignTripFetch()
     }
 
     // ******************** USER DESTINATION MAPPER ******************** //
@@ -189,7 +183,6 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
             console.log('UserDestination.tsx -> allUserDestinationsMapper.')
             return this.state.allUserDestinations.map((value: DestinationData, index: number): (JSX.Element | undefined) => {
                 if (value !== null) {
-                    // console.log(`Destination ${value.name} mapped ->`)
                     return (
                         <TableRow key={index}>
                             <TableCell align='right' component='th' scope='row'>{value.id}</TableCell>
@@ -220,14 +213,18 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                                     : <TableCell align='right'>N/A</TableCell>
                             }
                             {
-                                value.rating !== null && value.rating !== undefined
+                                value.rating !== null && value.rating !== undefined && value.rating !== 0
                                     ? <TableCell align='right'>{value.rating}</TableCell>
                                     : <TableCell align='right'>N/A</TableCell>
                             }
                             {
-                                value.favorite !== null && value.favorite !== undefined
-                                    ? <TableCell align='right'>{value.favorite.toString()}</TableCell>
-                                    : <TableCell align='right'>N/A</TableCell>
+                                value.favorite !== null && value.favorite !== undefined ? (
+                                    value.favorite === true
+                                        ? (<TableCell align='right'>Yes</TableCell>) :
+                                        (value.favorite === false)
+                                            ? <TableCell align='right'>No</TableCell> :
+                                            <TableCell>N/A</TableCell>
+                                ) : (<TableCell align='right'>N/A</TableCell>)
                             }
                             {
                                 value.tripId !== null && value.tripId !== undefined
@@ -271,12 +268,10 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                 })
             })
                 .then(response => response.json())
-                .then((tripFetchedData: AssignTripData[]) => {
-                    this.setState({ assignTripData: tripFetchedData })
-                })
-                .then(() => {
-                    if (this.state.assignTripData !== null) { console.log(this.state.assignTripData) }
-                })
+                .then((tripFetchedData: AssignTripData[]) => { this.setState({ assignTripData: tripFetchedData }) })
+                // .then(() => {
+                //     if (this.state.assignTripData !== null) { console.log(this.state.assignTripData) }
+                // })
                 .catch(error => console.log(error))
         }
     }
@@ -289,9 +284,7 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
             console.log('UserDestination.tsx -> assignTripMapper.')
             return this.state.assignTripData.map((value: AssignTripData, index: number): (JSX.Element | undefined) => {
                 if (value !== null) {
-                    return (
-                        <option key={index} value={value.id}>Trip No. {value.id}, {value.tripName}</option>
-                    )
+                    return (<option key={index} value={value.id}>Trip No. {value.id}, {value.tripName}</option>)
                 }
             })
         }
@@ -338,9 +331,15 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
         console.log('UserDestination.tsx -> handleClickEditDialogOpen.')
         this.setState({
             openEditDialog: true,
-            editDialogData: c
+            editDialogData: c,
+            // this addition hopefully keeps the currently exiting data in the entry present if unmodified
+            updateDescription: c.description,
+            updateKinds: c.kinds,
+            updateRating: c.rating,
+            updateFavorite: c.favorite,
+            updateAssignTripId: c.tripId,
+            // updateAssignTripName: c.name
         })
-        // this.assignTripMapper()
     }
 
     handleEditDialogClose = () => {
@@ -390,9 +389,9 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
         this.setState({ openDeleteDialog: false })
     }
 
-    handleDeleteDestination = (b: any) => () => {
+    handleDeleteDestination = (b: number | null) => () => {
         console.log('UserDestination.tsx -> handleDeleteDestination.')
-        this.deleteDestination(b)
+        if (b !== null) { this.deleteDestination(b) }
         this.setState({
             editDialogData: this.state.emptyEditDialogData,
             openDeleteDialog: false
@@ -504,10 +503,7 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                     destination: {
                         name: this.state.geonameFetchedData.name,
                         country: this.state.geonameFetchedData.country,
-                        // it would be nice if i can find a way to store decimals in the db, i think there is a sequelize convert decimals to strings problem that is mismatching the data, the fetch response has 500 error
-                        // latitude: Number(this.state.geonameFetchedData.lat.toFixed(0)),
                         latitude: this.state.geonameFetchedData.lat,
-                        // longitude: Number(this.state.geonameFetchedData.lon.toFixed(0))
                         longitude: this.state.geonameFetchedData.lon,
                     }
                 })
@@ -554,7 +550,7 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
     }
 
     // U //
-    updateDestination = (updateDestinationId: any) => {
+    updateDestination = (updateDestinationId: number | null) => {
         console.log('UserDestination.tsx -> updateDestination.')
         if (this.props.sessionToken !== undefined) {
             fetch(`${APIURL}/destination/edit/${updateDestinationId}`, {
@@ -671,7 +667,9 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                 {this.showGeonameFetchedData()}<br />
 
                 <Button color='primary' variant='contained' onClick={() => this.getUserDestinations()}>&#8595; Show Your Destinations &#8595;</Button>
+                <br/>
                 {this.showDestinations()}
+                <br/>
 
                 <Snackbar open={this.state.openGeonameSearchAlert} autoHideDuration={5000} onClose={this.handleGeonameSearchAlertClose}>
                     <this.geonameSearchAlert onClose={this.handleGeonameSearchAlertClose} severity="info">
@@ -696,16 +694,8 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                         Destination Deleted.
                     </this.DestinationDeletedAlert>
                 </Snackbar>
+                {console.log('this.state.editDialogData:', this.state.editDialogData)}
 
-                {/* { console.log('Current fetchedGeonameData:', this.state.geonameFetchedData)} */}
-                {/* <Button variant='contained' color='default' onClick={() => this.handleGeonameSearchAlertOpen()}>Geoname Search Alert Test</Button> */}
-                {/* {console.log('editDialogData:', this.state.editDialogData)} */}
-                {/* {console.log('updateDescription:', this.state.updateDescription)}
-                {console.log('updateKinds:', this.state.updateKinds)}
-                {console.log('updateRating:', this.state.updateRating)}
-                {console.log('updateFavorite:', this.state.updateFavorite)}
-                {console.log('edtiDialogData.id:', this.state.editDialogData.id)} */}
-                {/* <Button variant='contained' color='default' onClick={() => this.assignTripFetch()}>Assign Trip Fetch Test</Button> */}
             </div >
         )
     }
