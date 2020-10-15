@@ -1,4 +1,76 @@
 .footerMainDiv {
-    background: #e6cccc59;
-    color: rgb(158, 206, 238);
+  background: #1a1a1a;
+  color: rgb(158, 206, 238);
 }
+
+footer {
+  margin-top: 1rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #1c1c20;
+  color: white;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.footerContainer {
+  display: flex;
+  width: 98%;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.copyrightText {
+  padding-right: 0.5rem;
+}
+
+.spacer {
+  height: 4rem;
+}
+footer span {
+  display: flex;
+  align-items: center;
+}
+
+.githubLogoOne {
+  margin-right: 0.7rem;
+}
+
+footer a {
+  text-decoration: none;
+  color: white;
+}
+
+footer a:visited {
+  text-decoration: none;
+  color: white;
+}
+
+footer a:hover {
+  text-decoration: none;
+  color: rgb(0, 162, 255);
+  transition: 0.1s;
+}
+
+.linkTwo:hover {
+  text-decoration: none;
+  color: rgb(255, 0, 179);
+  transition: 0.1s;
+}
+
+.siteLogoOne {
+  margin-left: 0.5rem;
+}
+
+footer p {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+

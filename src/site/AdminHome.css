@@ -1,13 +1,14 @@
 .adminHomeMainDiv {
-    background: navy;
+  background: navy;
+  padding-top: 0.1rem;
 }
 
 .adminUsersTableDiv {
-    background: black;
-    color: wheat;
+  background: black;
+  color: wheat;
 }
 
 .adminDestinationsTableDiv {
-    background: darkcyan;
-    color: whitesmoke;
+  background: darkcyan;
+  color: whitesmoke;
 }

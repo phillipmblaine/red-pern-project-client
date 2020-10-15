@@ -36,6 +36,7 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
 
     return (
         <div className='loginMainDiv'>
+            <br />
             <h2>Welcome</h2>
             <h3>Login</h3>
             <form onSubmit={props.handleLoginSubmit}>
@@ -67,11 +68,13 @@ const Login: React.FunctionComponent<AcceptedProps> = (props) => {
                     style={TextFieldStyles}
                     onChange={props.handlePasswordLoginInput}
                     InputProps={{ startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment> }}
-                /><br /><br />
+                /><br /><br /><br />
 
                 <ButtonStyles type='submit' value='Submit' variant='contained'>Submit</ButtonStyles>
             </form>
+            <br />
             {toggleLoginFailMessage()}
+            <br />
         </div >
     )
 }
