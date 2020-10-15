@@ -24,8 +24,8 @@ type UserTripState = {
     updateTripName: string;
     updateStops: string[];
     updateNumberOfStops: number;
-    updateTripBeginDate: string;
-    updateTripEndDate: string;
+    updateTripBeginDate?: string;
+    updateTripEndDate?: string;
     createTripName: string;
     createStops: string[];
     createNumberOfStops: number;
@@ -131,9 +131,9 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
             openDeletedAlert: false,
             openUpdatedAlert: false,
             openCreatedAlert: false,
-            updateTripName: '',
             updateStops: [],
             updateNumberOfStops: 0,
+            updateTripName: '',
             updateTripBeginDate: '',
             updateTripEndDate: '',
             createTripName: '',
@@ -335,7 +335,11 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
         console.log('UserTrip.tsx -> handleClickEditDialogOpen.')
         this.setState({
             openEditDialog: true,
-            editDialogData: a
+            editDialogData: a,
+            // this addition, as in UserDestination / UserDestinationDisplay, this addition hopefully will keep existing data in the entry fields present in unmodified
+            updateTripName: a.tripName,
+            updateTripBeginDate: a.tripBeginDate,
+            updateTripEndDate: a.tripEndDate,
         })
     }
 
@@ -626,14 +630,14 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                 <h2>Your Trips</h2>
                 <Button color='primary' variant='contained' onClick={this.handleClickCreateDialogOpen}>+ Create New Trip +</Button><br /><br />
                 <Button color='primary' variant='contained' onClick={() => this.getUserTrips()}>&#8595; Show Your Trips &#8595;</Button>
-                {this.showTrips()}<br /><br />
+                {this.showTrips()}
                 {this.showDestinationsInfo()}
-
+                <br/>
                 <Dialog open={this.state.openCreateDialog} onClose={this.handleCreateDialogClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Create Trip</DialogTitle>
                     <form onSubmit={this.handleCreateTrip}>
                         <DialogContent>
-                            <DialogContentText>Create Trip {this.state.editDialogData.tripName}</DialogContentText>
+                            <DialogContentText>Create Trip</DialogContentText>
                             <TextField
                                 autoFocus
                                 margin="dense"
@@ -671,7 +675,6 @@ class UserTrip extends React.Component<AcceptedProps, UserTripState>{
                         Trip Deleted.
                     </this.TripDeletedAlert>
                 </Snackbar>
-                <br />
             </div>
         )
     }

@@ -34,10 +34,10 @@ type UserDestinationState = {
     openUpdatedAlert: boolean;
     openDeletedAlert: boolean;
     openEditDialog: boolean;
-    updateDescription: string;
-    updateKinds: string;
-    updateRating: number;
-    updateFavorite: boolean;
+    updateDescription?: string;
+    updateKinds?: string;
+    updateRating?: number;
+    updateFavorite?: boolean;
     updateAssignTripId: number | null;
     updateAssignTripName: string;
     updateAssignTripOpen: boolean;
@@ -269,9 +269,9 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
             })
                 .then(response => response.json())
                 .then((tripFetchedData: AssignTripData[]) => { this.setState({ assignTripData: tripFetchedData }) })
-                .then(() => {
-                    if (this.state.assignTripData !== null) { console.log(this.state.assignTripData) }
-                })
+                // .then(() => {
+                //     if (this.state.assignTripData !== null) { console.log(this.state.assignTripData) }
+                // })
                 .catch(error => console.log(error))
         }
     }
@@ -331,7 +331,14 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
         console.log('UserDestination.tsx -> handleClickEditDialogOpen.')
         this.setState({
             openEditDialog: true,
-            editDialogData: c
+            editDialogData: c,
+            // this addition hopefully keeps the currently exiting data in the entry present if unmodified
+            updateDescription: c.description,
+            updateKinds: c.kinds,
+            updateRating: c.rating,
+            updateFavorite: c.favorite,
+            updateAssignTripId: c.tripId,
+            // updateAssignTripName: c.name
         })
     }
 
@@ -660,7 +667,9 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                 {this.showGeonameFetchedData()}<br />
 
                 <Button color='primary' variant='contained' onClick={() => this.getUserDestinations()}>&#8595; Show Your Destinations &#8595;</Button>
+                <br/>
                 {this.showDestinations()}
+                <br/>
 
                 <Snackbar open={this.state.openGeonameSearchAlert} autoHideDuration={5000} onClose={this.handleGeonameSearchAlertClose}>
                     <this.geonameSearchAlert onClose={this.handleGeonameSearchAlertClose} severity="info">
@@ -685,6 +694,8 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                         Destination Deleted.
                     </this.DestinationDeletedAlert>
                 </Snackbar>
+                {console.log('this.state.editDialogData:', this.state.editDialogData)}
+
             </div >
         )
     }

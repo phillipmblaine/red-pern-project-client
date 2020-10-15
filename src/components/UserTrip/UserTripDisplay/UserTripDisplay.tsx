@@ -62,14 +62,14 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                     <Table style={styles.table} aria-label='simple table'>
                         <TableHead style={styles.TableHead}>
                             <TableRow>
-                                <TableCell align='right'>id</TableCell>
-                                <TableCell align='right'>TripName</TableCell>
+                                <TableCell align='right'>ID</TableCell>
+                                <TableCell align='right'>Trip Name</TableCell>
                                 <TableCell align='right'>Destinations Info</TableCell>
-                                <TableCell align='right'>tripBeginDate</TableCell>
-                                <TableCell align='right'>tripEndDate</TableCell>
-                                <TableCell align='right'>userId</TableCell>
+                                <TableCell align='right'>Trip Begin Date</TableCell>
+                                <TableCell align='right'>Trip End Date</TableCell>
+                                <TableCell align='right'>User Id</TableCell>
                                 <TableCell align='right'>Edit Trip</TableCell>
-                                <TableCell align='right'>Delete?</TableCell>
+                                <TableCell align='right'>Delete</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -81,12 +81,13 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
 
             {/* Dialog for UPDATE Trips */}
             <Dialog open={props.openEditDialog} onClose={props.handleEditDialogClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Edit Trip</DialogTitle>
+                <DialogTitle id="form-dialog-title">Trip {props.editDialogData.tripName}</DialogTitle>
                 <form onSubmit={props.handleUpdateTrip}>
                     <DialogContent>
                         <DialogContentText>Edit Trip {props.editDialogData.tripName}</DialogContentText>
                         <TextField
                             autoFocus
+                            defaultValue={props.editDialogData.tripName}
                             margin="dense"
                             label="Trip Name"
                             type="text"
@@ -98,24 +99,26 @@ const UserTripDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                         />
                         <TextField
                             margin="dense"
+                            defaultValue={props.editDialogData.tripBeginDate}
                             label="Trip Begin Date"
                             type="date"
                             variant='outlined'
                             fullWidth
                             onChange={props.handleUpdateTripBeginDateInput}
                             InputLabelProps={{ shrink: true }}
-                            required
+                            // required
                             helperText='Please enter a valid trip begin date.'
                         />
                         <TextField
                             margin="dense"
+                            defaultValue={props.editDialogData.tripEndDate}
                             label="Trip End Date"
                             type="date"
                             variant='outlined'
                             fullWidth
                             onChange={props.handleUpdateTripEndDateInput}
                             InputLabelProps={{ shrink: true }}
-                            required
+                            // required
                             helperText='Please enter a valid trip end date.'
                         />
                     </DialogContent>

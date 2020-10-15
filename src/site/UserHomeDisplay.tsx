@@ -18,6 +18,7 @@ const UserHomeDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                     ? props.userTripMapper()
                     : <h3>No Trips Yet ...</h3>
             }
+            <br/>
             <hr />
             <h2>Destinations</h2>
             {

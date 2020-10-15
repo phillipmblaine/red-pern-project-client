@@ -120,7 +120,12 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
         console.log('AdminUser.tsx -> handleClickEditDialogOpen.')
         this.setState({
             openEditDialog: true,
-            editDialogData: a
+            editDialogData: a,
+            updateFirstName: a.firstName,
+            updateLastName: a.lastName,
+            updateUsername: a.username,
+            updateEmail: a.email,
+            updateRole: a.role
         })
     }
 
@@ -291,6 +296,7 @@ class AdminUser extends React.Component<AcceptedProps, AdminUserState>{
                 <h2>Manage Users</h2>
                 <Button variant='contained' color='primary' onClick={() => this.getAllUsers()}>&#8595; Show All Users &#8595;</Button>
                 {this.showAllUsers()}
+                <br/>
 
                 <Snackbar open={this.state.openUpdatedAlert} autoHideDuration={5000} onClose={this.handleUpdatedAlertClose}>
                     <this.UserUpdatedAlert onClose={this.handleUpdatedAlertClose} severity="warning">
