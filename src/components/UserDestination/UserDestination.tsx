@@ -661,6 +661,7 @@ class UserDestination extends React.Component<AcceptedProps, UserDestinationStat
                             onChange={this.handleGeonameInput}
                             InputProps={{ startAdornment: <InputAdornment position="start"><LocationSearchingIcon /></InputAdornment> }}
                         />
+                        <br />
                         <Button color='primary' variant='contained' type='submit' value='submit'>Submit Search</Button>
                     </FormControl>
                 </form>

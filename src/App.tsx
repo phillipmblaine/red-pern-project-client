@@ -66,12 +66,12 @@ class App extends React.Component<AcceptedProps, AppState> {
                     clearUserLogin={this.clearUserLogin}
                   />
                 </AdminRouter>
-                <FooterRouter>
+                {/* <FooterRouter>
                   <Footer
                     sessionToken={this.state.sessionToken}
                     clearUserLogin={this.clearUserLogin}
                   />
-                </FooterRouter>
+                </FooterRouter> */}
               </div>
             ) : (
               <div>
@@ -81,12 +81,12 @@ class App extends React.Component<AcceptedProps, AppState> {
                     clearUserLogin={this.clearUserLogin}
                   />
                 </UserRouter>
-                <FooterRouter>
+                {/* <FooterRouter>
                   <Footer
                     sessionToken={this.state.sessionToken}
                     clearUserLogin={this.clearUserLogin}
                   />
-                </FooterRouter>
+                </FooterRouter> */}
               </div >
             )
         ) : (
@@ -112,7 +112,13 @@ class App extends React.Component<AcceptedProps, AppState> {
         }
         <Toolbar />
         {this.protectedViews()}
-        <Toolbar />
+        
+        <FooterRouter>
+          <Footer
+            sessionToken={this.state.sessionToken}
+            clearUserLogin={this.clearUserLogin}
+          />
+        </FooterRouter>
       </div >
     )
   }

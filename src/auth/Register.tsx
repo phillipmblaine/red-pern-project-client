@@ -95,6 +95,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
 
     return (
         <div className='registerMainDiv'>
+            <br />
             <h2>New User?</h2>
             <h3>Register</h3>
             <form onSubmit={props.handleRegisterSubmit}>
@@ -183,6 +184,8 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     style={TextFieldStyles}
                 />
 
+                <br /><br />
+
                 <div id='passwordMessage'>
                     <h5>Password must contain:</h5>
                     <p id='passwordLowercaseLetter' className='invalid'>One lowercase letter</p>
@@ -193,6 +196,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
 
                 <ButtonStyles type='submit' value='Submit' variant='contained'>Submit</ButtonStyles>
             </form>
+            <br /><br />
         </div>
     )
 }

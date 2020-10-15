@@ -209,9 +209,9 @@ class AdminHome extends React.Component<AcceptedProps, AdminHomeState>{
             <div className='adminHomeMainDiv'>
                 <h2>Home</h2>
                 <Button variant='contained' color='primary' onClick={() => this.getUser()}>&#8595; Show My User Information &#8595;</Button>
-                <br/>
+                <br />
                 {this.showUser()}
-                <br/>
+                <br />
                 {console.log('fetchedUserData:', this.state.fetchedUserData)}
             </div>
         )

@@ -1,17 +1,17 @@
 .loginMainDiv {
-    background: rgba(134, 48, 62, 0.774);
+  background: rgba(134, 48, 62, 0.774);
+  margin-top: 1rem;
 }
 
 #loginFailMessage {
-    background: rgba(53, 0, 12, 0.685);
-    color: rgb(255, 221, 70);
-    position: relative;
-    padding: 20px;
-    margin-top: 10px;
-  }
-  
-  #loginFailMessage p {
-    padding: 10px 35px;
-    font-size: 18px;
-  }
-  
+  background: rgba(53, 0, 12, 0.685);
+  color: rgb(255, 221, 70);
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+#loginFailMessage p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
