@@ -27,7 +27,7 @@ class AdminDestination extends React.Component<AcceptedProps, AdminDestinationSt
         return (
             <div className='adminDestinationMainDiv'>
                 <h2>Destinations</h2>
-                <Button variant='contained' color='primary' onClick={() => this.getAllDestinations()}>getAllDestinations</Button>
+                <Button variant='contained' color='primary' onClick={() => this.getAllDestinations()}>Get All Destinations</Button>
                 <br/><br/>
             </div>
         )
