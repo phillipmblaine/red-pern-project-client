@@ -204,7 +204,7 @@ class UserHome extends React.Component<AcceptedProps, UserHomeState>{
         return (
             <div className='userHomeMainDiv'>
                 <h2>Home</h2>
-                <Button variant='contained' color='primary' onClick={() => this.getUser()}>&#8595; Show My User Information &#8595;</Button>
+                <Button variant='contained' color='primary' onClick={() => this.getUser()}>&#8595; Show Your User Information &#8595;</Button>
                 <br/>
                 {this.showUser()}
                 <br/>
