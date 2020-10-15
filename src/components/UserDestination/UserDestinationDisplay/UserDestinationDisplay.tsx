@@ -16,11 +16,11 @@ type AcceptedProps = {
     handleUpdateKindsInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateRatingInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateDestination: (e: React.FormEvent) => void;
-    updateFavorite: boolean;
+    updateFavorite?: boolean;
     handleUpdateFavoriteInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpdateAssignTripInput: (e: any) => void;
     updateAssignTripId: number | null;
-    updateRating: number;
+    updateRating?: number;
 }
 
 type DestinationData = {
@@ -62,8 +62,8 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                 <Table style={styles.table} aria-label='simple-table'>
                     <TableHead style={styles.TableHead}>
                         <TableRow>
-                            <TableCell align='right'>id</TableCell>
-                            <TableCell align='right'>Destination (Name)</TableCell>
+                            <TableCell align='right'>ID</TableCell>
+                            <TableCell align='right'>Destination</TableCell>
                             <TableCell align='right'>Country</TableCell>
                             <TableCell align='right'>Latitude</TableCell>
                             <TableCell align='right'>Longitude</TableCell>
@@ -71,9 +71,9 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                             <TableCell align='right'>Kinds</TableCell>
                             <TableCell align='right'>Rating</TableCell>
                             <TableCell align='right'>Favorite</TableCell>
-                            <TableCell align='right'>tripId</TableCell>
+                            <TableCell align='right'>Trip ID</TableCell>
                             <TableCell align='right'>Edit Destination</TableCell>
-                            <TableCell align='right'>Delete?</TableCell>
+                            <TableCell align='right'>Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -84,13 +84,14 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
 
             {/* // Dialog for UPDATE Destinations */}
             <Dialog open={props.openEditDialog} onClose={props.handleEditDialogClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Edit Destination</DialogTitle>
+                <DialogTitle id="form-dialog-title">Destination {props.editDialogData.name}</DialogTitle>
                 <form onSubmit={props.handleUpdateDestination}>
                     <DialogContent>
-                        <DialogContentText>Edit Destination {props.editDialogData.name}</DialogContentText>
+                        <DialogContentText>Edit {props.editDialogData.name}</DialogContentText>
                         <TextField
                             autoFocus
                             multiline
+                            defaultValue={props.editDialogData.description}
                             margin="dense"
                             label="Destination Description"
                             type="text"
@@ -102,6 +103,7 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
 
                         <TextField
                             multiline
+                            defaultValue={props.editDialogData.kinds}
                             margin="dense"
                             label="Destination Kinds"
                             type="text"
@@ -130,7 +132,7 @@ const UserDestinationDisplay: React.FunctionComponent<AcceptedProps> = (props) =
                                 onChange={props.handleUpdateAssignTripInput}
                                 input={<Input id="demo-dialog-native" />}
                             >
-                                <option aria-label="None">No Trip Assigned</option>
+                                <option aria-label="None">Select A Trip</option>
                                 {props.assignTripMapper()}
                             </Select>
                         </FormControl><br /><br />

@@ -119,6 +119,7 @@ Version 1.0, 2020-10-13
 - Explore other data types and functions of Sequelize/PostgreSQL that may improve the app
 - Back end validation
 - Rewrite inefficient code/cut down on unnecessary code
+- Cascade Delete -> when deleting a user, delete all associated data with the user
 
 <br/>
 

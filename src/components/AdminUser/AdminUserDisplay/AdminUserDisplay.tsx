@@ -52,14 +52,14 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                 <Table style={styles.table} aria-label='simple table'>
                     <TableHead style={styles.TableHead}>
                         <TableRow>
-                            <TableCell align='right'>id</TableCell>
-                            <TableCell align='right'>lastName</TableCell>
-                            <TableCell align='right'>firstName</TableCell>
-                            <TableCell align='right'>username</TableCell>
-                            <TableCell align='right'>email</TableCell>
-                            <TableCell align='right'>role</TableCell>
+                            <TableCell align='right'>ID</TableCell>
+                            <TableCell align='right'>Last Name</TableCell>
+                            <TableCell align='right'>First Name</TableCell>
+                            <TableCell align='right'>Username</TableCell>
+                            <TableCell align='right'>Email</TableCell>
+                            <TableCell align='right'>Role</TableCell>
                             <TableCell align='right'>Edit User</TableCell>
-                            <TableCell align='right'>Delete?</TableCell>
+                            <TableCell align='right'>Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -70,12 +70,13 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
 
             {/* Dialog for UPDATE Users */}
             <Dialog open={props.openEditDialog} onClose={props.handleEditDialogClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Edit User</DialogTitle>
+                <DialogTitle id="form-dialog-title">{props.editDialogData.username}</DialogTitle>
                 <form onSubmit={props.handleUpdateUser}>
                     <DialogContent>
-                        <DialogContentText>Edit User {props.editDialogData.username}</DialogContentText>
+                        <DialogContentText>Edit {props.editDialogData.username}</DialogContentText>
                         <TextField
                             required
+                            defaultValue={props.editDialogData.firstName}
                             margin="dense"
                             label="firstName"
                             type="text"
@@ -87,6 +88,7 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                         />
                         <TextField
                             required
+                            defaultValue={props.editDialogData.lastName}
                             margin="dense"
                             label="lastName"
                             type="text"
@@ -98,6 +100,7 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                         />
                         <TextField
                             required
+                            defaultValue={props.editDialogData.username}
                             margin="dense"
                             label="Username"
                             type="text"
@@ -108,6 +111,7 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                             autoComplete='new-password'
                         />
                         <TextField
+                            defaultValue={props.editDialogData.email}
                             required
                             margin="dense"
                             label="Email"
