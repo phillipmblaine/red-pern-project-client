@@ -177,7 +177,7 @@ const Register: React.FunctionComponent<AcceptedProps> = (props) => {
                     onFocus={onFocusPasswordMessageStyling}
                     onBlur={onBlurPasswordMessageStyling}
                     onKeyUp={validatePasswordFormat}
-                    inputProps={{ pattern: '(?=.*)(?=.*[a-z])(?=.*[A-Z]).{8,}' }}
+                    inputProps={{ pattern: '(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}' }}
                     required
                     InputProps={{ startAdornment: <InputAdornment position="start"><LockIcon /></InputAdornment> }}
                     color='primary'
