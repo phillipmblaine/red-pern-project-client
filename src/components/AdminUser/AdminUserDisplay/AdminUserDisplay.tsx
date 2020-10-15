@@ -70,7 +70,7 @@ const AdminUserDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
 
             {/* Dialog for UPDATE Users */}
             <Dialog open={props.openEditDialog} onClose={props.handleEditDialogClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">{props.editDialogData.username}</DialogTitle>
+                <DialogTitle id="form-dialog-title">User {props.editDialogData.username}</DialogTitle>
                 <form onSubmit={props.handleUpdateUser}>
                     <DialogContent>
                         <DialogContentText>Edit {props.editDialogData.username}</DialogContentText>
